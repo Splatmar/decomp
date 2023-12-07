@@ -115,6 +115,10 @@ enum DialogSpecialChars {
     DIALOG_CHAR_SLASH                = 0xD0,
     DIALOG_CHAR_MULTI_THE            = 0xD1, // 'the'
     DIALOG_CHAR_MULTI_YOU            = 0xD2, // 'you'
+    DIALOG_CHAR_MULTI_US             = 0xD3, // 'us'
+    DIALOG_CHAR_MULTI_LE             = 0xD4, // 'le'
+    DIALOG_CHAR_MULTI_DE             = 0xD5, // 'de'
+    DIALOG_CHAR_MULTI_VO             = 0xD6, // 'vo'
     DIALOG_CHAR_PERIOD               = 0x6E,
     DIALOG_CHAR_COMMA                = 0x6F,
     DIALOG_CHAR_COLOR                = 0xDF,

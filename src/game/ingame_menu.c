@@ -94,27 +94,15 @@ u8 gDialogCharWidths[256] = { // TODO: Is there a way to auto generate this?
     7,  5,  5,  5,  6,  5,  5,  5,  5,  5,  7,  7,  5,  5,  4,  4,
     8,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     8,  8,  8,  8,  7,  7,  6,  7,  7,  0,  0,  0,  0,  0,  0,  0,
-#ifdef VERSION_EU
-    6,  6,  6,  0,  6,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  4,
-    5,  5,  5,  5,  6,  6,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,
-    5,  5,  5,  0,  6,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  5,  5,  0,  0,  6,  6,  0,  0,  0,  0,  0,  0,  0,  5,  6,
-    0,  4,  4,  0,  0,  5,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-#else
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  6,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-#endif
+    6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,
+    5,  5,  5,  5,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,
+    5,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  6,
+    0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-#ifdef VERSION_EU
-    7,  5, 10,  5,  9,  8,  4,  0,  0,  0,  0,  5,  5,  6,  5,  0,
-#else
-    7,  5, 10,  5,  9,  8,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-#endif
+    7,  5, 10,  5,  9,  8,  4,  0,  0,  0,  0,  0,  0,  6,  5,  0,
     0,  0,  5,  7,  7,  6,  6,  8,  0,  8, 10,  6,  4, 10,  0,  0
 };
 
@@ -330,8 +318,12 @@ struct MultiTextEntry {
 
 #define TEXT_THE_RAW ASCII_TO_DIALOG('t'), ASCII_TO_DIALOG('h'), ASCII_TO_DIALOG('e'), 0x00
 #define TEXT_YOU_RAW ASCII_TO_DIALOG('y'), ASCII_TO_DIALOG('o'), ASCII_TO_DIALOG('u'), 0x00
+#define TEXT_DE_RAW ASCII_TO_DIALOG('d'), ASCII_TO_DIALOG('e'), 0x00, 0x00
+#define TEXT_VO_RAW ASCII_TO_DIALOG('v'), ASCII_TO_DIALOG('o'), 0x00, 0x00
+#define TEXT_US_RAW ASCII_TO_DIALOG('u'), ASCII_TO_DIALOG('s'), 0x00, 0x00
+#define TEXT_LE_RAW ASCII_TO_DIALOG('l'), ASCII_TO_DIALOG('e'), 0x00, 0x00
 
-enum MultiStringIDs { STRING_THE, STRING_YOU };
+enum MultiStringIDs { STRING_THE, STRING_YOU, STRING_DE, STRING_VO, STRING_US, STRING_LE};
 
 /*
  * Place the multi-text string according to the ID passed. (US, EU)
@@ -340,9 +332,13 @@ enum MultiStringIDs { STRING_THE, STRING_YOU };
  */
 void render_multi_text_string(s8 multiTextID) {
     s8 i;
-    struct MultiTextEntry textLengths[2] = {
+    struct MultiTextEntry textLengths[6] = {
         { 3, { TEXT_THE_RAW } },
         { 3, { TEXT_YOU_RAW } },
+        { 2, { TEXT_DE_RAW } },
+        { 2, { TEXT_VO_RAW } },
+        { 2, { TEXT_US_RAW } },
+        { 2, { TEXT_LE_RAW } },
     };
 
     for (i = 0; i < textLengths[multiTextID].length; i++) {
@@ -435,6 +431,18 @@ void print_generic_string(s16 x, s16 y, const u8 *str) {
                 break;
             case DIALOG_CHAR_MULTI_YOU:
                 render_multi_text_string(STRING_YOU);
+                break;
+            case DIALOG_CHAR_MULTI_DE:
+                render_multi_text_string(STRING_DE);
+                break;
+            case DIALOG_CHAR_MULTI_VO:
+                render_multi_text_string(STRING_VO);
+                break;
+            case DIALOG_CHAR_MULTI_US:
+                render_multi_text_string(STRING_US);
+                break;
+            case DIALOG_CHAR_MULTI_LE:
+                render_multi_text_string(STRING_LE);
                 break;
             case DIALOG_CHAR_SPACE:
                 // create_dl_translation_matrix(MENU_MTX_NOPUSH, (f32)(gDialogCharWidths[DIALOG_CHAR_SPACE]), 0.0f, 0.0f);
@@ -852,9 +860,13 @@ void render_star_count_dialog_text(s8 *xMatrix, s16 *linePos) {
 
 void render_multi_text_string_lines(s8 multiTextId, s8 lineNum, s16 *linePos, s8 linesPerBox, s8 xMatrix, s8 lowerBound) {
     s8 i;
-    struct MultiTextEntry textLengths[2] = {
+    struct MultiTextEntry textLengths[6] = {
         { 3, { TEXT_THE_RAW } },
         { 3, { TEXT_YOU_RAW } },
+        { 2, { TEXT_DE_RAW } },
+        { 2, { TEXT_VO_RAW } },
+        { 2, { TEXT_US_RAW } },
+        { 2, { TEXT_LE_RAW } },
     };
 
     if (lineNum >= lowerBound && lineNum <= (lowerBound + linesPerBox)) {
@@ -971,6 +983,22 @@ void handle_dialog_text_and_pages(s8 colorMode, struct DialogEntry *dialog, s8 l
                 break;
             case DIALOG_CHAR_MULTI_YOU:
                 render_multi_text_string_lines(STRING_YOU, lineNum, &linePos, linesPerBox, xMatrix, lowerBound);
+                xMatrix = 1;
+                break;
+            case DIALOG_CHAR_MULTI_US:
+                render_multi_text_string_lines(STRING_US, lineNum, &linePos, linesPerBox, xMatrix, lowerBound);
+                xMatrix = 1;
+                break;
+            case DIALOG_CHAR_MULTI_LE:
+                render_multi_text_string_lines(STRING_LE, lineNum, &linePos, linesPerBox, xMatrix, lowerBound);
+                xMatrix = 1;
+                break;
+            case DIALOG_CHAR_MULTI_DE:
+                render_multi_text_string_lines(STRING_DE, lineNum, &linePos, linesPerBox, xMatrix, lowerBound);
+                xMatrix = 1;
+                break;
+            case DIALOG_CHAR_MULTI_VO:
+                render_multi_text_string_lines(STRING_VO, lineNum, &linePos, linesPerBox, xMatrix, lowerBound);
                 xMatrix = 1;
                 break;
             case DIALOG_CHAR_STAR_COUNT:
