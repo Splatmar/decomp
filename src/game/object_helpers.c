@@ -27,6 +27,7 @@
 #include "spawn_object.h"
 #include "spawn_sound.h"
 #include "puppylights.h"
+#include "course_table.h"
 
 static s32 clear_move_flag(u32 *bitSet, s32 flag);
 
@@ -623,6 +624,127 @@ struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript *b
     return closestObj;
 }
 
+//Drahnokks functions and enums - START
+
+#define EQUALS(value1, value2) value1 == value2
+#define GREATER(value1, value2) value1 > value2
+#define GREATER_EQUALS(value1, value2) value1 >= value2
+#define LOWER_EQUALS(value1, value2) value1 <= value2
+#define LOWER(value1, value2) value1 < value2
+
+enum LogicOperator {
+    EQUAL,
+    GREATER,
+    GREATER_EQUALS,
+    LOWER_EQUALS,
+    LOWER
+};
+
+static s32 operation_check(s32 operator, f32 value, f32 wantedValue){
+    switch (operator) {
+        case EQUAL:
+            return EQUALS(value, wantedValue);
+            break;
+
+        case GREATER:
+            return GREATER(value, wantedValue);
+            break;
+        
+        case GREATER_EQUALS:
+            return GREATER_EQUALS(value, wantedValue);
+            break;
+
+        case LOWER_EQUALS:
+            return LOWER_EQUALS(value, wantedValue);
+            break;
+        
+        case LOWER:
+            return LOWER(value, wantedValue);
+            break;
+        
+        default:
+            return FALSE;
+            break;
+    }
+}
+
+enum ObjectFieldType {
+    U32,
+    S32,
+    S16,
+    F32
+};
+
+static s32 obj_field_condition_check(struct Object *obj, s32 index, s32 objFieldType, f32 wantedValue, s32 operator){
+    f32 value;
+    switch (objFieldType) {
+        case U32:
+            value = obj->rawData.asU32[index];
+            break;
+
+        case S32:
+            value = obj->rawData.asS32[index];
+            break;
+
+        case S16:
+            value = (int)(obj->rawData.asS16[index]);
+            break;
+
+        case F32:
+            value = obj->rawData.asF32[index];
+            break;
+        
+        default:
+            return FALSE;
+            break;
+    }
+
+    return operation_check(operator, value, wantedValue);
+}
+
+
+struct Object *cur_obj_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator) {
+    f32 dist;
+    struct Object *o;
+    return cur_obj_find_nearest_object_with_behavior_and_condition(behavior, &dist, fieldToCheck, objFieldType, wantedValue, operator);
+}
+
+f32 cur_obj_dist_to_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator) {
+    f32 dist;
+    if (cur_obj_find_nearest_object_with_behavior_and_condition(behavior, &dist, fieldToCheck, objFieldType, wantedValue, operator) == NULL) dist = 15000.0f;
+    return dist;
+}
+
+
+struct Object *cur_obj_find_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, f32 *dist, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator) {
+    uintptr_t *behaviorAddr = segmented_to_virtual(behavior);
+    struct ObjectNode *listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
+    struct Object *obj = (struct Object *) listHead->next;
+    struct Object *closestObj = NULL;
+    f32 minDist = 0x20000;
+
+    while (obj != (struct Object *) listHead) {
+        if (obj->behavior == behaviorAddr
+            && obj->activeFlags != ACTIVE_FLAG_DEACTIVATED
+            && obj != o
+            && obj_field_condition_check(obj, fieldToCheck, objFieldType, wantedValue, operator)
+        ) {
+            f32 objDist = dist_between_objects(o, obj);
+            if (objDist < minDist) {
+                closestObj = obj;
+                minDist = objDist;
+            }
+        }
+
+        obj = (struct Object *) obj->header.next;
+    }
+
+    *dist = minDist;
+    return closestObj;
+}
+
+//Drahnokks functions and enums - END
+
 struct Object *find_unimportant_object(void) {
     struct ObjectNode *listHead = &gObjectLists[OBJ_LIST_UNIMPORTANT];
     struct ObjectNode *obj = listHead->next;
@@ -893,6 +1015,12 @@ void cur_obj_disable(void) {
     cur_obj_disable_rendering();
     cur_obj_hide();
     cur_obj_become_intangible();
+}
+
+void cur_obj_enable(void) {
+    cur_obj_enable_rendering();
+    cur_obj_unhide();
+    cur_obj_become_tangible();
 }
 
 void cur_obj_become_intangible(void) {
@@ -2332,4 +2460,32 @@ void cur_obj_spawn_star_at_y_offset(f32 targetX, f32 targetY, f32 targetZ, f32 o
     o->oPosY += offsetY + gDebugInfo[DEBUG_PAGE_ENEMYINFO][0];
     spawn_default_star(targetX, targetY, targetZ);
     o->oPosY = objectPosY;
+}
+
+void cur_obj_appear_if_enough_star(void) {
+    s32 starCount = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
+    if(starCount < o->oNeededStar) {
+        cur_obj_disable();
+    } else {
+        cur_obj_enable();
+    }
+}
+
+void cur_obj_disappear_if_enough_star(void) {
+    s32 starCount = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
+    if(starCount > o->oNeededStar) {
+        cur_obj_disable();
+    } else {
+        cur_obj_enable();
+    }
+}
+
+/**
+ * Drahnokks function
+ * Takes a float and prints it as a text
+ */
+void print_text_fmt_float(s32 x, s32 y, const char *strf, f32 f) {
+    char str[50];
+    sprintf(str, strf, f);
+    print_text(x, y, str);
 }

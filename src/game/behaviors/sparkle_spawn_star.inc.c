@@ -118,8 +118,15 @@ void bhv_spawned_star_loop(void) {
 }
 
 void bhv_spawn_star_no_level_exit(u32 params) {
-    struct Object *starObj = spawn_object(o, MODEL_STAR, bhvSpawnedStarNoLevelExit);
-    SET_BPARAM1(starObj->oBehParams, params);
-    starObj->oInteractionSubtype = INT_SUBTYPE_NO_EXIT;
+    bhv_spawn_star_at_object(params, o, TRUE);
+}
+
+//Drahnokks function, enable to spawn a star above any wanted object nad decide if it exit the level
+void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit) {
+    struct Object *starObj = spawn_object(obj, MODEL_STAR, bhvSpawnedStarNoLevelExit);
+    SET_BPARAM1(starObj->oBehParams, starId);
+    if(exit == TRUE){
+        starObj->oInteractionSubtype = INT_SUBTYPE_NO_EXIT;
+    }
     obj_set_angle(starObj, 0x0, 0x0, 0x0);
 }

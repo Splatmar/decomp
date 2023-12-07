@@ -15,6 +15,7 @@
 #include "surface_load.h"
 #include "game/puppyprint.h"
 #include "game/debug.h"
+#include "course_table.h"
 
 #include "config.h"
 
@@ -697,6 +698,12 @@ static TerrainData sVertexData[600];
  * Transform an object's vertices, reload them, and render the object.
  */
 void load_object_collision_model(void) {
+
+    //Drahnokks edit, if the star count for this object make it desappear, don't load the collsion
+    s32 starCount = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
+    if((o->oFlags & OBJ_FLAG_APPEAR_IF_ENOUGH_STAR && starCount < o->oNeededStar) || 
+    (o->oFlags & OBJ_FLAG_DISAPPEAR_IF_ENOUGH_STAR && starCount > o->oNeededStar)) return;
+
     PUPPYPRINT_GET_SNAPSHOT();
     TerrainData *collisionData = o->collisionData;
 

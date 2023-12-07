@@ -904,6 +904,15 @@ void cur_obj_update(void) {
         obj_update_gfx_pos_and_angle(o);
     }
 
+    //The next 2 Flag require to set the object field oNeededStar to the wanted value
+    if (objFlags & OBJ_FLAG_APPEAR_IF_ENOUGH_STAR) {
+        cur_obj_appear_if_enough_star();
+    }
+
+    if (objFlags & OBJ_FLAG_DISAPPEAR_IF_ENOUGH_STAR) {
+        cur_obj_disappear_if_enough_star();
+    }
+
 #if SILHOUETTE
     COND_BIT((objFlags & OBJ_FLAG_SILHOUETTE        ), o->header.gfx.node.flags, GRAPH_RENDER_SILHOUETTE        );
     COND_BIT((objFlags & OBJ_FLAG_OCCLUDE_SILHOUETTE), o->header.gfx.node.flags, GRAPH_RENDER_OCCLUDE_SILHOUETTE);

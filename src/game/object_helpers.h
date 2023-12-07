@@ -116,6 +116,11 @@ u32 get_object_list_from_behavior(const BehaviorScript *behavior);
 struct Object *cur_obj_nearest_object_with_behavior(const BehaviorScript *behavior);
 f32 cur_obj_dist_to_nearest_object_with_behavior(const BehaviorScript* behavior);
 struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript * behavior, f32 *dist);
+//new
+struct Object *cur_obj_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator);
+f32 cur_obj_dist_to_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator);
+struct Object *cur_obj_find_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, f32 *dist, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator);
+//
 struct Object *find_unimportant_object(void);
 s32 count_unimportant_objects(void);
 s32 count_objects_with_behavior(const BehaviorScript *behavior);
@@ -146,6 +151,7 @@ void obj_mark_for_deletion(struct Object *obj);
 // Hackersm64 backwards compatibility
 #define mark_obj_for_deletion obj_mark_for_deletion
 void cur_obj_disable(void);
+void cur_obj_enable(void);
 void cur_obj_become_intangible(void);
 void cur_obj_become_tangible(void);
 void obj_become_tangible(struct Object *obj);
@@ -277,5 +283,8 @@ s32 cur_obj_check_interacted(void);
 void cur_obj_spawn_loot_blue_coin(void);
 
 void cur_obj_spawn_star_at_y_offset(f32 targetX, f32 targetY, f32 targetZ, f32 offsetY);
+void cur_obj_appear_if_enough_star(void);
+void cur_obj_disappear_if_enough_star(void);
+void print_text_fmt_float(s32 x, s32 y, const char *strf, f32 f);
 
 #endif // OBJECT_HELPERS_H
