@@ -18,7 +18,7 @@
  * Enables a comprehensive standalone profiler. Automatically enabled by PUPPYPRINT_DEBUG.
  * If not using PUPPYPRINT_DEBUG, press L + D-Pad Up to toggle the profiler.
  */
-#define USE_PROFILER
+//#define USE_PROFILER
 
 /**
  * -- TEST LEVEL --
@@ -36,7 +36,7 @@
 /**
  * Enables debug free move (D-pad up to enter, A to exit).
  */
-#define ENABLE_DEBUG_FREE_MOVE
+//#define ENABLE_DEBUG_FREE_MOVE
 
 /**
  * Enables a custom, enhanced performance profiler. (Enables PUPPYPRINT by default in config_safeguards).
@@ -85,3 +85,8 @@
  * Forces a crash when the game starts. Useful for debugging the crash screen.
  */
 // #define DEBUG_FORCE_CRASH_ON_BOOT
+
+/**
+ * To see each dialog in their proper textbox to check for fitting or typos
+ */
+#define TEXT_BOX_DEBUG

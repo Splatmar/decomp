@@ -93,6 +93,7 @@ Thanks to Frame#5375 and AloXado320 for also helping with silhouette stuff
   - NOTE: It is not mandatory to reset the text color with `"@--------"`, but text will need to be recolored each time it scrolls in a dialog box, or the custom color will reset.
 - Toggle visiblity of collision surfaces and object hitboxes with Visual Surface Debug. `config/config_debug.h` has VISUAL_DEBUG which can be turned on to enable this feature.
 - Workaround for infinite death loops caused by using the wrong warp type for death warps. Mario's HP will be restored when being warped to any warp if (and only if) he was warped while dead. *
+- Get acces to all the Dialog with TEXT_BOX_DEBUG when turn on (pressing DPad Down).
 
 **Other Bugfixes:**
 - Castle music fix (fixes the castle music sometimes triggering after getting a dialog) *

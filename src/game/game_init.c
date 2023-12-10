@@ -742,6 +742,21 @@ void setup_game_memory(void) {
     load_segment_decompress(SEGMENT_SEGMENT2, _segment2_mio0SegmentRomStart, _segment2_mio0SegmentRomEnd);
 }
 
+#ifdef TEXT_BOX_DEBUG
+u8 textBoxId = 0;
+static void debug_text_box_input(void){
+    if (gPlayer1Controller->buttonPressed & D_JPAD) {
+        if(gPlayer1Controller->buttonDown & L_TRIG) textBoxId -= 10;
+        else textBoxId--;
+    }
+    if (gPlayer1Controller->buttonPressed & U_JPAD) {
+        if(gPlayer1Controller->buttonDown & L_TRIG) textBoxId += 10;
+        else textBoxId ++;
+        
+    }
+}
+#endif
+
 /**
  * Main game loop thread. Runs forever as long as the game continues.
  */
@@ -816,6 +831,12 @@ void thread5_game_loop(UNUSED void *arg) {
             print_text_fmt_int(180, 20, "BUF %d", gGfxPoolEnd - (u8 *) gDisplayListHead);
         }
 #endif
+
+//Drahnokks textbox debug
+#ifdef TEXT_BOX_DEBUG
+        debug_text_box_input();
+#endif
+
 #if 0
         if (gPlayer1Controller->buttonPressed & L_TRIG) {
             osStartThread(&hvqmThread);

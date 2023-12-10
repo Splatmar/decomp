@@ -16,7 +16,7 @@ DEFINE_DIALOG(DIALOG_000, 1, 6, 30, 200, _("\
 Wow! You're smack in the\n\
 ( )( ) ↔ & : C° ß Ç ç\n\
 „ ! % ? „ 『 』~ … $ ★\n\
-× ・ ☆ / ¤/ #\n\
+× ・ ☆ µ/ ¤/ #\n\
 toad@toadstool.mu\n\
 worlds.\n\
 First, talk to the\n\

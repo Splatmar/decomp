@@ -87,6 +87,7 @@
     #undef COMPLETE_SAVE_FILE
     #undef DEBUG_FORCE_CRASH_ON_BOOT
     #undef USE_PROFILER
+    #undef TEXT_BOX_DEBUG
 #endif // DISABLE_ALL
 
 #ifdef DEBUG_ALL
@@ -110,6 +111,9 @@
 
     #undef COMPLETE_SAVE_FILE
     #define COMPLETE_SAVE_FILE
+
+    #undef TEXT_BOX_DEBUG
+    #define TEXT_BOX_DEBUG
 #endif // DEBUG_ALL
 
 #ifdef PUPPYPRINT_DEBUG
