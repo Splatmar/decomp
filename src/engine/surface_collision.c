@@ -649,6 +649,12 @@ f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
     return height;
 }
 
+// Drahnokks add
+f32 obj_find_floor(struct Object *obj){
+  struct Surface *sObjFloor;
+  return find_floor(obj->oPosX + obj->oVelX, obj->oPosY, obj->oPosZ + obj->oVelZ, &sObjFloor);
+}
+
 f32 find_room_floor(f32 x, f32 y, f32 z, struct Surface **pfloor) {
     gCollisionFlags |= (COLLISION_FLAG_EXCLUDE_DYNAMIC | COLLISION_FLAG_INCLUDE_INTANGIBLE);
 

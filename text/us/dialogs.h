@@ -14,10 +14,10 @@
 
 DEFINE_DIALOG(DIALOG_000, 1, 6, 30, 200, _("\
 Wow! You're smack in the\n\
-middle of the battlefield.\n\
-You'll find the Power\n\
-Stars that Bowser stole\n\
-inside the painting\n\
+( )( ) ↔ & : C° ß Ç ç\n\
+„ ! % ? „ 『 』~ … $ ★\n\
+× ・ ☆ / ¤/ #\n\
+toad@toadstool.mu\n\
 worlds.\n\
 First, talk to the\n\
 Bob-omb Buddy. (Press [B]\n\
