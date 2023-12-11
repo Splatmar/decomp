@@ -224,6 +224,37 @@ void calc_obj_friction(f32 *objFriction, f32 floor_nY) {
     }
 }
 
+//Drahnokks add - START
+
+void obj_calc_new_pos_y(struct Object *obj){
+    // Caps vertical speed with a "terminal velocity".
+    obj->oVelY -= obj->oGravity;
+    if (obj->oVelY > 75.0) {
+        obj->oVelY = 75.0;
+    }
+    if (obj->oVelY < -75.0) {
+        obj->oVelY = -75.0;
+    }
+
+    obj->oPosY += obj->oVelY;
+}
+
+void obj_bounce_then_snap_on_floor(struct Object *obj, f32 floor) {
+    // Snap the object up to the floor.
+    if (obj->oPosY < floor) {
+        obj->oPosY = floor;
+
+        // Bounces an object if the ground is hit fast enough.
+        if (obj->oVelY < -17.5f) {
+            obj->oVelY = -(obj->oVelY / 2);
+        } else {
+            obj->oVelY = 0;
+        }
+    }
+}
+
+//Drahnokks add - END
+
 /**
  * Updates an objects speed for gravity and updates Y position.
  */
@@ -233,28 +264,8 @@ void calc_new_obj_vel_and_pos_y(struct Surface *objFloor, f32 objFloorY, f32 obj
     f32 floor_nZ = objFloor->normal.z;
     f32 objFriction;
 
-    // Caps vertical speed with a "terminal velocity".
-    o->oVelY -= o->oGravity;
-    if (o->oVelY > 75.0) {
-        o->oVelY = 75.0;
-    }
-    if (o->oVelY < -75.0) {
-        o->oVelY = -75.0;
-    }
-
-    o->oPosY += o->oVelY;
-
-    // Snap the object up to the floor.
-    if (o->oPosY < objFloorY) {
-        o->oPosY = objFloorY;
-
-        // Bounces an object if the ground is hit fast enough.
-        if (o->oVelY < -17.5f) {
-            o->oVelY = -(o->oVelY / 2);
-        } else {
-            o->oVelY = 0;
-        }
-    }
+    obj_calc_new_pos_y(o);
+    obj_bounce_then_snap_on_floor(o, objFloorY);
 
     //! (Obj Position Crash) If you got an object with height past 2^31, the game would crash.
     if ((s32) o->oPosY >= (s32) objFloorY && (s32) o->oPosY < (s32) objFloorY + 37) {
@@ -727,6 +738,73 @@ UNUSED s32 debug_sequence_tracker(s16 debugInputSequence[]) {
     return FALSE;
 }
 
+//Dranokks add - START
+
+s8 object_find_wall(struct Object *obj) {
+    struct WallCollisionData hitbox;
+
+    f32 objVelX = obj->oForwardVel * sins(obj->oMoveAngleYaw);
+    f32 objVelZ = obj->oForwardVel * coss(obj->oMoveAngleYaw);
+
+    f32 objNewX = obj->oPosX + objVelX;
+    f32 objNewZ = obj->oPosZ + objVelZ;
+    
+    f32 wall_nX, wall_nY, wall_nZ, objVelXCopy, objVelZCopy, objYawX, objYawZ;
+
+
+    hitbox.x = objNewX;
+    hitbox.y = obj->oPosY;
+    hitbox.z = objNewZ;
+    hitbox.offsetY = obj->hitboxHeight / 2;
+    hitbox.radius = obj->hitboxRadius;
+
+    if (find_wall_collisions(&hitbox) != 0) {
+        obj->oPosX = hitbox.x;
+        obj->oPosY = hitbox.y;
+        obj->oPosZ = hitbox.z;
+
+        wall_nX = hitbox.walls[0]->normal.x;
+        wall_nY = hitbox.walls[0]->normal.y;
+        wall_nZ = hitbox.walls[0]->normal.z;
+
+        objVelXCopy = objVelX;
+        objVelZCopy = objVelZ;
+
+        // Turns away from the first wall only.
+        turn_obj_away_from_surface(objVelXCopy, objVelZCopy, wall_nX, wall_nY, wall_nZ, &objYawX, &objYawZ);
+
+        obj->oMoveAngleYaw = atan2s(objYawZ, objYawX);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+/**
+ * This version of object step don't make the object face the steep and dont recalculate the velocity
+ */
+s16 object_simple_step(struct Object *obj) {
+    s16 collisionFlags = 0;
+
+    if (object_find_wall(obj) == 0) {
+        collisionFlags += OBJ_COL_FLAG_HIT_WALL;
+    }
+
+    f32 floor = obj_find_floor(obj);
+
+    obj_calc_new_pos_y(obj);
+    obj_bounce_then_snap_on_floor(obj, floor);
+    
+    if(floor == obj->oPosY) {
+        collisionFlags += OBJ_COL_FLAG_GROUNDED;
+    }
+    obj_update_pos_vel_xz();
+
+    return collisionFlags;
+}
+
+//Dranokks add - END
+
 #include "behaviors/moving_coin.inc.c"
 #include "behaviors/seaweed.inc.c"
 #include "behaviors/bobomb.inc.c"
@@ -783,3 +861,4 @@ UNUSED s32 debug_sequence_tracker(s16 debugInputSequence[]) {
 #include "behaviors/treasure_chest.inc.c"
 #include "behaviors/mips.inc.c"
 #include "behaviors/yoshi.inc.c"
+#include "behaviors/small_jumping_chain_chomp.inc.c"

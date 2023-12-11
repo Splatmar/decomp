@@ -233,7 +233,7 @@ ALIGNED8 static const Texture texture_hud_char_I[] = {
 
 #if defined(VERSION_JP) || defined(VERSION_SH) || defined(COMPLETE_EN_US_SEGMENT2)
 ALIGNED8 static const Texture texture_hud_char_J[] = {
-#include "textures/segment2/segment2.02600.rgba16.inc.c"
+#include "textures/segment2/segment2.hud_char_j.rgba16.inc.c"
 };
 #else
 ALIGNED8 static const Texture texture_hud_char_J[] = {
@@ -286,7 +286,7 @@ ALIGNED8 static const Texture texture_hud_char_U[] = {
 };
 
 ALIGNED8 static const Texture texture_hud_char_V[] = {
-#include "textures/segment2/segment2.06E00.rgba16.inc.c"
+#include "textures/segment2/segment2.03E00.rgba16.inc.c"
 };
 
 ALIGNED8 static const Texture texture_hud_char_W[] = {
