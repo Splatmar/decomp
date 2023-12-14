@@ -286,7 +286,7 @@ ALIGNED8 static const Texture texture_hud_char_U[] = {
 };
 
 ALIGNED8 static const Texture texture_hud_char_V[] = {
-#include "textures/segment2/segment2.03E00.rgba16.inc.c"
+#include "textures/segment2/segment2.hud_char_v.rgba16.inc.c"
 };
 
 ALIGNED8 static const Texture texture_hud_char_W[] = {
@@ -1933,6 +1933,8 @@ ALIGNED8 static const Texture texture_font_char_us_ellipsis[] = {
 #include "textures/segment2/font_graphics.06D00.ia4.inc.c"
 };
 
+//Drahnokks fix
+// the - was named slash, I fix it
 ALIGNED8 static const Texture texture_font_char_us_dash[] = {
 #include "textures/segment2/font_graphics.06D40.ia4.inc.c"
 };
@@ -2356,7 +2358,7 @@ const Texture *const main_font_lut[] = {
     texture_font_char_us_left_right_arrow,       // ↔
     texture_font_char_us_ampersand, // &
     texture_font_char_us_ellipsis,  // :
-    texture_font_char_slash,     // /            
+    texture_font_char_slash,     // / use µ/          
     texture_font_char_backslash, // \ use ¤/              
     texture_font_char_at, // @              
     texture_font_char_hashtag, // #
