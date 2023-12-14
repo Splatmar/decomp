@@ -598,7 +598,71 @@ f32 cur_obj_dist_to_nearest_object_with_behavior(const BehaviorScript *behavior)
     return dist;
 }
 
-struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript *behavior, f32 *dist) {
+//Drahnokks functions and enums - START ----------------------------------------------------------------------------------------------------------------------
+
+static s32 operation_check(s32 operator, f32 value, f32 wantedValue){
+    switch (operator) {
+        case OPERATOR_EQUAL:
+            return EQUALS(value, wantedValue);
+            break;
+
+        case OPERATOR_GREATER:
+            return GREATER(value, wantedValue);
+            break;
+        
+        case OPERATOR_GREATER_EQUALS:
+            return GREATER_EQUALS(value, wantedValue);
+            break;
+
+        case OPERATOR_LOWER_EQUALS:
+            return LOWER_EQUALS(value, wantedValue);
+            break;
+        
+        case OPERATOR_LOWER:
+            return LOWER(value, wantedValue);
+            break;
+        
+        default:
+            return FALSE;
+            break;
+    }
+}
+
+static s32 obj_field_condition_check(struct Object *obj, s32 index, s32 objFieldType, f32 wantedValue, s32 operator){
+    f32 value;
+    switch (objFieldType) {
+        case TYPE_U32:
+            value = obj->rawData.asU32[index];
+            break;
+
+        case TYPE_S32:
+            value = obj->rawData.asS32[index];
+            break;
+
+        case TYPE_S16:
+            value = (int)(obj->rawData.asS16[index]);
+            break;
+
+        case TYPE_F32:
+            value = obj->rawData.asF32[index];
+            break;
+        
+        default:
+            return FALSE;
+            break;
+    }
+
+    return operation_check(operator, value, wantedValue);
+}
+
+// the unused param is to match the signature of the previous function to be able to call them the same ways on the function below
+static s32 obj_bparam_ckeck(struct Object *obj, s32 bparamToCheck, s32 unused, f32 wantedValue, s32 operator){
+    f32 value;
+    value = GET_BPARAMS((obj->oBehParams), bparamToCheck, 1);
+    return operation_check(operator, value, wantedValue);
+}
+
+static struct Object *cur_obj_find_nearest_object_with_behavior_and_func(const BehaviorScript *behavior, f32 *dist, s32 fieldOrBparamToCheck, s32 objFieldType, f32 wantedValue, s32 operator, s32 (*func)(struct Object *, s32, s32, f32, f32)){
     uintptr_t *behaviorAddr = segmented_to_virtual(behavior);
     struct ObjectNode *listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
     struct Object *obj = (struct Object *) listHead->next;
@@ -609,6 +673,7 @@ struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript *b
         if (obj->behavior == behaviorAddr
             && obj->activeFlags != ACTIVE_FLAG_DEACTIVATED
             && obj != o
+            && func(obj, fieldOrBparamToCheck, objFieldType, wantedValue, operator)
         ) {
             f32 objDist = dist_between_objects(o, obj);
             if (objDist < minDist) {
@@ -624,84 +689,17 @@ struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript *b
     return closestObj;
 }
 
-//Drahnokks functions and enums - START
-
-#define EQUALS(value1, value2) value1 == value2
-#define GREATER(value1, value2) value1 > value2
-#define GREATER_EQUALS(value1, value2) value1 >= value2
-#define LOWER_EQUALS(value1, value2) value1 <= value2
-#define LOWER(value1, value2) value1 < value2
-
-enum LogicOperator {
-    EQUAL,
-    GREATER,
-    GREATER_EQUALS,
-    LOWER_EQUALS,
-    LOWER
-};
-
-static s32 operation_check(s32 operator, f32 value, f32 wantedValue){
-    switch (operator) {
-        case EQUAL:
-            return EQUALS(value, wantedValue);
-            break;
-
-        case GREATER:
-            return GREATER(value, wantedValue);
-            break;
-        
-        case GREATER_EQUALS:
-            return GREATER_EQUALS(value, wantedValue);
-            break;
-
-        case LOWER_EQUALS:
-            return LOWER_EQUALS(value, wantedValue);
-            break;
-        
-        case LOWER:
-            return LOWER(value, wantedValue);
-            break;
-        
-        default:
-            return FALSE;
-            break;
-    }
+//use by the vanilla cur_obj_find_nearest_object_with_behavior to respect the method signature
+static s32 alwaysTrue(struct Object *unused1, s32 unused2, s32 unused3, f32 unused4, s32 unused5){
+    return TRUE;
 }
 
-enum ObjectFieldType {
-    U32,
-    S32,
-    S16,
-    F32
-};
-
-static s32 obj_field_condition_check(struct Object *obj, s32 index, s32 objFieldType, f32 wantedValue, s32 operator){
-    f32 value;
-    switch (objFieldType) {
-        case U32:
-            value = obj->rawData.asU32[index];
-            break;
-
-        case S32:
-            value = obj->rawData.asS32[index];
-            break;
-
-        case S16:
-            value = (int)(obj->rawData.asS16[index]);
-            break;
-
-        case F32:
-            value = obj->rawData.asF32[index];
-            break;
-        
-        default:
-            return FALSE;
-            break;
-    }
-
-    return operation_check(operator, value, wantedValue);
+//vanilla find with behavior
+struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript *behavior, f32 *dist) {
+    return cur_obj_find_nearest_object_with_behavior_and_func(behavior, dist, 0, 0, 0, 0, alwaysTrue);
 }
 
+//set of find with behavior and an objectField condition
 
 struct Object *cur_obj_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator) {
     f32 dist;
@@ -715,35 +713,30 @@ f32 cur_obj_dist_to_nearest_object_with_behavior_and_condition(const BehaviorScr
     return dist;
 }
 
-
 struct Object *cur_obj_find_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, f32 *dist, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator) {
-    uintptr_t *behaviorAddr = segmented_to_virtual(behavior);
-    struct ObjectNode *listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
-    struct Object *obj = (struct Object *) listHead->next;
-    struct Object *closestObj = NULL;
-    f32 minDist = 0x20000;
-
-    while (obj != (struct Object *) listHead) {
-        if (obj->behavior == behaviorAddr
-            && obj->activeFlags != ACTIVE_FLAG_DEACTIVATED
-            && obj != o
-            && obj_field_condition_check(obj, fieldToCheck, objFieldType, wantedValue, operator)
-        ) {
-            f32 objDist = dist_between_objects(o, obj);
-            if (objDist < minDist) {
-                closestObj = obj;
-                minDist = objDist;
-            }
-        }
-
-        obj = (struct Object *) obj->header.next;
-    }
-
-    *dist = minDist;
-    return closestObj;
+    return cur_obj_find_nearest_object_with_behavior_and_func(behavior, dist, fieldToCheck, objFieldType, wantedValue, operator, obj_field_condition_check);
 }
 
-//Drahnokks functions and enums - END
+//set of find with behavior and a Bparam condition
+
+struct Object *cur_obj_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, u8 bparamToCheck,  f32 wantedValue, s32 operator){
+    f32 dist;
+    struct Object *o;
+    return cur_obj_find_nearest_object_with_behavior_and_bparam(behavior, &dist, bparamToCheck, wantedValue, operator);
+}
+
+f32 cur_obj_dist_to_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, u8 bparamToCheck,  f32 wantedValue, s32 operator){
+    f32 dist;
+    if (cur_obj_find_nearest_object_with_behavior_and_bparam(behavior, &dist, bparamToCheck, wantedValue, operator) == NULL) dist = 15000.0f;
+    return dist;
+}
+
+struct Object *cur_obj_find_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, f32 *dist, u8 bparamToCheck,  f32 wantedValue, s32 operator){
+    return cur_obj_find_nearest_object_with_behavior_and_func(behavior, dist, bparamToCheck, 0, wantedValue, operator, obj_bparam_ckeck);
+}
+
+
+//Drahnokks functions and enums - END ----------------------------------------------------------------------------------------------------------------------
 
 struct Object *find_unimportant_object(void) {
     struct ObjectNode *listHead = &gObjectLists[OBJ_LIST_UNIMPORTANT];

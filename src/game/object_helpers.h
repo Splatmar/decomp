@@ -117,9 +117,33 @@ struct Object *cur_obj_nearest_object_with_behavior(const BehaviorScript *behavi
 f32 cur_obj_dist_to_nearest_object_with_behavior(const BehaviorScript* behavior);
 struct Object *cur_obj_find_nearest_object_with_behavior(const BehaviorScript * behavior, f32 *dist);
 //new
+
+#define TYPE_U32 0
+#define TYPE_S32 1
+#define TYPE_S16 2
+#define TYPE_F32 3
+
+#define OPERATOR_EQUAL           0
+#define OPERATOR_GREATER         1
+#define OPERATOR_GREATER_EQUALS  2
+#define OPERATOR_LOWER_EQUALS    3
+#define OPERATOR_LOWER           4
+
+#define EQUALS(value1, value2) value1 == value2
+#define GREATER(value1, value2) value1 > value2
+#define GREATER_EQUALS(value1, value2) value1 >= value2
+#define LOWER_EQUALS(value1, value2) value1 <= value2
+#define LOWER(value1, value2) value1 < value2
+
+
+
 struct Object *cur_obj_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator);
 f32 cur_obj_dist_to_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator);
 struct Object *cur_obj_find_nearest_object_with_behavior_and_condition(const BehaviorScript *behavior, f32 *dist, s32 fieldToCheck, s32 objFieldType, f32 wantedValue, s32 operator);
+
+struct Object *cur_obj_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, u8 bparamToCheck,  f32 wantedValue, s32 operator);
+f32 cur_obj_dist_to_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, u8 bparamToCheck,  f32 wantedValue, s32 operator);
+struct Object *cur_obj_find_nearest_object_with_behavior_and_bparam(const BehaviorScript *behavior, f32 *dist, u8 bparamToCheck,  f32 wantedValue, s32 operator);
 //
 struct Object *find_unimportant_object(void);
 s32 count_unimportant_objects(void);
