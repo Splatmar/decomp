@@ -861,4 +861,3 @@ s16 object_simple_step(struct Object *obj) {
 #include "behaviors/treasure_chest.inc.c"
 #include "behaviors/mips.inc.c"
 #include "behaviors/yoshi.inc.c"
-#include "behaviors/small_jumping_chain_chomp.inc.c"
