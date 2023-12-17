@@ -125,6 +125,7 @@ void bhv_spawn_star_no_level_exit(u32 params) {
 void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit) {
     struct Object *starObj = spawn_object(obj, MODEL_STAR, bhvSpawnedStarNoLevelExit);
     SET_BPARAM1(starObj->oBehParams, starId);
+    SET_BPARAM2(starObj->oBehParams, SPAWN_STAR_POS_CUTSCENE_BP_SPAWN_AT_HOME);
     if(exit == TRUE){
         starObj->oInteractionSubtype = INT_SUBTYPE_NO_EXIT;
     }
