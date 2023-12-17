@@ -13,8 +13,16 @@ struct ObjectHitbox sSparkleSpawnStarHitbox = {
 };
 
 void bhv_spawned_star_init(void) {
+    //commented that cause I don't know the purpose of it
+
+    //possible explanation : the condition is true if the star make you out of the level, 
+    //so IF the star let you in the level (e.g : bowser course redcoins star), 
+    //it doesn't need the get the parent Bparam1 since these kind of star are always star 0
+    //So in opposite case (all normal level star) it copy not only first Bparams but ALL
+    //Since I don't want to erase my parametize Bparam2 I cahnge the code.
     if (!(o->oInteractionSubtype & INT_SUBTYPE_NO_EXIT)) {
-        o->oBehParams = o->parentObj->oBehParams;
+        //o->oBehParams = o->parentObj->oBehParams;
+        SET_BPARAM1(o->oBehParams, GET_BPARAM1(o->parentObj->oBehParams));
     }
     u8 param = GET_BPARAM1(o->oBehParams);
 #ifdef GLOBAL_STAR_IDS
@@ -121,7 +129,7 @@ void bhv_spawn_star_no_level_exit(u32 params) {
     bhv_spawn_star_at_object(params, o, TRUE);
 }
 
-//Drahnokks function, enable to spawn a star above any wanted object nad decide if it exit the level
+//Drahnokks function, enable to spawn a star above any wanted object and decide if it exit the level
 void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit) {
     struct Object *starObj = spawn_object(obj, MODEL_STAR, bhvSpawnedStar);
     SET_BPARAM1(starObj->oBehParams, starId);
