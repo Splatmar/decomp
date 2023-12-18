@@ -630,6 +630,22 @@ u32 save_file_get_star_flags(s32 fileIndex, s32 courseIndex) {
 }
 #endif
 
+//Drahnokks add
+/**
+ * Return the number of star catched in a specific level
+ */
+u8 save_file_get_star_catch_in_level(s32 courseIndex){
+    u8 levelIstarFLag = save_file_get_star_flags(gCurrSaveFileNum - 1, courseIndex);
+    u8 numberOfStarGet = 0;
+
+    while (levelIstarFLag) {
+        numberOfStarGet += levelIstarFLag & 1;
+        levelIstarFLag >>= 1;
+    }
+
+    return numberOfStarGet;
+}
+
 /**
  * Add to the bitset of obtained stars in the specified course.
  * If course is COURSE_NONE, add to the bitset of obtained castle secret stars.
