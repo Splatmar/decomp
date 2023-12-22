@@ -134,7 +134,7 @@ void bhv_spawn_star_no_level_exit(u32 params) {
  * 
  * @param starId the id of the star
  * @param obj the object spawning the star
- * @param exit TRUE or FALSE, TRUE if the star get MArio out of the level
+ * @param exit TRUE or FALSE, TRUE if the star get Mario out of the level
  * @param booleanSpawnAtHome TRUE or FALSE, TRUE if the star stay at his spawn point, FALSE to get above Mario
  */
 void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit, u8 booleanSpawnAtHome) {
