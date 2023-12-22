@@ -126,13 +126,21 @@ void bhv_spawned_star_loop(void) {
 }
 
 void bhv_spawn_star_no_level_exit(u32 params) {
-    bhv_spawn_star_at_object(params, o, TRUE);
+    bhv_spawn_star_at_object(params, o, TRUE, FALSE);
 }
 
-//Drahnokks function, enable to spawn a star above any wanted object and decide if it exit the level
-void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit) {
-    struct Object *starObj = spawn_object(obj, MODEL_STAR, bhvSpawnedStar);
+/**
+ * @brief Drahnokks function, enable to spawn a star above any wanted object and decide if it exit the level
+ * 
+ * @param starId the id of the star
+ * @param obj the object spawning the star
+ * @param exit TRUE or FALSE, TRUE if the star get MArio out of the level
+ * @param booleanSpawnAtHome TRUE or FALSE, TRUE if the star stay at his spawn point, FALSE to get above Mario
+ */
+void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit, u8 booleanSpawnAtHome) {
+    struct Object *starObj = spawn_object(obj, MODEL_STAR, bhvSpawnedStarNoLevelExit);
     SET_BPARAM1(starObj->oBehParams, starId);
+    SET_BPARAM2(starObj->oBehParams, booleanSpawnAtHome);
     if(exit != TRUE){
         starObj->oInteractionSubtype = INT_SUBTYPE_NO_EXIT;
     }
