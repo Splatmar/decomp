@@ -126,7 +126,7 @@ void bhv_spawned_star_loop(void) {
 }
 
 void bhv_spawn_star_no_level_exit(u32 params) {
-    bhv_spawn_star_at_object(params, o, TRUE, FALSE);
+    bhv_spawn_star_at_object(params, o, FALSE, FALSE);
 }
 
 /**
@@ -137,10 +137,13 @@ void bhv_spawn_star_no_level_exit(u32 params) {
  * @param exit TRUE or FALSE, TRUE if the star get Mario out of the level
  * @param booleanSpawnAtHome TRUE or FALSE, TRUE if the star stay at his spawn point, FALSE to get above Mario
  */
-void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit, u8 booleanSpawnAtHome) {
-    struct Object *starObj = spawn_object(obj, MODEL_STAR, bhvSpawnedStarNoLevelExit);
+void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit, s32 booleanSpawnAtHome) {
+    BehaviorScript *starBehavior = bhvSpawnedStarNoLevelExit;
+    if(booleanSpawnAtHome){
+        starBehavior = bhvSpawnedStar;
+    }
+    struct Object *starObj = spawn_object(obj, MODEL_STAR, starBehavior);
     SET_BPARAM1(starObj->oBehParams, starId);
-    SET_BPARAM2(starObj->oBehParams, booleanSpawnAtHome);
     if(exit != TRUE){
         starObj->oInteractionSubtype = INT_SUBTYPE_NO_EXIT;
     }
