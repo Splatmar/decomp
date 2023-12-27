@@ -27,13 +27,13 @@ struct ExclamationBoxContents sExclamationBoxContents[] = {
     [EXCLAMATION_BOX_BP_COINS_3         ] = { MODEL_NONE,             bhvThreeCoinsSpawn,       0 },
     [EXCLAMATION_BOX_BP_COINS_10        ] = { MODEL_NONE,             bhvTenCoinsSpawn,         0 },
     [EXCLAMATION_BOX_BP_1UP_WALKING     ] = { MODEL_1UP,              bhv1upWalking,            0 },
-    [EXCLAMATION_BOX_BP_STAR_1          ] = { MODEL_STAR,             bhvSpawnedStar,           0 },
+    [EXCLAMATION_BOX_BP_STAR_1          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           0 },
     [EXCLAMATION_BOX_BP_1UP_RUNNING_AWAY] = { MODEL_1UP,              bhv1upRunningAway,        0 },
-    [EXCLAMATION_BOX_BP_STAR_2          ] = { MODEL_STAR,             bhvSpawnedStar,           1 },
-    [EXCLAMATION_BOX_BP_STAR_3          ] = { MODEL_STAR,             bhvSpawnedStar,           2 },
-    [EXCLAMATION_BOX_BP_STAR_4          ] = { MODEL_STAR,             bhvSpawnedStar,           3 },
-    [EXCLAMATION_BOX_BP_STAR_5          ] = { MODEL_STAR,             bhvSpawnedStar,           4 },
-    [EXCLAMATION_BOX_BP_STAR_6          ] = { MODEL_STAR,             bhvSpawnedStar,           5 },
+    [EXCLAMATION_BOX_BP_STAR_2          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           1 },
+    [EXCLAMATION_BOX_BP_STAR_3          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           2 },
+    [EXCLAMATION_BOX_BP_STAR_4          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           3 },
+    [EXCLAMATION_BOX_BP_STAR_5          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           4 },
+    [EXCLAMATION_BOX_BP_STAR_6          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           5 },
 };
 
 void bhv_rotating_exclamation_mark_loop(void) {

@@ -903,14 +903,14 @@ const BehaviorScript bhvWhitePuffExplosion[] = {
     END_LOOP(),
 };
 
-const BehaviorScript bhvSpawnedStar[] = {
+const BehaviorScript bhvSpawnedStarAtHome[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     SET_INT(oBehParams2ndByte, SPAWN_STAR_POS_CUTSCENE_BP_SPAWN_AT_HOME),
-    GOTO(bhvSpawnedStarNoLevelExit + 1 + 1),
+    GOTO(bhvSpawnedStarAtMario + 1 + 1),
 };
 
-const BehaviorScript bhvSpawnedStarNoLevelExit[] = {
+const BehaviorScript bhvSpawnedStarAtMario[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     // Spawned star - common:

@@ -138,9 +138,9 @@ void bhv_spawn_star_no_level_exit(u32 params) {
  * @param booleanSpawnAtHome TRUE or FALSE, TRUE if the star stay at his spawn point, FALSE to get above Mario
  */
 void bhv_spawn_star_at_object(u32 starId, struct Object *obj, s32 exit, s32 booleanSpawnAtHome) {
-    BehaviorScript *starBehavior = bhvSpawnedStarNoLevelExit;
+    BehaviorScript *starBehavior = bhvSpawnedStarAtMario;
     if(booleanSpawnAtHome){
-        starBehavior = bhvSpawnedStar;
+        starBehavior = bhvSpawnedStarAtHome;
     }
     struct Object *starObj = spawn_object(obj, MODEL_STAR, starBehavior);
     SET_BPARAM1(starObj->oBehParams, starId);
