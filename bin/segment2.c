@@ -2000,6 +2000,10 @@ ALIGNED8 static const Texture texture_font_char_hashtag[] = {
 #include "textures/segment2/hashtag.ia4.inc.c"
 };
 
+ALIGNED8 static const Texture texture_font_char_us_semicolon[] = {
+#include "textures/segment2/semicolon.ia4.inc.c"
+};
+
 //Drahnokks edit END
 
 ALIGNED8 static const Texture texture_font_char_us_button_C_up[] = {
@@ -2277,7 +2281,9 @@ const Texture *const main_font_lut[] = {
     texture_font_char_us_button_C,
     texture_font_char_us_button_Z,
     texture_font_char_us_button_R,   
-    texture_font_char_us_button_L,   0x0,               0x0,
+    texture_font_char_us_button_L,   
+    texture_font_char_us_semicolon,  
+                  0x0,
                   0x0,               0x0,               0x0,               0x0,
     // à â ä á À Â Ä Á
     texture_font_char_a_grave_min, 
@@ -2351,21 +2357,21 @@ const Texture *const main_font_lut[] = {
                   0x0,               0x0,               0x0,               0x0,
                   0x0,               0x0,               0x0,               0x0,
                   0x0,               0x0,               0x0,               0x0,
-                  0x0, // [%] display a '0' idk  
+                  0x0,                           // [%] display a '0' idk  
     texture_font_char_us_open_parentheses,       // (
     texture_font_char_us_close_open_parentheses, // )(
     texture_font_char_us_close_parentheses,      // )
     texture_font_char_us_left_right_arrow,       // ↔
-    texture_font_char_us_ampersand, // &
-    texture_font_char_us_ellipsis,  // :
-    texture_font_char_slash,     // / use µ/          
-    texture_font_char_backslash, // \ use ¤/              
-    texture_font_char_at, // @              
-    texture_font_char_hashtag, // #
+    texture_font_char_us_ampersand,              // &
+    texture_font_char_us_ellipsis,               // :
+    texture_font_char_slash,                     // / use µ/          
+    texture_font_char_backslash,                 // \ use ¤/              
+    texture_font_char_at,                        // @              
+    texture_font_char_hashtag,  // #
     texture_font_char_degree,   // ° NOTE: I changed ゜to ° (degree sign), charmap.txt now interpret ° insteed of ゜and move it to 0xEB (initially at 0xF1)     
     texture_font_char_eszett,   // ß
-    texture_font_char_c_cedile_maj, // Ç
-    texture_font_char_c_cedile_min, // ç
+    texture_font_char_c_cedile_maj,     // Ç
+    texture_font_char_c_cedile_min,     // ç
     texture_font_char_double_low_quote, // „  NOTE: originally „ char ID is 0xF0, but it doesn't work with this ID, so I move it to 0xEF in charmap.txt, now it works           
                   0x0,                  // ID 0xF0 DON'T USE (japanese characters thing)
                   0x0,                  // ID 0xF1 DON'T USE (japanese characters thing)
@@ -2374,14 +2380,14 @@ const Texture *const main_font_lut[] = {
     texture_font_char_us_question,      // ?
     texture_font_char_us_double_quote_open,  // " use 『
     texture_font_char_us_double_quote_close, // " use 』
-    texture_font_char_us_tilde,       // ~
-    texture_font_char_triple_period,  // …
-    texture_font_char_us_coin,        // $
-    texture_font_char_us_star_filled, // ★
-    texture_font_char_us_multiply,    // ×
-    texture_font_char_us_interpunct,  // ・
-    texture_font_char_us_star_hollow, // ☆
-                  0x0,               0x0,
+    texture_font_char_us_tilde,              // ~
+    texture_font_char_triple_period,         // …
+    texture_font_char_us_coin,               // $
+    texture_font_char_us_star_filled,        // ★
+    texture_font_char_us_multiply,           // ×
+    texture_font_char_us_interpunct,         // ・
+    texture_font_char_us_star_hollow,        // ☆
+                  0x0,               0x0,    // \n end
 #elif defined(VERSION_JP) || defined(VERSION_SH)
     texture_font_char_jp_0, texture_font_char_jp_1, texture_font_char_jp_2, texture_font_char_jp_3,
     texture_font_char_jp_4, texture_font_char_jp_5, texture_font_char_jp_6, texture_font_char_jp_7,
