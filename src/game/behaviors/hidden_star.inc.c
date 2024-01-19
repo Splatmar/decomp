@@ -21,7 +21,7 @@ void bhv_hidden_star_loop(void) {
 
         case 1:
             if (o->oTimer > 2) {
-                spawn_red_coin_cutscene_star(o->oPosX, o->oPosY, o->oPosZ);
+                spawn_hidden_star(o->oPosX, o->oPosY, o->oPosZ);
                 spawn_mist_particles();
                 o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
             }
@@ -44,37 +44,5 @@ void bhv_hidden_star_trigger_loop(void) {
         }
 
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
-    }
-}
-
-void bhv_bowser_course_red_coin_star_init(void) {
-    if (o->oBehParams2ndByte != 0) {
-        o->oHiddenStarTriggerTotal = o->oBehParams2ndByte;
-        o->oHiddenStarTriggerCounter = gRedCoinsCollected;
-    }
-    else {
-        s16 numRedCoinsRemaining = count_objects_with_behavior(bhvRedCoin);
-        o->oHiddenStarTriggerTotal = numRedCoinsRemaining + gRedCoinsCollected;
-        o->oHiddenStarTriggerCounter = o->oHiddenStarTriggerTotal - numRedCoinsRemaining;
-    }
-}
-
-void bhv_bowser_course_red_coin_star_loop(void) {
-    gRedCoinsCollected = o->oHiddenStarTriggerCounter;
-
-    switch (o->oAction) {
-        case 0:
-            if (o->oHiddenStarTriggerCounter == o->oHiddenStarTriggerTotal) {
-                o->oAction = 1;
-            }
-            break;
-
-        case 1:
-            if (o->oTimer > 2) {
-                spawn_no_exit_star(o->oPosX, o->oPosY, o->oPosZ);
-                spawn_mist_particles();
-                o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
-            }
-            break;
     }
 }

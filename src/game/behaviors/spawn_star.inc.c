@@ -131,23 +131,35 @@ struct Object *spawn_star(struct Object *starObj, f32 x, f32 y, f32 z) {
     return starObj;
 }
 
+//Drahnokks edit
+//I optimized the spawn_X_star function, before there was 3 way to do :
+// - spaw_default_star              -> set coordinate, camera follow the star during the arc movement to home but DON'T zoom on it, exit the level
+// - spawn_red_coin_cutscene_star   -> set coordinate, camera "follow" but always used with o->oPosVec, so it always just bounce on place THEN zoom on it, exit the level
+// - spawn_no_exit_star             -> set coordinate, camera "follow" but always used with o->oPosVec, so it always just bounce on place THEN zoom on it, don't exit the level
+// 
+// It was impossible to zoom on a not-hidden star (like stars from bosses), and the only difference between the last 2 was the "exiting level" case.
+// So I bring to you spawn_star_cutscene where you can parametize if the star exit the level and which zoom policy to apply.
+
+// I also redirect the spawn_default_star to the new one to avoid edit each occurence of it.
+// and spawn_hidden_star so you dont have to remember the SPAWN_STAR_ARC_CUTSCENE_BP_DEFAULT_STAR & SPAWN_STAR_ARC_CUTSCENE_BP_HIDDEN_STAR #define is you want the star to exit the level
+//
+// linked with that, now the bhvBowserCourseRedCoinStar behavior redirect to bhvHiddenRedCoinStar who get new checks to handle old bhvBowserCourseRedCoinStar comportments (no marker and no exit)
+
 void spawn_default_star(f32 x, f32 y, f32 z) {
-    struct Object *starObj = NULL;
-    starObj = spawn_star(starObj, x, y, z);
-    starObj->oBehParams2ndByte = SPAWN_STAR_ARC_CUTSCENE_BP_DEFAULT_STAR;
+    spawn_star_cutscene(x, y, z, TRUE, SPAWN_STAR_ARC_CUTSCENE_BP_DEFAULT_STAR);
 }
 
-void spawn_red_coin_cutscene_star(f32 x, f32 y, f32 z) {
-    struct Object *starObj = NULL;
-    starObj = spawn_star(starObj, x, y, z);
-    starObj->oBehParams2ndByte = SPAWN_STAR_ARC_CUTSCENE_BP_HIDDEN_STAR;
+void spawn_hidden_star(f32 x, f32 y, f32 z) {
+    spawn_star_cutscene(x, y, z, TRUE, SPAWN_STAR_ARC_CUTSCENE_BP_HIDDEN_STAR);
 }
 
-void spawn_no_exit_star(f32 x, f32 y, f32 z) {
+void spawn_star_cutscene(f32 x, f32 y, f32 z, s32 exitLevel, s32 cutsceneStarType) {
     struct Object *starObj = NULL;
     starObj = spawn_star(starObj, x, y, z);
-    starObj->oBehParams2ndByte = SPAWN_STAR_ARC_CUTSCENE_BP_HIDDEN_STAR;
-    starObj->oInteractionSubtype |= INT_SUBTYPE_NO_EXIT;
+    starObj->oBehParams2ndByte = cutsceneStarType;
+    if(exitLevel != TRUE){
+        starObj->oInteractionSubtype |= INT_SUBTYPE_NO_EXIT;
+    }
 }
 
 void bhv_hidden_red_coin_star_init(void) {
@@ -158,7 +170,9 @@ void bhv_hidden_red_coin_star_init(void) {
         spawn_object(o, MODEL_TRANSPARENT_STAR, bhvRedCoinStarMarker);
     }
 #else
-    spawn_object(o, MODEL_TRANSPARENT_STAR, bhvRedCoinStarMarker);
+    if(!cur_obj_has_behavior(bhvBowserCourseRedCoinStar)){
+        spawn_object(o, MODEL_TRANSPARENT_STAR, bhvRedCoinStarMarker);
+    }
 #endif
 
     // check if bparam2 specifies a total number of coins that should spawn the star
@@ -196,7 +210,8 @@ void bhv_hidden_red_coin_star_loop(void) {
 
         case HIDDEN_STAR_ACT_ACTIVE:
             if (o->oTimer > 2) {
-                spawn_red_coin_cutscene_star(o->oPosX, o->oPosY, o->oPosZ);
+                s32 exitLevel = !cur_obj_has_behavior(bhvBowserCourseRedCoinStar);
+                spawn_star_cutscene(o->oPosX, o->oPosY, o->oPosZ, exitLevel, SPAWN_STAR_ARC_CUTSCENE_BP_HIDDEN_STAR);
                 spawn_mist_particles();
                 o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
             }

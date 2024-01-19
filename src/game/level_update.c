@@ -1003,7 +1003,6 @@ void basic_update(void) {
 
 #ifdef TEXT_BOX_DEBUG
     extern u8 textBoxId;
-    extern struct Controller* const gPlayer1Controller;
     #include "dialog_ids.h"
 #endif
 

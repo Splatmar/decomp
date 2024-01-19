@@ -171,5 +171,7 @@ void bhv_free_bowling_ball_loop(void); /* likely unused */
 void bhv_rr_cruiser_wing_init(void);
 void bhv_rr_cruiser_wing_loop(void);
 void spawn_default_star(f32 x, f32 y, f32 z);
+void spawn_hidden_star(f32 x, f32 y, f32 z);
+void spawn_star_cutscene(f32 x, f32 y, f32 z, s32 exitLevel, s32 cutsceneStarType);
 
 #endif // OBJ_BEHAVIORS_H
