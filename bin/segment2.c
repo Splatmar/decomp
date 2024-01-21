@@ -2004,6 +2004,10 @@ ALIGNED8 static const Texture texture_font_char_us_semicolon[] = {
 #include "textures/segment2/semicolon.ia4.inc.c"
 };
 
+ALIGNED8 static const Texture texture_font_char_us_circonflexe[] = {
+#include "textures/segment2/circonflexe.ia4.inc.c"
+};
+
 //Drahnokks edit END
 
 ALIGNED8 static const Texture texture_font_char_us_button_C_up[] = {
@@ -2059,6 +2063,10 @@ ALIGNED8 static const Texture texture_font_char_c_cedile_min[] = {
 
 ALIGNED8 static const Texture texture_font_char_i_circonflexe_min[] = {
 #include "textures/segment2/i_circonflexe_min.ia4.inc.c"
+};
+
+ALIGNED8 static const Texture texture_font_char_i_circonflexe_maj[] = {
+#include "textures/segment2/i_circonflexe_maj.ia4.inc.c"
 };
 
 ALIGNED8 static const Texture texture_font_char_i_umlaut_min[] = {
@@ -2282,9 +2290,12 @@ const Texture *const main_font_lut[] = {
     texture_font_char_us_button_Z,
     texture_font_char_us_button_R,   
     texture_font_char_us_button_L,   
-    texture_font_char_us_semicolon,  
+    texture_font_char_us_semicolon, // ; 
+    texture_font_char_us_circonflexe, // ^
+                  0x0,               
+                  0x0,               
+                  0x0,               
                   0x0,
-                  0x0,               0x0,               0x0,               0x0,
     // à â ä á À Â Ä Á
     texture_font_char_a_grave_min, 
     texture_font_char_a_circonflexe_min,
@@ -2339,7 +2350,7 @@ const Texture *const main_font_lut[] = {
     texture_font_char_i_umlaut_min,
     0x0,
     0x0,
-    0x0,
+    texture_font_char_i_circonflexe_maj,
     0x0,
     0x0,
     // ??
