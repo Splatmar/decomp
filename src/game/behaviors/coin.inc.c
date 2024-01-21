@@ -180,34 +180,125 @@ void bhv_coin_formation_spawned_coin_loop(void) {
     }
 }
 
+//----------------------Drahnokks Better Coin Formation----------------------//
+
+static f32 sCoinFormationDefaultOffset[] = {160, 0, 300.0f, 200.0f};
+
+static f32 sNumberOfCoinInDefaultFormation[] = {
+    5,  // COIN_FORMATION_BP_SHAPE_HORIZONTAL_LINE
+    5,  // COIN_FORMATION_BP_SHAPE_VERTICAL_LINE
+    8,  // COIN_FORMATION_BP_SHAPE_HORIZONTAL_RING
+    8,  // COIN_FORMATION_BP_SHAPE_VERTICAL_RING
+    8,  // COIN_FORMATION_BP_SHAPE_ARROW
+    8,  // COIN_FORMATION_BP_SHAPE_ARROW_VERTICAL
+};
+
+static s32 sNumberOfCoinInCustomShape[8] = {
+    10, // CUSTOM SHAPE 0
+    8, // CUSTOM SHAPE 1
+    8, // CUSTOM SHAPE 2
+    8, // CUSTOM SHAPE 3
+    8, // CUSTOM SHAPE 4
+    8, // CUSTOM SHAPE 5
+    8, // CUSTOM SHAPE 6
+    8, // CUSTOM SHAPE 7
+};
+
+/**
+ * Table of position for each coin of the formation.
+ * sCoinCustomShapePositionsTemplate[a][2] -> a = number of coin in the formation.
+ * Don't forget to change the sNumberOfCoinInCustomShape table to match the number
+ * 
+ * copy this template to create your own shape and put it in 
+ * the sCustomCoinFormationShapes table (remplace one of the template line)
+ */
+s16 sCoinCustomShapePositionsTemplate[][2] = {
+    { 0, -150 },
+//  { x, z },
+//  ...
+};
+
+s16 sCoinCustomShapePositionsStar[10][2] = {
+    { 0, 300 },
+    { 100, 100 },
+    { 300, 50 },
+    { 150, -100 },
+    { 200, -300 },
+    { 0, -200 },
+    { -200, -300 },
+    { -150, -100 },
+    { -300, 50 },
+    { -100, 100 },
+};
+
+/**
+ * Table of custom shapes for coin formation
+ * 
+ * Only 8 custom shapes are possible since the id is store on 3 bits
+ */
+s16 (*sCustomCoinFormationShapes[8])[][2] = {
+    &sCoinCustomShapePositionsStar,     // CUSTOM SHAPE 0
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 1
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 2
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 3
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 4
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 5
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 6
+    &sCoinCustomShapePositionsTemplate, // CUSTOM SHAPE 7
+};
+
 void spawn_coin_in_formation(s32 index, s32 shape) {
     Vec3i pos = { 0, 0, 0 };
     s32 spawnCoin    = TRUE;
     s32 snapToGround = TRUE;
 
-    switch (shape & COIN_FORMATION_BP_SHAPE_MASK) {
-        case COIN_FORMATION_BP_SHAPE_HORIZONTAL_LINE:
-            pos[2] = 160 * (index - 2);
-            if (index > 4) spawnCoin = FALSE;
-            break;
-        case COIN_FORMATION_BP_SHAPE_VERTICAL_LINE:
-            snapToGround = FALSE;
-            pos[1] = index << 7;
-            if (index > 4) spawnCoin = FALSE;
-            break;
-        case COIN_FORMATION_BP_SHAPE_HORIZONTAL_RING:
-            pos[0] = sins(index << 13) * 300.0f;
-            pos[2] = coss(index << 13) * 300.0f;
-            break;
-        case COIN_FORMATION_BP_SHAPE_VERTICAL_RING:
-            snapToGround = FALSE;
-            pos[0] = coss(index << 13) * 200.0f;
-            pos[1] = sins(index << 13) * 200.0f + 200.0f;
-            break;
-        case COIN_FORMATION_BP_SHAPE_ARROW:
-            pos[0] = sCoinArrowPositions[index][0];
-            pos[2] = sCoinArrowPositions[index][1];
-            break;
+    s32 shapeID = shape & COIN_FORMATION_BP_SHAPE_MASK;
+    s32 isShapeCustom = shape & COIN_FORMATION_FLAG_CUSTOM_SHAPE;
+    s32 numberOfCoin = isShapeCustom ? sNumberOfCoinInCustomShape[shapeID] : sNumberOfCoinInDefaultFormation[shapeID];
+
+    f32 offset1 = sCoinFormationDefaultOffset[shapeID];
+    f32 offset2 = offset1;
+
+    if(index >= numberOfCoin){
+        return;
+    }
+
+    if(shape & COIN_FORMATION_FLAG_CUSTOM_OFFSET){
+        offset1 = GET_BPARAM1(o->oBehParams) * 10.0f;
+        offset2 = GET_BPARAM4(o->oBehParams) * 10.0f;
+    }
+    
+    if(isShapeCustom){  // use a custom shape
+        pos[0] = (*sCustomCoinFormationShapes[shapeID])[index][0];
+        pos[2] = (*sCustomCoinFormationShapes[shapeID])[index][1];
+    } else {            // use default ones
+        switch (shapeID) {
+            case COIN_FORMATION_BP_SHAPE_HORIZONTAL_LINE:
+                pos[2] = offset1 * (index - 2);
+                break;
+            case COIN_FORMATION_BP_SHAPE_VERTICAL_LINE:
+                snapToGround = FALSE;
+                pos[1] = index << 7;
+                break;
+            case COIN_FORMATION_BP_SHAPE_HORIZONTAL_RING:
+                pos[0] = sins(index << 13) * offset1;
+                pos[2] = coss(index << 13) * offset2;
+                break;
+            case COIN_FORMATION_BP_SHAPE_VERTICAL_RING:
+                snapToGround = FALSE;
+                pos[0] = coss(index << 13) * offset1;
+                pos[1] = sins(index << 13) * offset2 + offset2;
+                break;
+            case COIN_FORMATION_BP_SHAPE_ARROW:
+                pos[0] = sCoinArrowPositions[index][0];
+                pos[2] = sCoinArrowPositions[index][1];
+                break;
+            case COIN_FORMATION_BP_SHAPE_ARROW_VERTICAL:
+                snapToGround = FALSE;
+                pos[0] = sCoinArrowPositions[index][0];
+                pos[1] = sCoinArrowPositions[index][1];
+                break;
+        }
     }
 
     if (shape & COIN_FORMATION_BP_FLYING) {
@@ -215,12 +306,12 @@ void spawn_coin_in_formation(s32 index, s32 shape) {
     }
 
     if (spawnCoin) {
-        struct Object *newCoin =
-            spawn_object_relative(index, pos[0], pos[1], pos[2], o,
-                                  MODEL_YELLOW_COIN, bhvCoinFormationSpawnedCoin);
+        struct Object *newCoin = spawn_object_relative(index, pos[0], pos[1], pos[2], o, MODEL_YELLOW_COIN, bhvCoinFormationSpawnedCoin);
         newCoin->oCoinSnapToGround = snapToGround;
     }
 }
+
+//------------------------------------END------------------------------------//
 
 void bhv_coin_formation_init(void) {
     o->oCoinRespawnBits = GET_BPARAM3(o->oBehParams);
@@ -232,7 +323,7 @@ void bhv_coin_formation_loop(void) {
     switch (o->oAction) {
         case COIN_FORMATION_ACT_INACTIVE:
             if (o->oDistanceToMario < COIN_FORMATION_DISTANCE) {
-                for (bitIndex = 0; bitIndex < 8; bitIndex++) {
+                for (bitIndex = 0; bitIndex < 16; bitIndex++) { //maxicum coins per formation set to 16
                     if (!(o->oCoinRespawnBits & (1 << bitIndex))) {
                         spawn_coin_in_formation(bitIndex, o->oBehParams2ndByte);
                     }
