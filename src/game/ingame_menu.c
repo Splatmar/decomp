@@ -356,6 +356,16 @@ void render_multi_text_string(s8 multiTextID) {
 #define CHAR_WIDTH_SPACE (f32)(gDialogCharWidths[DIALOG_CHAR_SPACE])
 #define CHAR_WIDTH_DEFAULT (f32)(gDialogCharWidths[str[strPos]])
 
+void render_lowercase_diacritic(u8 c, u8 diacritic) {
+    render_generic_char(c);
+    render_generic_char(diacritic + 0xE7);
+}
+
+void render_uppercase_diacritic(u8 c, u8 diacritic) {
+    render_generic_char(c);
+    render_generic_char(diacritic + 0xE3);
+}
+
 /**
  * Prints a generic white string.
  * In JP/EU a IA1 texture is used but in US a IA4 texture is used.
@@ -517,6 +527,33 @@ void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str) {
     }
 }
 
+static void render_menu_generic_char(s16 curX, s16 curY, void **fontLUT, u8 c,  UNUSED s8 mark) {
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_IA, G_IM_SIZ_8b, 1, fontLUT[c]);
+    gDPLoadSync(gDisplayListHead++);
+    gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 8 * 8 - 1, CALC_DXT(8, G_IM_SIZ_8b_BYTES));
+    gSPTextureRectangle(gDisplayListHead++, curX << 2, curY << 2, (curX + 8) << 2,
+                        (curY + 8) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    if (mark != DIALOG_MARK_NONE) {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_IA, G_IM_SIZ_8b, 1, fontLUT[DIALOG_CHAR_MARK_START + mark]);
+        gDPLoadSync(gDisplayListHead++);
+        gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 8 * 8 - 1, CALC_DXT(8, G_IM_SIZ_8b_BYTES));
+        gSPTextureRectangle(gDisplayListHead++, (curX + 6) << 2, (curY - 7) << 2,
+                            (curX + 6 + 8) << 2, (curY - 7 + 8) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+        mark = DIALOG_MARK_NONE;
+    }
+}
+
+void render_menu_lowercase_diacritic(s16 curX, s16 curY, void **fontLUT, u8 c, u8 diacritic, UNUSED s8 mark) {
+    render_menu_generic_char(curX, curY, fontLUT, c, mark);
+    render_menu_generic_char(curX, curY - 3, fontLUT, diacritic + 0xE7, mark);
+}
+
+void render_menu_uppercase_diacritic(s16 curX, s16 curY, void **fontLUT, u8 c, u8 diacritic, UNUSED s8 mark) {
+    render_menu_generic_char(curX, curY, fontLUT, c, mark);
+    render_menu_generic_char(curX, curY - 3, fontLUT, diacritic + 0xE3, mark);
+}
 
 void print_menu_generic_string(s16 x, s16 y, const u8 *str) {
     UNUSED s8 mark = DIALOG_MARK_NONE; // unused in EU
@@ -527,6 +564,41 @@ void print_menu_generic_string(s16 x, s16 y, const u8 *str) {
 
     while (str[strPos] != DIALOG_CHAR_TERMINATOR) {
         switch (str[strPos]) {
+            case DIALOG_CHAR_UPPER_A_GRAVE:
+            case DIALOG_CHAR_UPPER_A_CIRCUMFLEX:
+            case DIALOG_CHAR_UPPER_A_UMLAUT:
+            case DIALOG_CHAR_UPPER_A_AIGUE:
+                render_menu_uppercase_diacritic(curX, curY, fontLUT, ASCII_TO_DIALOG('A'), str[strPos] & 0xF, mark);
+                curX += gDialogCharWidths[ASCII_TO_DIALOG('A')];
+                break;
+            case DIALOG_CHAR_UPPER_E_GRAVE:
+            case DIALOG_CHAR_UPPER_E_CIRCUMFLEX:
+            case DIALOG_CHAR_UPPER_E_UMLAUT:
+            case DIALOG_CHAR_UPPER_E_ACUTE:
+                render_menu_uppercase_diacritic(curX, curY, fontLUT, ASCII_TO_DIALOG('E'), str[strPos] & 0xF, mark);
+                curX += gDialogCharWidths[ASCII_TO_DIALOG('E')];
+                break;
+            case DIALOG_CHAR_UPPER_I_GRAVE:
+            case DIALOG_CHAR_UPPER_I_CIRCUMFLEX:
+            case DIALOG_CHAR_UPPER_I_UMLAUT:
+            case DIALOG_CHAR_UPPER_I_ACUTE:
+                render_menu_uppercase_diacritic(curX, curY, fontLUT, ASCII_TO_DIALOG('I'), str[strPos] & 0xF, mark);
+                curX += gDialogCharWidths[ASCII_TO_DIALOG('I')];
+                break;
+            case DIALOG_CHAR_UPPER_O_GRAVE:
+            case DIALOG_CHAR_UPPER_O_CIRCUMFLEX:
+            case DIALOG_CHAR_UPPER_O_UMLAUT:
+            case DIALOG_CHAR_UPPER_O_AIGUE:
+                render_menu_uppercase_diacritic(curX, curY, fontLUT, ASCII_TO_DIALOG('O'), str[strPos] & 0xF, mark);
+                curX += gDialogCharWidths[ASCII_TO_DIALOG('O')];
+                break;
+            case DIALOG_CHAR_UPPER_U_GRAVE:
+            case DIALOG_CHAR_UPPER_U_CIRCUMFLEX:
+            case DIALOG_CHAR_UPPER_U_UMLAUT:
+            case DIALOG_CHAR_UPPER_U_AIGUE:
+                render_menu_uppercase_diacritic(curX, curY, fontLUT, ASCII_TO_DIALOG('U'), str[strPos] & 0xF, mark);
+                curX += gDialogCharWidths[ASCII_TO_DIALOG('U')];
+                break;
             case DIALOG_CHAR_DAKUTEN:
                 mark = DIALOG_MARK_DAKUTEN;
                 break;
@@ -537,21 +609,7 @@ void print_menu_generic_string(s16 x, s16 y, const u8 *str) {
                 curX += 4;
                 break;
             default:
-                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_IA, G_IM_SIZ_8b, 1, fontLUT[str[strPos]]);
-                gDPLoadSync(gDisplayListHead++);
-                gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 8 * 8 - 1, CALC_DXT(8, G_IM_SIZ_8b_BYTES));
-                gSPTextureRectangle(gDisplayListHead++, curX << 2, curY << 2, (curX + 8) << 2,
-                                    (curY + 8) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-                if (mark != DIALOG_MARK_NONE) {
-                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_IA, G_IM_SIZ_8b, 1, fontLUT[DIALOG_CHAR_MARK_START + mark]);
-                    gDPLoadSync(gDisplayListHead++);
-                    gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 8 * 8 - 1, CALC_DXT(8, G_IM_SIZ_8b_BYTES));
-                    gSPTextureRectangle(gDisplayListHead++, (curX + 6) << 2, (curY - 7) << 2,
-                                        (curX + 6 + 8) << 2, (curY - 7 + 8) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-                    mark = DIALOG_MARK_NONE;
-                }
+                render_menu_generic_char(curX, curY, fontLUT, str[strPos], mark);
                 curX += gDialogCharWidths[str[strPos]];
         }
         strPos++;
