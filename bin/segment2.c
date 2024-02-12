@@ -2049,6 +2049,10 @@ ALIGNED8 static const Texture texture_hud_char_arrow_down[] = {
 
 // Karyno-Drahnokks Special Character START
 
+ALIGNED8 static const Texture texture_font_char_us_i_dotless[] = {
+#include "textures/segment2/i_dotless.ia4.inc.c"
+};
+
 ALIGNED8 static const Texture texture_font_char_c_cedile_maj[] = {
 #include "textures/segment2/c_cedile_maj.ia4.inc.c"
 };
@@ -2267,7 +2271,7 @@ const Texture *const main_font_lut[] = {
     texture_font_char_umlaut,               
     texture_font_char_aigue,
     // ?? - maybe more accent
-                  0x0,               0x0,               0x0,               0x0,
+    texture_font_char_us_i_dotless,  0x0,               0x0,               0x0,
                   0x0,               0x0,               0x0,               0x0,
                   0x0,               0x0,               0x0,               0x0,
                   0x0,               0x0,               0x0,               0x0,

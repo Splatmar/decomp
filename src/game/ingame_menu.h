@@ -131,6 +131,8 @@ enum DialogSpecialChars {
     DIALOG_CHAR_UPPER_I_CIRCUMFLEX   = 0xA5, // 'I' circumflex
     DIALOG_CHAR_UPPER_I_UMLAUT       = 0xA6, // 'I' umlaut
     DIALOG_CHAR_UPPER_I_ACUTE        = 0xA7, // 'I' acute
+
+    DIALOG_CHAR_LOWER_I_DOTLESS      = 0xAC, // 'ı' dotless
     
     DIALOG_CHAR_SLASH                = 0xD0,
     DIALOG_CHAR_MULTI_THE            = 0xD1, // 'the'
