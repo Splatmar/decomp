@@ -23,6 +23,11 @@
 // #define DEATH_ON_EXIT_COURSE
 
 /**
+ * Enable a custom exit course warp using the 0xF4 warp id, so it can be different in each level
+ */
+#define CUSTOM_EXIT_COURSE
+
+/**
  * Decides which level, area and warp ID the "Exit Course" option takes you to (has no effect if you disable Exit Course or enable DEATH_ON_EXIT_COURSE).
  * Ensure that the warp exists, or else the game will crash.
  */
