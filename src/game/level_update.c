@@ -1097,6 +1097,7 @@ s32 play_mode_paused(void) {
 #ifndef DISABLE_EXIT_COURSE
     } else { // MENU_OPT_EXIT_COURSE
         if (gDebugLevelSelect) {
+            play_puzzle_jingle();
             fade_into_special_warp(WARP_SPECIAL_LEVEL_SELECT, 1);
         } else {
 #ifdef DEATH_ON_EXIT_COURSE
@@ -1104,7 +1105,14 @@ s32 play_mode_paused(void) {
             gCameraMovementFlags &= ~CAM_MOVE_PAUSE_SCREEN;
             set_play_mode(PLAY_MODE_NORMAL);
             level_trigger_warp(gMarioState, WARP_OP_DEATH);
-#else
+#else   
+
+#ifdef CUSTOM_EXIT_COURSE
+            struct ObjectWarpNode *warpNode = area_get_warp_node(WARP_NODE_CUSTOM_EXIT_COURSE);
+            if(warpNode != NULL) {
+                initiate_warp(warpNode->node.destLevel & 0x7F, warpNode->node.destArea, warpNode->node.destNode, sDelayedWarpArg);
+            } else
+#endif
             initiate_warp(EXIT_COURSE_LEVEL, EXIT_COURSE_AREA, EXIT_COURSE_NODE, WARP_FLAG_EXIT_COURSE);
             fade_into_special_warp(WARP_SPECIAL_NONE, 0);
             gSavedCourseNum = COURSE_NONE;
