@@ -2466,7 +2466,7 @@ void cur_obj_appear_if_enough_star(void) {
 
 void cur_obj_disappear_if_enough_star(void) {
     s32 starCount = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
-    if(starCount > o->oNeededStar) {
+    if(starCount >= o->oNeededStar) {
         cur_obj_disable();
     } else {
         cur_obj_enable();
