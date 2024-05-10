@@ -676,11 +676,17 @@ void apply_gravity(struct MarioState *m) {
 
 void apply_vertical_wind(struct MarioState *m) {
     f32 maxVelY;
+    f32 offsetY;
 
     if (m->action != ACT_GROUND_POUND) {
-        f32 offsetY = m->pos[1] - -1500.0f;
-
-        if (m->floor->type == SURFACE_VERTICAL_WIND && -3000.0f < offsetY && offsetY < 2000.0f) {
+        if(m->floor->type == SURFACE_NEW_VERTICAL_WIND) {
+            s16 height = m->floor->force;
+            offsetY = m->pos[1] - height;
+        } else {
+            offsetY = m->pos[1] - -1500.0f;
+        }
+        
+        if ((m->floor->type == SURFACE_VERTICAL_WIND || m->floor->type == SURFACE_NEW_VERTICAL_WIND) && -3000.0f < offsetY && offsetY < 2000.0f) {
             if (offsetY >= 0.0f) {
                 maxVelY = 10000.0f / (offsetY + 200.0f);
             } else {
