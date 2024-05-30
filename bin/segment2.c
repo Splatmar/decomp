@@ -2207,7 +2207,7 @@ const Texture *const main_font_lut[] = {
                   0x0,               
                   0x0,
     // For the following vowel, IDs are use in charmap.txt but there is no textures,
-    // since the accent letter in built using regular vowel with a accent-only char
+    // since the accent letters are built using regular vowel with a accent-only char
     // à â ä á À Â Ä Á
     0x0, 
     0x0,
