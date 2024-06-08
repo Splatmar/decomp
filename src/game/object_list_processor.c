@@ -261,6 +261,8 @@ void spawn_particle(u32 activeParticleFlag, ModelID16 model, const BehaviorScrip
 /**
  * Mario's primary behavior update function.
  */
+
+
 void bhv_mario_update(void) {
     u32 particleFlags = 0;
     s32 i;
@@ -271,7 +273,9 @@ void bhv_mario_update(void) {
     // Mario code updates MarioState's versions of position etc, so we need
     // to sync it with the Mario object
     copy_mario_state_to_object();
-
+    print_text_fmt_float(0, 130, "X POS %f", gMarioObject->oPosX);
+    print_text_fmt_float(0, 110, "Y POS %f", gMarioObject->oPosY);
+    print_text_fmt_float(0, 90 , "Z POS %f", gMarioObject->oPosZ);
     i = 0;
     while (sParticleTypes[i].particleFlag != 0) {
         if (particleFlags & sParticleTypes[i].particleFlag) {

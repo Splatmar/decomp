@@ -30,3 +30,6 @@
 #include "src/s2d_engine/s2d_config.h"
 #include FONT_C_FILE
 #endif
+
+#include "turning_platform/collision.inc.c"
+#include "turning_platform/model.inc.c"

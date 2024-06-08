@@ -57,6 +57,7 @@
 #include "make_const_nonconst.h"
 #include "behavior_data.h"
 
+
 #define BC_B(a) _SHIFTL(a, 24, 8)
 #define BC_BB(a, b) (_SHIFTL(a, 24, 8) | _SHIFTL(b, 16, 8))
 #define BC_BBBB(a, b, c, d) (_SHIFTL(a, 24, 8) | _SHIFTL(b, 16, 8) | _SHIFTL(c, 8, 8) | _SHIFTL(d, 0, 8))
@@ -6072,6 +6073,18 @@ const BehaviorScript bhvIntroScene[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_intro_scene_loop),
+    END_LOOP(),
+};
+const BehaviorScript bhvMooving[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL)),
+    LOAD_COLLISION_DATA(turning_platform_collision),
+    CALL_NATIVE(bhv_moving_platform_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_moving_platform_loop),
+        CALL_NATIVE(load_object_collision_model),
+        
+        
     END_LOOP(),
 };
 
