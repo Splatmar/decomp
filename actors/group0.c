@@ -33,3 +33,5 @@
 
 #include "turning_platform/collision.inc.c"
 #include "turning_platform/model.inc.c"
+#include "champi/collision.inc.c"
+#include "champi/model.inc.c"

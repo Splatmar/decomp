@@ -1922,6 +1922,11 @@ void mario_handle_special_floors(struct MarioState *m) {
             case SURFACE_TIMER_END:
                 pss_end_slide(m);
                 break;
+            case SURFACE_TRAMPOLINE:
+             if (m->pos[1] - m->floorHeight < 10) {
+                act_trampoline(m);
+                break;
+             }
         }
 
         if (!(m->action & (ACT_FLAG_AIR | ACT_FLAG_SWIMMING))) {

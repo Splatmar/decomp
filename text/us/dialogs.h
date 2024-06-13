@@ -134,18 +134,14 @@ Here you go--you've won\n\
 it, fair and square!"))
 
 DEFINE_DIALOG(DIALOG_008, 1, 4, 30, 200, _("\
-BEWARE OF CHAIN CHOMP\n\
-Extreme Danger!\n\
-Get close and press [C]^\n\
-for a better look.\n\
-Scary, huh?\n\
-See the Red Coin on top\n\
-of the stake?\n\
-\n\
-When you collect eight of\n\
-them, a Power Star will\n\
-appear in the meadow\n\
-across the bridge."))
+Mario you're finally back!\n\
+Bowser has struck again\n\
+and captured the princess. \n\
+Quick, go save her!\n\
+Climb onto the castle roof\n\
+to go to her rescue.\n\
+Good Luck , Mario.\n\
+"))
 
 DEFINE_DIALOG(DIALOG_009, 1, 5, 30, 200, _("\
 Long time, no see! Wow,\n\

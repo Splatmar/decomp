@@ -335,4 +335,10 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "turning_platform/geo_header.h"
 
+#include "turning_platform/header.h"
+
+#include "champi/collision_header.h"
+
+#include "champi/geo_header.h"
+
 #endif

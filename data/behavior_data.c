@@ -3478,7 +3478,7 @@ const BehaviorScript bhvToadMessage[] = {
     LOAD_ANIMATIONS(oAnimations, toad_seg6_anims_0600FB58),
     ANIMATE(TOAD_ANIM_WEST_WAVING_BOTH_ARMS),
     SET_INTERACT_TYPE(INTERACT_TEXT),
-    SET_HITBOX(/*Radius*/ 80, /*Height*/ 100),
+    SET_HITBOX(/*Radius*/ 80, /*Height*/ 150),
     SET_INT(oIntangibleTimer, 0),
     CALL_NATIVE(bhv_init_room),
     CALL_NATIVE(bhv_toad_message_init),
@@ -6087,5 +6087,27 @@ const BehaviorScript bhvMooving[] = {
         
     END_LOOP(),
 };
-
-
+const BehaviorScript bhvMoovingForward[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL|OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    LOAD_COLLISION_DATA(turning_platform_collision),
+    SET_FLOAT(oDrawingDistance, 2300),
+    CALL_NATIVE(bhv_moving_platform_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_moving_forward_loop),
+        CALL_NATIVE(load_object_collision_model),
+        
+        
+        
+    END_LOOP(),
+};
+const BehaviorScript bhvScale[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE |OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    LOAD_COLLISION_DATA(champi_collision),
+    BEGIN_LOOP(),
+        CALL_NATIVE(load_object_collision_model),
+        CALL_NATIVE(scale_up_animation),
+        END_LOOP(),
+};
+// test
