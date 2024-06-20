@@ -78,6 +78,7 @@ void scale_up_animation() {
            }
            else {
                 cur_obj_scale(1);
+                cur_obj_play_sound_2(SOUND_OBJ_WATER_BOMB_BOUNCING);
            }
         
             

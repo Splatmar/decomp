@@ -543,6 +543,7 @@ extern const BehaviorScript bhvUnusedFakeStar[];
 extern const BehaviorScript bhvMooving[];
 extern const BehaviorScript bhvMoovingForward[];
 extern const BehaviorScript bhvScale[];
-
-
+extern const BehaviorScript bhvPlane[];
+extern const BehaviorScript bhvObstacleManager[];
+extern const BehaviorScript bhvFireball[];
 #endif // BEHAVIOR_DATA_H

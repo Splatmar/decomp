@@ -2368,6 +2368,33 @@ void mode_spiral_stairs_camera(struct Camera *c) {
     c->nextYaw = update_spiral_stairs_camera(c, c->focus, c->pos);
 }
 
+void mode_plane_camera(struct Camera *c) {
+
+    sLakituPitch = 0;
+    gCameraMovementFlags &= ~CAM_MOVING_INTO_MODE;
+    sStatusFlags &= ~CAM_FLAG_BLOCK_SMOOTH_MOVEMENT;
+
+    struct Object *plane = gMarioState->usedObj;
+    
+    s16 yaw = plane->oMoveAngleYaw;
+    s16 pitch = plane->oMoveAnglePitch;
+    u32 camDecrement = 5000;
+
+    Vec3f camOffset = {
+        (sins(yaw) * coss(pitch)) * ((plane->oForwardVel) - camDecrement),
+        (sins(pitch)) * ((plane->oForwardVel) + camDecrement),
+        (coss(yaw) * coss(pitch)) * ((plane->oForwardVel) - camDecrement)
+    };
+    Vec3f newPos;
+
+    vec3f_copy(c->focus, &plane->oPosX);
+
+    vec3f_copy(newPos, c->focus);
+    vec3f_add(newPos, camOffset);
+    vec3f_copy(c->pos, newPos);
+
+}
+
 s32 update_slide_or_0f_camera(UNUSED struct Camera *c, Vec3f focus, Vec3f pos) {
     s16 yaw = sMarioCamState->faceAngle[1] + sModeOffsetYaw + DEGREES(180);
 
@@ -2963,6 +2990,10 @@ void update_camera(struct Camera *c) {
                     mode_cannon_camera(c);
                     break;
 
+                case CAMERA_MODE_PLANE:
+                    mode_plane_camera(c);
+                    break;
+
                 default:
                     mode_mario_camera(c);
             }
@@ -3022,6 +3053,10 @@ void update_camera(struct Camera *c) {
 
                 case CAMERA_MODE_SPIRAL_STAIRS:
                     mode_spiral_stairs_camera(c);
+                    break;
+
+                case CAMERA_MODE_PLANE:
+                    mode_plane_camera(c);
                     break;
             }
         }
@@ -6065,6 +6100,9 @@ struct CameraTrigger sCamBBH[] = {
  * Each table is terminated with NULL_TRIGGER
  */
 struct CameraTrigger sCamCastleGrounds[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamCastleCourtyard[] = {
 	NULL_TRIGGER
 };
 struct CameraTrigger *sCameraTriggers[LEVEL_COUNT + 1] = {
@@ -10415,7 +10453,7 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // SA             | BITS
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // LLL            | DDD
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // WF             | ENDING
-	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // COURTYARD      | PSS
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // COURTYARD      | PSS
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // COTMC          | TOTWC
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // BOWSER_1       | WMOTR
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // Unused         | BOWSER_2

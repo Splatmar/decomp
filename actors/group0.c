@@ -35,3 +35,6 @@
 #include "turning_platform/model.inc.c"
 #include "champi/collision.inc.c"
 #include "champi/model.inc.c"
+#include "plane/model.inc.c"
+#include "fireball/model.inc.c"
+#include "fireball/collision.inc.c"

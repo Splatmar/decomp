@@ -553,7 +553,11 @@ void bhv_moving_platform_loop(void);
 void bhv_moving_platform_init(void);
 void bhv_moving_forward_loop(void);
 void scale_up_animation(void);
-
+void bhv_rotate_plane_loop(void);
+void bhv_obstacle_manager_loop(void);
+void bhv_obstacle_manager_init(void);
+void bhv_fireball_loop(void);
+void bhv_move_plan(void);
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Bowser

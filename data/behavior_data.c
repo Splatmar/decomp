@@ -6101,6 +6101,7 @@ const BehaviorScript bhvMoovingForward[] = {
         
     END_LOOP(),
 };
+
 const BehaviorScript bhvScale[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE |OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
@@ -6108,6 +6109,32 @@ const BehaviorScript bhvScale[] = {
     BEGIN_LOOP(),
         CALL_NATIVE(load_object_collision_model),
         CALL_NATIVE(scale_up_animation),
-        END_LOOP(),
+    END_LOOP(),
 };
+
+const BehaviorScript bhvPlane[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE|OBJ_FLAG_SET_FACE_ANGLE_TO_MOVE_ANGLE)),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_rotate_plane_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvObstacleManager[] ={
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    CALL_NATIVE(bhv_obstacle_manager_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_obstacle_manager_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvFireball[] ={
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_fireball_loop),
+    END_LOOP(),
+};
+
 // test

@@ -341,4 +341,12 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "champi/geo_header.h"
 
+#include "plane/geo_header.h"
+
+#include "plane/header.h"
+
+#include "fireball/geo_header.h"
+
+#include "fireball/collision_header.h"
+
 #endif

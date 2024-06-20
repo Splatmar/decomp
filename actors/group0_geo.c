@@ -19,3 +19,5 @@
 
 #include "turning_platform/geo.inc.c"
 #include "champi/geo.inc.c"
+#include "plane/geo.inc.c"
+#include "fireball/geo.inc.c"

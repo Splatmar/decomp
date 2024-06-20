@@ -458,12 +458,12 @@
 #define MODEL_DIRT_ANIMATION              0x8A        // dirt_animation_geo
 #define MODEL_CARTOON_STAR                0x8B        // cartoon_star_geo
 #define MODEL_BLUE_COIN_SWITCH            0x8C        // blue_coin_switch_geo
-// find me
+#define MODEL_PLANE                       0x8D          //plane_geo
 #define MODEL_MIST                        0x8E        // mist_geo
 #define MODEL_SPARKLES_ANIMATION          0x8F        // sparkles_animation_geo
 #define MODEL_RED_FLAME                   0x90        // red_flame_geo
 #define MODEL_BLUE_FLAME                  0x91        // blue_flame_geo
-// find me
+#define MODEL_FIREBALL                    0x92        // blue_flame_geo
 // find me
 #define MODEL_BURN_SMOKE                  0x94        // burn_smoke_geo
 #define MODEL_SPARKLES                    0x95        // sparkles_geo

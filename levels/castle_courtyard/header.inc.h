@@ -1,0 +1,17 @@
+extern const GeoLayout castle_courtyard_area_1_geo[];
+extern const GeoLayout castle_courtyard_area_1[];
+extern const Collision castle_courtyard_area_1_collision[];
+extern const MacroObject castle_courtyard_area_1_macro_objs[];
+extern u8 castle_courtyard_dl_SUPER_MARIO_64_51D4DA7F_0_2_all_rgba32[];
+extern u8 castle_courtyard_dl_nuit_ci8[];
+extern u8 castle_courtyard_dl_nuit_pal_rgba16[];
+extern Vtx castle_courtyard_dl_Circle_mesh_layer_5_vtx_0[41];
+extern Gfx castle_courtyard_dl_Circle_mesh_layer_5_tri_0[];
+extern Vtx castle_courtyard_dl_Sphere_mesh_layer_1_vtx_0[163];
+extern Gfx castle_courtyard_dl_Sphere_mesh_layer_1_tri_0[];
+extern Gfx mat_castle_courtyard_dl_f3dlite_material_001[];
+extern Gfx mat_revert_castle_courtyard_dl_f3dlite_material_001[];
+extern Gfx mat_castle_courtyard_dl_f3dlite_material[];
+extern Gfx mat_revert_castle_courtyard_dl_f3dlite_material[];
+extern Gfx castle_courtyard_dl_Circle_mesh_layer_5[];
+extern Gfx castle_courtyard_dl_Sphere_mesh_layer_1[];
