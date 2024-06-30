@@ -16,7 +16,10 @@ So what's new :
 
 **Behavior flags for star requirement:**
 - A new flag desactivating an object if you have not enough stars
-- A new making the object appear if you have enough stars
+- A new flag making the object appear if you have enough stars
+
+**Reset Course new menu option:**
+- A new reset course menu option that allows you restart a level (enable it in config_menu.h where you can change the area and warp node used by it)
 
 **Text boxes debug mode:**
 - A new debug configuration that allows you to display the wanted dialog by his ID
