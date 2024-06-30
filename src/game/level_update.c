@@ -1094,6 +1094,13 @@ s32 play_mode_paused(void) {
         raise_background_noise(1);
         gCameraMovementFlags &= ~CAM_MOVE_PAUSE_SCREEN;
         set_play_mode(PLAY_MODE_NORMAL);
+
+#ifdef ENABLE_RESET_COURSE
+    } else if (gMenuOptSelectIndex == MENU_OPT_RESET_COURSE) {
+        initiate_warp(gCurrLevelNum, RESET_COURSE_AREA, RESET_COURSE_NODE, WARP_FLAG_EXIT_COURSE);
+        fade_into_special_warp(WARP_SPECIAL_NONE, 0);
+#endif
+
 #ifndef DISABLE_EXIT_COURSE
     } else { // MENU_OPT_EXIT_COURSE
         if (gDebugLevelSelect) {

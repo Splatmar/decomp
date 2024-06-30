@@ -28,6 +28,14 @@
 #define CUSTOM_EXIT_COURSE
 
 /**
+ * Enable to reset a course using the pause menu, so it can be different in each level
+ */
+//#define ENABLE_RESET_COURSE
+
+#define RESET_COURSE_AREA 0x01
+#define RESET_COURSE_NODE 0x0A
+
+/**
  * Decides which level, area and warp ID the "Exit Course" option takes you to (has no effect if you disable Exit Course or enable DEATH_ON_EXIT_COURSE).
  * Ensure that the warp exists, or else the game will crash.
  */
