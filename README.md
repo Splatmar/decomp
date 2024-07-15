@@ -36,5 +36,8 @@ So what's new :
 - New conveyor surface with settable speed and angle
 - New vertical wind collision with configurable stabilization height
 
+**Shell Coyote Time**
+- Add Coyote Time to shell will falling, can be deactivate by commenting the define in config_objects.h
+
 
 Go read the original HackerSM64 repo README.md
