@@ -129,3 +129,12 @@
  * The number of segments Wiggler has, not including the head. Vanilla is 4.
  */
 #define WIGGLER_NUM_SEGMENTS     4
+
+/*********************
+ * -- KOOPA SHELL --
+ *********************/
+
+/**
+ * FAlling from a platform with allows coyote time frame
+ */
+#define KOOPA_SHELL_COYOTE_TIME  10

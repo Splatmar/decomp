@@ -1200,6 +1200,10 @@ s32 act_hold_decelerating(struct MarioState *m) {
 s32 act_riding_shell_ground(struct MarioState *m) {
     s16 startYaw = m->faceAngle[1];
 
+#ifdef KOOPA_SHELL_COYOTE_TIME
+    m->riddenObj->oCoyoteTimer = 0;
+#endif
+
     if (m->input & INPUT_A_PRESSED) {
         return set_mario_action(m, ACT_RIDING_SHELL_JUMP, 0);
     }

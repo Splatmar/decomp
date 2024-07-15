@@ -694,6 +694,11 @@
 #define /*0x0F4*/ oKoopaShellFlameUnused OBJECT_FIELD_F32(0x1B)
 #define /*0x0F8*/ oKoopaShellFlameScale  OBJECT_FIELD_F32(0x1C)
 
+#ifdef KOOPA_SHELL_COYOTE_TIME
+/* Koopa Shell*/
+#define /*0x0FC*/ oCoyoteTimer  OBJECT_FIELD_S32(0x1D)
+#endif
+
 /* Camera Lakitu */
 #define /*0x0F4*/ oCameraLakituBlinkTimer     OBJECT_FIELD_S32(0x1B)
 #define /*0x0F8*/ oCameraLakituSpeed          OBJECT_FIELD_F32(0x1C)
