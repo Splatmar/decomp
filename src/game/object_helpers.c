@@ -662,7 +662,7 @@ static s32 obj_bparam_ckeck(struct Object *obj, s32 bparamToCheck, s32 unused, f
     return operation_check(operator, value, wantedValue);
 }
 
-static struct Object *cur_obj_find_nearest_object_with_behavior_and_func(const BehaviorScript *behavior, f32 *dist, s32 fieldOrBparamToCheck, s32 objFieldType, f32 wantedValue, s32 operator, s32 (*func)(struct Object *, s32, s32, f32, f32)){
+static struct Object *cur_obj_find_nearest_object_with_behavior_and_func(const BehaviorScript *behavior, f32 *dist, s32 fieldOrBparamToCheck, s32 objFieldType, f32 wantedValue, s32 operator, s32 (*func)(struct Object *, s32, s32, f32, s32)){
     uintptr_t *behaviorAddr = segmented_to_virtual(behavior);
     struct ObjectNode *listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
     struct Object *obj = (struct Object *) listHead->next;
