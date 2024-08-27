@@ -250,13 +250,14 @@ void load_level_init_text(u32 arg) {
     }
 }
 
-void init_door_warp(struct SpawnInfo *spawnInfo, u32 warpDestFlags) {
+void init_door_warp(struct SpawnInfo *spawnInfo, u32 warpDestFlags, u32 frontOffset) {
     if (warpDestFlags & WARP_FLAG_DOOR_FLIP_MARIO) {
         spawnInfo->startAngle[1] += 0x8000;
     }
-
-    spawnInfo->startPos[0] += 300.0f * sins(spawnInfo->startAngle[1]);
-    spawnInfo->startPos[2] += 300.0f * coss(spawnInfo->startAngle[1]);
+    
+    f32 offset = frontOffset == 0 ? 300.0f : frontOffset;
+    spawnInfo->startPos[0] += offset * sins(spawnInfo->startAngle[1]);
+    spawnInfo->startPos[2] += offset * coss(spawnInfo->startAngle[1]);
 }
 
 void set_mario_initial_cap_powerup(struct MarioState *m) {
@@ -362,7 +363,7 @@ void init_mario_after_warp(void) {
         gPlayerSpawnInfos[0].startAngle[2] = 0;
 
         if (marioSpawnType == MARIO_SPAWN_DOOR_WARP) {
-            init_door_warp(&gPlayerSpawnInfos[0], sWarpDest.arg);
+            init_door_warp(&gPlayerSpawnInfos[0], sWarpDest.arg, GET_BPARAM3(spawnNode->object->oBehParams) * 2);
         }
 
         if (sWarpDest.type == WARP_TYPE_CHANGE_LEVEL || sWarpDest.type == WARP_TYPE_CHANGE_AREA) {
