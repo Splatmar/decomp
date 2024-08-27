@@ -5181,19 +5181,19 @@ const BehaviorScript bhvChainChompChainPart[] = {
 
 //small chomp jumpin
 
-const BehaviorScript bhvSmallJumpingChainChomp[] = {
-    BEGIN(OBJ_LIST_GENACTOR),
-    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW)),
-    LOAD_ANIMATIONS(oAnimations, chain_chomp_seg6_anims_06025178),
-    ANIMATE(CHAIN_CHOMP_ANIM_CHOMPING),
-    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ 100, /*Bounciness*/ 0, /*Drag strength*/ 1000, /*Friction*/ 0, /*Buoyancy*/ 0, /*Unused*/ 0, 0),
-    SET_HOME(),
-    SET_FLOAT(oGraphYOffset, 60),
-    SCALE(0, 50),
-    BEGIN_LOOP(),
-        //CALL_NATIVE(bhv_small_jumping_chain_chomp_update),
-    END_LOOP(),
-};
+//const BehaviorScript bhvSmallJumpingChainChomp[] = {
+//    BEGIN(OBJ_LIST_GENACTOR),
+//    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW)),
+//    LOAD_ANIMATIONS(oAnimations, chain_chomp_seg6_anims_06025178),
+//    ANIMATE(CHAIN_CHOMP_ANIM_CHOMPING),
+//    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ 100, /*Bounciness*/ 0, /*Drag strength*/ 1000, /*Friction*/ 0, /*Buoyancy*/ 0, /*Unused*/ 0, 0),
+//    SET_HOME(),
+//    SET_FLOAT(oGraphYOffset, 60),
+//    SCALE(0, 50),
+//    BEGIN_LOOP(),
+//        //CALL_NATIVE(bhv_small_jumping_chain_chomp_update),
+//    END_LOOP(),
+//};
 
 const BehaviorScript bhvWoodenPost[] = {
     BEGIN(OBJ_LIST_SURFACE),
