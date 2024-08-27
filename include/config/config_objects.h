@@ -135,6 +135,6 @@
  *********************/
 
 /**
- * FAlling from a platform with allows coyote time frame
+ * Falling from a platform with allows coyote time frame
  */
 #define KOOPA_SHELL_COYOTE_TIME  10
