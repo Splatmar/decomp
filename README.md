@@ -31,6 +31,7 @@ So what's new :
 **Warps:**
 - Warp hole can now have a custom hitbox height !
 - each area can get a unique "exit level" destination
+- the distance from a door warp when exiting it can be modify (bparam3 * 2)
 
 **Surface collisions**
 - New conveyor surface with settable speed and angle
