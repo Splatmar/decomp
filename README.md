@@ -24,9 +24,10 @@ So what's new :
 **Text boxes debug mode:**
 - A new debug configuration that allows you to display the wanted dialog by his ID
 
-**Better coin formation module:**
+**Better coins module:**
 - customize the vanilla coin formations by modifying the offset, or enable flying !
 - you can create a custom coin formation shape and place it in your levels
+- red coins can now be collected accross areas, spawning the star on Mario
 
 **Warps:**
 - Warp hole can now have a custom hitbox height !

@@ -29,6 +29,11 @@
  */
 // #define BLUE_COIN_SWITCH_PREVIEW
 
+/**
+ * Allow to collect the red coins in differente areas, the last red coin will make the star spawn above Mario
+ */
+ #define CROSS_AREA_RED_COINS
+
 /****************
  * -- GOOMBA --
  ****************/
