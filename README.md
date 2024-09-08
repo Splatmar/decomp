@@ -9,7 +9,7 @@ So what's new :
 
 **Add new characters:**
 - Diacritics support for characters like -é -à -ï -ô
-- You can now use a bunhc of new special character such as -@ -# -ß -Ç -/ -\
+- You can now use a bunch of new special character such as -@ -# -ß -Ç -/ -\
 
 **Better object finding methods:**
 - add some new methods to find more specific objects, for example : the nearest bob-omb with o->oAction == 2
@@ -19,7 +19,7 @@ So what's new :
 - A new flag making the object appear if you have enough stars
 
 **Reset Course new menu option:**
-- A new reset course menu option that allows you restart a level (enable it in config_menu.h where you can change the area and warp node used by it)
+- A new reset course menu option that allows you to restart a level (enable it in config_menu.h where you can change the area and warp node used by it)
 
 **Text boxes debug mode:**
 - A new debug configuration that allows you to display the wanted dialog by his ID
@@ -30,9 +30,10 @@ So what's new :
 - red coins can now be collected accross areas, spawning the star on Mario
 
 **Warps:**
-- Warp hole can now have a custom hitbox height !
-- each area can get a unique "exit level" destination
+- Warp hole can now have a custom hitbox height through bparam 3 !
+- each area can get a unique "exit level" destination through the 0xF4 warp
 - the distance from a door warp when exiting it can be modify (bparam3 * 2)
+- the camera Lakitu angle (yaw) after warping can be change through warp's bparam 4 (0->255 as 0->360°)
 
 **Surface collisions**
 - New conveyor surface with settable speed and angle
