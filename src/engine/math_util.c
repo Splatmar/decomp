@@ -938,6 +938,31 @@ void vec3s_set_dist_and_angle(Vec3s from, Vec3s to, s16 dist, s16 pitch, s16 yaw
 }
 
 /**
+ * @brief Modify a vector to reach another
+ * 
+ * @param from the source vector, the one that will be impacted
+ * @param to the dest vector, the target
+ * @param inc how much "distance" the source vector will move
+ */
+void vec3f_approach(Vec3f from, Vec3f to, f32 inc) {
+    f32 dist;
+    f32 lateralDist;
+    s16 pitchAngle;
+    s16 yawAngle;
+
+    vec3f_get_dist_and_lateral_dist_and_angle(from, to, &dist, &lateralDist, &pitchAngle, &yawAngle);
+
+    if(dist < inc) {
+        vec3f_copy(from, to);
+    } else {
+        f32 incCos = (inc * coss(pitchAngle));
+        from[0] += incCos * sins(yawAngle);
+        from[1] += inc * sins(pitchAngle);
+        from[2] += incCos * coss(yawAngle);
+    }
+}
+
+/**
  * Similar to approach_s32, but converts to s16 and allows for overflow between 32767 and -32768
  */
 s16 approach_angle(s16 current, s16 target, s16 inc) {

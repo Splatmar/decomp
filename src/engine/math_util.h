@@ -567,6 +567,7 @@ void vec3f_to_vec3s_get_dist_and_angle(        Vec3f from, Vec3s to, f32 *dist, 
 void vec3s_set_dist_and_angle(                 Vec3s from, Vec3s to, s16  dist,                   s16  pitch, s16  yaw);
 void vec3f_set_dist_and_angle(                 Vec3f from, Vec3f to, f32  dist,                   s16  pitch, s16  yaw);
 
+void vec3f_approach(Vec3f from, Vec3f to, f32 inc);
 s16 approach_angle(s16 current, s16 target, s16 inc);
 s16 approach_s16(s16 current, s16 target, s16 inc, s16 dec);
 s32 approach_s32(s32 current, s32 target, s32 inc, s32 dec);
