@@ -119,6 +119,34 @@ Gfx *geo_switch_anim_state(s32 callContext, struct GraphNode *node, UNUSED void 
     return NULL;
 }
 
+/**
+ * Geo switch that let you manipulate the prim color
+ */
+Gfx *geo_change_prim_color(s32 callContext, struct GraphNode *node, UNUSED s32 context) {
+    Gfx *gfxHead = NULL;
+
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct Object *obj = (struct Object *) gCurGraphNodeObject;
+
+        u8 redValue = GET_REDVALUE(obj->oRGBAValue);
+        u8 greenValue = GET_GREENVALUE(obj->oRGBAValue);
+        u8 blueValue = GET_BLUEVALUE(obj->oRGBAValue);
+        u8 alphaValue = GET_ALPHAVALUE(obj->oRGBAValue);
+
+        struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+
+        gfxHead = alloc_display_list(sizeof(Gfx) * 2);
+        // IMPORTANT TO MAKE IT WORKS
+        SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_TRANSPARENT);
+
+        Gfx *gfx = gfxHead;
+        gDPSetPrimColor(gfx++, 0, 0, redValue, greenValue, blueValue, alphaValue);
+        gSPEndDisplayList(gfx);
+    }
+
+    return gfxHead;
+}
+
 Gfx *geo_switch_area(s32 callContext, struct GraphNode *node, UNUSED void *context) {
     struct GraphNodeSwitchCase *switchCase = (struct GraphNodeSwitchCase *) node;
     RoomData room;

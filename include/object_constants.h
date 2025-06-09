@@ -216,7 +216,15 @@ enum ActiveParticleFlags {
 #define BPARAM3 GET_BPARAM3(o->oBehParams)
 #define BPARAM4 GET_BPARAM4(o->oBehParams)
 
+#define SET_ALPHAVALUE(behParams, val) SET_BPARAM1((behParams), val)
+#define SET_BLUEVALUE(behParams, val) SET_BPARAM2((behParams), val)
+#define SET_GREENVALUE(behParams, val) SET_BPARAM3((behParams), val)
+#define SET_REDVALUE(behParams, val) SET_BPARAM4((behParams), val)
 
+#define GET_ALPHAVALUE(behParams) GET_BPARAMS((behParams), 1, 1)
+#define GET_BLUEVALUE(behParams) GET_BPARAMS((behParams), 2, 1)
+#define GET_GREENVALUE(behParams) GET_BPARAMS((behParams), 3, 1)
+#define GET_REDVALUE(behParams) GET_BPARAMS((behParams), 4, 1)
 
 /* oBehParams2ndByte */
 enum ObjGeneralBehParams {
