@@ -372,7 +372,7 @@ void init_mario_after_warp(void) {
         gPlayerSpawnInfos[0].startAngle[2] = 0;
 
         if (marioSpawnType == MARIO_SPAWN_DOOR_WARP) {
-            init_door_warp(&gPlayerSpawnInfos[0], sWarpDest.arg, GET_BPARAM3(spawnNode->object->oBehParams) * 2);
+            init_door_warp(&gPlayerSpawnInfos[0], sWarpDest.arg, GET_BPARAM3(object->oBehParams) * 2);
         }
 
         if (sWarpDest.type == WARP_TYPE_CHANGE_LEVEL || sWarpDest.type == WARP_TYPE_CHANGE_AREA) {
@@ -388,7 +388,7 @@ void init_mario_after_warp(void) {
     }
 
     reset_camera(gCurrentArea->camera);
-    s8DirModeYawOffset = DEGREES((GET_BPARAM4(spawnNode->object->oBehParams) * 360) / 255);
+    s8DirModeYawOffset = DEGREES((GET_BPARAM4(object->oBehParams) * 360) / 255);
     sWarpDest.type = WARP_TYPE_NOT_WARPING;
     sDelayedWarpOp = WARP_OP_NONE;
 

@@ -540,7 +540,9 @@ void render_hud_camera_status(void) {
 void render_hud(void) {
     s16 hudDisplayFlags = gHudDisplay.flags;
 
-    if (hudDisplayFlags == HUD_DISPLAY_NONE) {
+    if (hudDisplayFlags == HUD_DISPLAY_NONE || 
+        // hide hud in c up
+        gMarioState->area->camera->mode == CAMERA_MODE_C_UP) {
         sPowerMeterHUD.animation = POWER_METER_HIDDEN;
         sPowerMeterStoredHealth = 8;
         sPowerMeterVisibleTimer = 0;
