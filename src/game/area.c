@@ -406,7 +406,10 @@ void render_game(void) {
 
         gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, gBorderHeight, SCREEN_WIDTH,
                       SCREEN_HEIGHT - gBorderHeight);
-        render_hud();
+
+        if(gMarioState->area->camera->mode == CAMERA_MODE_C_UP) {
+            render_hud();
+        }
 
         gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         render_text_labels();

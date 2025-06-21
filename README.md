@@ -42,5 +42,8 @@ So what's new :
 **Shell Coyote Time**
 - Add Coyote Time to shell will falling, can be deactivate by commenting the define in config_objects.h
 
+**New Geo ASM**
+- Add a new geo_change_prim_color function to change dynamically the primitive color through a new oRGBValue Object Field
+
 
 Go read the original HackerSM64 repo README.md

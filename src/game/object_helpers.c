@@ -134,6 +134,12 @@ Gfx *geo_change_prim_color(s32 callContext, struct GraphNode *node, UNUSED s32 c
         u8 alphaValue = GET_ALPHAVALUE(obj->oRGBAValue);
 
         struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+        s32 parameter = currentGraphNode->parameter;
+
+        #if SILHOUETTE
+        // shift by 5 if SILHOUETTE is active since it add 5 layer
+        parameter += 5;
+        #endif
 
         gfxHead = alloc_display_list(sizeof(Gfx) * 2);
         // IMPORTANT TO MAKE IT WORKS
