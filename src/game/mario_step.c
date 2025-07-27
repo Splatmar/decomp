@@ -688,7 +688,7 @@ void apply_vertical_wind(struct MarioState *m) {
 #else
     if (m->action != ACT_GROUND_POUND) {
 #endif
-        if(m->floor->type == SURFACE_NEW_VERTICAL_WIND) {
+        if(m->floor->type == SURFACE_NEW_VERTICAL_WIND || m->floor->type == SURFACE_NEW_VERTICAL_WIND_NO_DEATH) {
             s16 height = m->floor->force;
             offsetY = m->pos[1] - height;
         } else {
