@@ -1130,7 +1130,11 @@ u32 interact_whirlpool(struct MarioState *m, UNUSED u32 interactType, struct Obj
 }
 
 u32 interact_strong_wind(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
+#ifdef WIND_RESISTANT_METAL_CAP
+    if (m->action != ACT_GETTING_BLOWN && !(m->flags & MARIO_METAL_CAP)) {
+#else 
     if (m->action != ACT_GETTING_BLOWN) {
+#endif
         mario_stop_riding_and_holding(m);
         obj->oInteractStatus = INT_STATUS_INTERACTED;
         m->interactObj = obj;
@@ -1907,7 +1911,9 @@ void mario_handle_special_floors(struct MarioState *m) {
 
         switch (floorType) {
             case SURFACE_DEATH_PLANE:
+            // all vertical wind kill you at bottom, except the SURFACE_NEW_VERTICAL_WIND_NO_DEATH
             case SURFACE_VERTICAL_WIND:
+            case SURFACE_NEW_VERTICAL_WIND:
                 check_death_barrier(m);
                 break;
 

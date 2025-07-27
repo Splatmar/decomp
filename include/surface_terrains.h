@@ -64,7 +64,7 @@ enum SurfaceTypes {
     SURFACE_HARD_NOT_SLIPPERY,          // 0x0037 // Hard and Non-slippery (Always has fall damage)
     SURFACE_VERTICAL_WIND,              // 0x0038 // Death at bottom with vertical wind. Warps to ID of force parameter's second byte if set, otherwise warps to 0xF3 if it exists, otherwise defaults to ID 0xF1.
     SURFACE_NEW_VERTICAL_WIND,          // 0x0039 // Death at bottom with vertical wind but you can adjust the stabilisation height with the param (0x0000 = height)
-    SURFACE_003A,                       // 0x003A // Unused
+    SURFACE_NEW_VERTICAL_WIND_NO_DEATH, // 0x003A // Same as previous one but you don't die at bottom
     SURFACE_003B,                       // 0x003B // Unused
     SURFACE_003C,                       // 0x003C // Unused
     SURFACE_003D,                       // 0x003D // Unused
@@ -234,6 +234,7 @@ enum SurfaceTypes {
 #define SURFACE_IS_NEW_WATER(cmd)               (((cmd) == SURFACE_NEW_WATER) || ((cmd) == SURFACE_NEW_WATER_BOTTOM))
 #define SURFACE_IS_QUICKSAND(cmd)               ((((cmd) >= SURFACE_SHALLOW_QUICKSAND) && ((cmd) <= SURFACE_MOVING_QUICKSAND)) || ((cmd) == SURFACE_INSTANT_MOVING_QUICKSAND))
 #define SURFACE_IS_NOT_HARD(cmd)                (((cmd) != SURFACE_HARD) && !((cmd) >= SURFACE_HARD_SLIPPERY && ((cmd) <= SURFACE_HARD_NOT_SLIPPERY)))
+#define SURFACE_IS_VERTICAL_WIND(cmd)           (((cmd) >= SURFACE_VERTICAL_WIND) && ((cmd) <= SURFACE_NEW_VERTICAL_WIND_NO_DEATH))
 #define SURFACE_IS_PAINTING_WOBBLE(cmd)         (((cmd) >= SURFACE_PAINTING_WOBBLE_A6) && ((cmd) <= SURFACE_PAINTING_WOBBLE_D2))
 #define SURFACE_IS_PAINTING_WOBBLE_LEFT(cmd)    ((((cmd) - SURFACE_PAINTING_WOBBLE_A6) % 3) == 0)
 #define SURFACE_IS_PAINTING_WOBBLE_MIDDLE(cmd)  ((((cmd) - SURFACE_PAINTING_WOBBLE_A7) % 3) == 0)

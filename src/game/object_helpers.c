@@ -1198,7 +1198,7 @@ static void cur_obj_move_update_ground_air_flags(UNUSED f32 gravity, f32 bouncin
     o->oMoveFlags &= ~(OBJ_MOVE_ABOVE_LAVA | OBJ_MOVE_ABOVE_DEATH_BARRIER);
     if (o->oFloorType == SURFACE_BURNING) {
         o->oMoveFlags |= OBJ_MOVE_ABOVE_LAVA;
-    } else if ((o->oFloorType == SURFACE_DEATH_PLANE) || (o->oFloorType == SURFACE_VERTICAL_WIND)) {
+    } else if ((o->oFloorType == SURFACE_DEATH_PLANE) || (o->oFloorType == SURFACE_VERTICAL_WIND) || (o->oFloorType == SURFACE_NEW_VERTICAL_WIND)) {
         //! This maybe misses SURFACE_WARP
         o->oMoveFlags |= OBJ_MOVE_ABOVE_DEATH_BARRIER;
     }

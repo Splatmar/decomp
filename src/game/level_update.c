@@ -773,7 +773,8 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 break;
 
             case WARP_OP_WARP_FLOOR:
-                if ((m->floor) && (m->floor->force & 0xFF)) {
+                // Exluding SURFACE_NEW_VERTICAL_WIND since the force bytes are use for Y stabilization
+                if ((m->floor) && (m->floor->type != SURFACE_NEW_VERTICAL_WIND) && (m->floor->force & 0xFF)) {
                     sSourceWarpNodeId = m->floor->force & 0xFF;
                 } else {
                     sSourceWarpNodeId = WARP_NODE_WARP_FLOOR;

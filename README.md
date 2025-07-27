@@ -1,6 +1,6 @@
 # ![](https://media.discordapp.net/attachments/731330616158716004/785283273759653918/party_sonic.gif?ex=6662ebca&is=66619a4a&hm=2e481bff7c1862c36cb1aef0fd5a6e03102a96eed8a8e8edcbd39cdf8c350380&) DrahckerSM64 ![](https://media.discordapp.net/attachments/731330616158716004/785283273759653918/party_sonic.gif?ex=6662ebca&is=66619a4a&hm=2e481bff7c1862c36cb1aef0fd5a6e03102a96eed8a8e8edcbd39cdf8c350380&)
 
-Forked from HackerSM64 2.1.2 (5 Dec 2023), Add a bunch of new things !
+Forked from HackerSM64 2.3.0 (21 Jun 2025), Add a bunch of new things !
 
 **Credits**
 - **HackerSM64**: The OG repo
@@ -37,7 +37,9 @@ So what's new :
 
 **Surface collisions**
 - New conveyor surface with settable speed and angle
-- New vertical wind collision with configurable stabilization height
+- New vertical wind collision with configurable stabilization height, death at bottom policy is the same has vanilla vertical wind
+- Another vertical wind collision, similar to the previous one but you don't die at bottom
+- New flag in config_collision.c to choose if metal mario can resist all kind of wind
 
 **Shell Coyote Time**
 - Add Coyote Time to shell will falling, can be deactivate by commenting the define in config_objects.h
