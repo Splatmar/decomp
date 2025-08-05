@@ -111,7 +111,8 @@ s32 should_get_stuck_in_ground(struct MarioState *m) {
     s32 flags = floor->flags;
     s32 type = floor->type;
 
-    if (floor != NULL && (terrainType == TERRAIN_SNOW || terrainType == TERRAIN_SAND)
+    if (floor != NULL 
+        && (terrainType == TERRAIN_SNOW || terrainType == TERRAIN_SAND || type == SURFACE_SAND)
         && type != SURFACE_BURNING && SURFACE_IS_NOT_HARD(type)) {
         if (!(flags & SURFACE_FLAG_DYNAMIC) && m->peakHeight - m->pos[1] > 1000.0f && floor->normal.y >= COS30) {
             return TRUE;
@@ -141,7 +142,11 @@ s32 check_horizontal_wind(struct MarioState *m) {
     f32 speed;
     s16 pushAngle;
 
+#ifdef WIND_RESISTANT_METAL_CAP
+    if (floor->type == SURFACE_HORIZONTAL_WIND && !(m->flags & MARIO_METAL_CAP)) {
+#else
     if (floor->type == SURFACE_HORIZONTAL_WIND) {
+#endif
         pushAngle = floor->force << 8;
 
         m->slideVelX += 1.2f * sins(pushAngle);
@@ -203,6 +208,13 @@ void update_air_without_turn(struct MarioState *m) {
     f32 dragThreshold;
     s16 intendedDYaw;
     f32 intendedMag;
+
+#ifdef KOOPA_SHELL_COYOTE_TIME
+    // if mario is falling, press A, and the coyote time isn't over, then jump
+    if (m->action == ACT_RIDING_SHELL_FALL && m->input & INPUT_A_PRESSED && m->riddenObj->oCoyoteTimer < KOOPA_SHELL_COYOTE_TIME) {
+            return set_mario_action(m, ACT_RIDING_SHELL_JUMP, 0);
+        }
+#endif
 
     if (!check_horizontal_wind(m)) {
         dragThreshold = m->action == ACT_LONG_JUMP ? 48.0f : 32.0f;
@@ -429,15 +441,6 @@ u32 common_air_action_step(struct MarioState *m, u32 landAction, s32 animation, 
 }
 
 s32 act_jump(struct MarioState *m) {
-#ifdef EASIER_LONG_JUMPS
-    if (m->actionTimer < 1) {
-        m->actionTimer++;
-        if (m->input & INPUT_Z_PRESSED && m->forwardVel > 10.0f) {
-            return set_jumping_action(m, ACT_LONG_JUMP, 0);
-        }
-    }
-#endif
-
     if (check_kick_or_dive_in_air(m)) {
         return TRUE;
     }
@@ -630,7 +633,11 @@ s32 act_long_jump(struct MarioState *m) {
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_YAHOO);
 
-    if ((m->floor->type == SURFACE_VERTICAL_WIND || m->floor->type == SURFACE_NEW_VERTICAL_WIND) && m->actionState == 0) {
+#ifdef WIND_RESISTANT_METAL_CAP
+    if (!(m->flags & MARIO_METAL_CAP) && SURFACE_IS_VERTICAL_WIND(m->floor->type) && m->actionState == 0) {
+#else
+    if (SURFACE_IS_VERTICAL_WIND(m->floor->type) && m->actionState == 0) {
+#endif
         play_sound(SOUND_MARIO_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
         m->actionState = 1;
     }
@@ -645,8 +652,17 @@ s32 act_long_jump(struct MarioState *m) {
 }
 
 s32 act_riding_shell_air(struct MarioState *m) {
-    play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
     set_mario_animation(m, MARIO_ANIM_JUMP_RIDING_SHELL);
+
+#ifdef KOOPA_SHELL_COYOTE_TIME
+    // if mario is falling start increment coyote timer (I remove jump mario sound when falling)
+    if(m->action == ACT_RIDING_SHELL_FALL) 
+        m->riddenObj->oCoyoteTimer++;
+    else 
+        play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
+#else
+    play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
+#endif
 
     update_air_without_turn(m);
 
@@ -1992,7 +2008,11 @@ s32 check_common_airborne_cancels(struct MarioState *m) {
         return drop_and_set_mario_action(m, ACT_SQUISHED, 0);
     }
 
-    if ((m->floor->type == SURFACE_VERTICAL_WIND || m->floor->type == SURFACE_NEW_VERTICAL_WIND) && (m->action & ACT_FLAG_ALLOW_VERTICAL_WIND_ACTION)) {
+#ifdef WIND_RESISTANT_METAL_CAP
+    if (!(m->flags & MARIO_METAL_CAP) && SURFACE_IS_VERTICAL_WIND(m->floor->type) && (m->action & ACT_FLAG_ALLOW_VERTICAL_WIND_ACTION)) {
+#else
+    if (SURFACE_IS_VERTICAL_WIND(m->floor->type) && (m->action & ACT_FLAG_ALLOW_VERTICAL_WIND_ACTION)) {
+#endif
         return drop_and_set_mario_action(m, ACT_VERTICAL_WIND, 0);
     }
 

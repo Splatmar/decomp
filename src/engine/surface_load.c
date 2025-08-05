@@ -89,30 +89,6 @@ static struct Surface *alloc_surface(u32 dynamic) {
 }
 
 /**
- * Iterates through the entire partition, clearing the surfaces.
- */
-static void clear_spatial_partition(SpatialPartitionCell *cells) {
-    register s32 i = sqr(NUM_CELLS);
-
-    while (i--) {
-        (*cells)[SPATIAL_PARTITION_FLOORS].next = NULL;
-        (*cells)[SPATIAL_PARTITION_CEILS].next = NULL;
-        (*cells)[SPATIAL_PARTITION_WALLS].next = NULL;
-        (*cells)[SPATIAL_PARTITION_WATER].next = NULL;
-
-        cells++;
-    }
-}
-
-/**
- * Clears the static (level) surface partitions for new use.
- */
-static void clear_static_surfaces(void) {
-    gTotalStaticSurfaceData = 0;
-    clear_spatial_partition(&gStaticSurfacePartition[0][0]);
-}
-
-/**
  * Add a surface to the correct cell list of surfaces.
  * @param dynamic Determines whether the surface is static or dynamic
  * @param cellX The X position of the cell in which the surface resides
@@ -120,7 +96,7 @@ static void clear_static_surfaces(void) {
  * @param surface The surface to add
  */
 static void add_surface_to_cell(s32 dynamic, s32 cellX, s32 cellZ, struct Surface *surface) {
-    struct SurfaceNode *list;
+    struct SurfaceNode **list;
     s32 priority;
     s32 sortDir = 1; // highest to lowest, then insertion order (water and floors)
     s32 listIndex;
@@ -147,7 +123,7 @@ static void add_surface_to_cell(s32 dynamic, s32 cellX, s32 cellZ, struct Surfac
         if (sNumCellsUsed >= sizeof(sCellsUsed) / sizeof(struct CellCoords)) {
             sClearAllCells = TRUE;
         } else {
-            if (list->next == NULL) {
+            if (*list == NULL) {
                 sCellsUsed[sNumCellsUsed].z = cellZ;
                 sCellsUsed[sNumCellsUsed].x = cellX;
                 sCellsUsed[sNumCellsUsed].partition = listIndex;
@@ -158,19 +134,34 @@ static void add_surface_to_cell(s32 dynamic, s32 cellX, s32 cellZ, struct Surfac
         list = &gStaticSurfacePartition[cellZ][cellX][listIndex];
     }
 
+    if (*list == NULL) {
+        *list = newNode;
+        return;
+    }
+
+    struct SurfaceNode *curNode = *list;
+
+    // Check if surface should be placed at the beginning of the list.
+    priority = curNode->surface->upperY * sortDir;
+    if (surfacePriority > priority) {
+        *list = newNode;
+        newNode->next = curNode;
+        return;
+    }
+
     // Loop until we find the appropriate place for the surface in the list.
-    while (list->next != NULL) {
-        priority = list->next->surface->upperY * sortDir;
+    while (curNode->next != NULL) {
+        priority = curNode->next->surface->upperY * sortDir;
 
         if (surfacePriority > priority) {
             break;
         }
 
-        list = list->next;
+        curNode = curNode->next;
     }
 
-    newNode->next = list->next;
-    list->next = newNode;
+    newNode->next = curNode->next;
+    curNode->next = newNode;
 }
 
 /**
@@ -187,13 +178,6 @@ static s32 lower_cell_index(s32 coord) {
 
     // [0, NUM_CELLS)
     s32 index = coord / CELL_SIZE;
-
-    // Include extra cell if close to boundary
-    //! Some wall checks are larger than the buffer, meaning wall checks can
-    //  miss walls that are near a cell border.
-    if (coord % CELL_SIZE < 50) {
-        index--;
-    }
 
     // Potentially > NUM_CELLS - 1, but since the upper index is <= NUM_CELLS - 1, not exploitable
     return MAX(0, index);
@@ -213,13 +197,6 @@ static s32 upper_cell_index(s32 coord) {
 
     // [0, NUM_CELLS)
     s32 index = coord / CELL_SIZE;
-
-    // Include extra cell if close to boundary
-    //! Some wall checks are larger than the buffer, meaning wall checks can
-    //  miss walls that are near a cell border.
-    if (coord % CELL_SIZE > CELL_SIZE - 50) {
-        index++;
-    }
 
     // Potentially < 0, but since lower index is >= 0, not exploitable
     return MIN((NUM_CELLS - 1), index);
@@ -263,7 +240,7 @@ static struct Surface *read_surface_data(TerrainData *vertexData, TerrainData **
     Vec3t offset;
     s16 min, max;
 
-    vec3_prod_val(offset, (*vertexIndices), 3);
+    vec3_scale_dest(offset, (*vertexIndices), 3);
 
     vec3s_copy(v[0], (vertexData + offset[0]));
     vec3s_copy(v[1], (vertexData + offset[1]));
@@ -280,7 +257,7 @@ static struct Surface *read_surface_data(TerrainData *vertexData, TerrainData **
     }
 #endif
     mag = 1.0f / sqrtf(mag);
-    vec3_mul_val(n, mag);
+    vec3_scale(n, mag);
 
     struct Surface *surface = alloc_surface(dynamic);
 
@@ -512,7 +489,9 @@ void load_area_terrain(s32 index, TerrainData *data, RoomData *surfaceRooms, s16
     sNumCellsUsed = 0;
     sClearAllCells = TRUE;
 
-    clear_static_surfaces();
+    // Clear the static (level) surface partitions for new use.
+    bzero(gStaticSurfacePartition, sizeof(gStaticSurfacePartition));
+    gTotalStaticSurfaceData = 0;
 
     // Initialise a new surface pool for this block of static surface data
     gCurrStaticSurfacePool = main_pool_alloc(main_pool_available() - 0x10, MEMORY_POOL_LEFT);
@@ -575,10 +554,10 @@ void clear_dynamic_surfaces(void) {
         gSurfaceNodesAllocated = gNumStaticSurfaceNodes;
         gDynamicSurfacePoolEnd = gDynamicSurfacePool;
         if (sClearAllCells) {
-            clear_spatial_partition(&gDynamicSurfacePartition[0][0]);
+            bzero(gDynamicSurfacePartition, sizeof(gDynamicSurfacePartition));
         } else {
             for (u32 i = 0; i < sNumCellsUsed; i++) {
-                gDynamicSurfacePartition[sCellsUsed[i].z][sCellsUsed[i].x][sCellsUsed[i].partition].next = NULL;
+                gDynamicSurfacePartition[sCellsUsed[i].z][sCellsUsed[i].x][sCellsUsed[i].partition] = NULL;
             }
         }
         sNumCellsUsed = 0;
@@ -707,8 +686,9 @@ void load_object_collision_model(void) {
     PUPPYPRINT_GET_SNAPSHOT();
     TerrainData *collisionData = o->collisionData;
 
-    f32 sqrLateralDist;
-    vec3f_get_lateral_dist_squared(&o->oPosVec, &gMarioObject->oPosVec, &sqrLateralDist);
+    Vec3f dist;
+    vec3_diff(dist, &o->oPosVec, &gMarioObject->oPosVec);
+    f32 sqrLateralDist = sqr(dist[0]) + sqr(dist[2]);
 
     f32 verticalMarioDiff = gMarioObject->oPosY - o->oPosY;
 

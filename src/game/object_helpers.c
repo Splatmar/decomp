@@ -26,7 +26,6 @@
 #include "rendering_graph_node.h"
 #include "spawn_object.h"
 #include "spawn_sound.h"
-#include "puppylights.h"
 #include "course_table.h"
 
 static s32 clear_move_flag(u32 *bitSet, s32 flag);
@@ -117,6 +116,40 @@ Gfx *geo_switch_anim_state(s32 callContext, struct GraphNode *node, UNUSED void 
     }
 
     return NULL;
+}
+
+/**
+ * Geo switch that let you manipulate the prim color
+ */
+Gfx *geo_change_prim_color(s32 callContext, struct GraphNode *node, UNUSED s32 context) {
+    Gfx *gfxHead = NULL;
+
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct Object *obj = (struct Object *) gCurGraphNodeObject;
+
+        u8 redValue = GET_REDVALUE(obj->oRGBAValue);
+        u8 greenValue = GET_GREENVALUE(obj->oRGBAValue);
+        u8 blueValue = GET_BLUEVALUE(obj->oRGBAValue);
+        u8 alphaValue = GET_ALPHAVALUE(obj->oRGBAValue);
+
+        struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+        s32 parameter = currentGraphNode->parameter;
+
+        #if SILHOUETTE
+        // shift by 5 if SILHOUETTE is active since it add 5 layer
+        parameter += 5;
+        #endif
+
+        gfxHead = alloc_display_list(sizeof(Gfx) * 2);
+        // IMPORTANT TO MAKE IT WORKS
+        SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_TRANSPARENT);
+
+        Gfx *gfx = gfxHead;
+        gDPSetPrimColor(gfx++, 0, 0, redValue, greenValue, blueValue, alphaValue);
+        gSPEndDisplayList(gfx);
+    }
+
+    return gfxHead;
 }
 
 Gfx *geo_switch_area(s32 callContext, struct GraphNode *node, UNUSED void *context) {
@@ -470,16 +503,16 @@ void obj_set_gfx_pos_from_pos(struct Object *obj) {
 }
 
 void obj_init_animation(struct Object *obj, s32 animIndex) {
-    struct Animation **anims = o->oAnimations;
+    struct Animation **anims = obj->oAnimations;
     geo_obj_init_animation(&obj->header.gfx, &anims[animIndex]);
 }
 
 void obj_apply_scale_to_transform(struct Object *obj) {
     Vec3f scale;
     vec3f_copy(scale, obj->header.gfx.scale);
-    vec3_mul_val(obj->transform[0], scale[0]);
-    vec3_mul_val(obj->transform[1], scale[1]);
-    vec3_mul_val(obj->transform[2], scale[2]);
+    vec3_scale(obj->transform[0], scale[0]);
+    vec3_scale(obj->transform[1], scale[1]);
+    vec3_scale(obj->transform[2], scale[2]);
 }
 
 void obj_copy_scale(struct Object *dst, struct Object *src) {
@@ -662,7 +695,7 @@ static s32 obj_bparam_ckeck(struct Object *obj, s32 bparamToCheck, s32 unused, f
     return operation_check(operator, value, wantedValue);
 }
 
-static struct Object *cur_obj_find_nearest_object_with_behavior_and_func(const BehaviorScript *behavior, f32 *dist, s32 fieldOrBparamToCheck, s32 objFieldType, f32 wantedValue, s32 operator, s32 (*func)(struct Object *, s32, s32, f32, f32)){
+static struct Object *cur_obj_find_nearest_object_with_behavior_and_func(const BehaviorScript *behavior, f32 *dist, s32 fieldOrBparamToCheck, s32 objFieldType, f32 wantedValue, s32 operator, s32 (*func)(struct Object *, s32, s32, f32, s32)){
     uintptr_t *behaviorAddr = segmented_to_virtual(behavior);
     struct ObjectNode *listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
     struct Object *obj = (struct Object *) listHead->next;
@@ -993,9 +1026,6 @@ s32 cur_obj_clear_interact_status_flag(s32 flag) {
  * Mark an object to be unloaded at the end of the frame.
  */
 void obj_mark_for_deletion(struct Object *obj) {
-#ifdef PUPPYLIGHTS
-    obj_disable_light(obj);
-#endif
     //! This clears all activeFlags. Since some of these flags disable behavior,
     //  setting it to 0 could potentially enable unexpected behavior. After an
     //  object is marked for deletion, it still updates on that frame (I think),
@@ -1163,6 +1193,14 @@ static void cur_obj_move_update_ground_air_flags(UNUSED f32 gravity, f32 bouncin
         if (clear_move_flag(&o->oMoveFlags, OBJ_MOVE_ON_GROUND)) {
             o->oMoveFlags |= OBJ_MOVE_LEFT_GROUND;
         }
+    }
+
+    o->oMoveFlags &= ~(OBJ_MOVE_ABOVE_LAVA | OBJ_MOVE_ABOVE_DEATH_BARRIER);
+    if (o->oFloorType == SURFACE_BURNING) {
+        o->oMoveFlags |= OBJ_MOVE_ABOVE_LAVA;
+    } else if ((o->oFloorType == SURFACE_DEATH_PLANE) || (o->oFloorType == SURFACE_VERTICAL_WIND) || (o->oFloorType == SURFACE_NEW_VERTICAL_WIND)) {
+        //! This maybe misses SURFACE_WARP
+        o->oMoveFlags |= OBJ_MOVE_ABOVE_DEATH_BARRIER;
     }
 
     o->oMoveFlags &= ~OBJ_MOVE_MASK_IN_WATER;
@@ -1493,13 +1531,6 @@ static void cur_obj_update_floor(void) {
 
     if (floor != NULL) {
         SurfaceType floorType = floor->type;
-        if (floorType == SURFACE_BURNING) {
-            o->oMoveFlags |= OBJ_MOVE_ABOVE_LAVA;
-        } else if ((floorType == SURFACE_DEATH_PLANE) || (floorType == SURFACE_VERTICAL_WIND)) {
-            //! This maybe misses SURFACE_WARP
-            o->oMoveFlags |= OBJ_MOVE_ABOVE_DEATH_BARRIER;
-        }
-
         o->oFloorType = floorType;
         o->oFloorRoom = floor->room;
     } else {
@@ -1509,8 +1540,6 @@ static void cur_obj_update_floor(void) {
 }
 
 static void cur_obj_update_floor_and_resolve_wall_collisions(s16 steepSlopeDegrees) {
-    o->oMoveFlags &= ~(OBJ_MOVE_ABOVE_LAVA | OBJ_MOVE_ABOVE_DEATH_BARRIER);
-
     if (o->activeFlags & (ACTIVE_FLAG_FAR_AWAY | ACTIVE_FLAG_IN_DIFFERENT_ROOM)) {
         cur_obj_update_floor();
         o->oMoveFlags &= ~(OBJ_MOVE_HIT_WALL | OBJ_MOVE_MASK_IN_WATER);

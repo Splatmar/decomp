@@ -462,7 +462,7 @@ u32 mario_get_terrain_sound_addend(struct MarioState *m) {
         if ((gCurrLevelNum != LEVEL_LLL) && (m->floorHeight < (m->waterLevel - 10))) {
             // Water terrain sound, excluding LLL since it uses water in the volcano.
             ret = SOUND_TERRAIN_WATER << 16;
-        } else if (SURFACE_IS_QUICKSAND(floorType)) {
+        } else if (SURFACE_IS_QUICKSAND(floorType) || floorType == SURFACE_SAND) {
             ret = SOUND_TERRAIN_SAND << 16;
         } else {
             switch (floorType) {
@@ -1706,7 +1706,8 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
     s32 inLoop = TRUE;
 
     // Updates once per frame:
-    vec3f_get_dist_and_lateral_dist_and_angle(gMarioState->prevPos, gMarioState->pos, &gMarioState->moveSpeed, &gMarioState->lateralSpeed, &gMarioState->movePitch, &gMarioState->moveYaw);
+    vec3f_get_dist_and_angle(gMarioState->prevPos, gMarioState->pos, &gMarioState->moveSpeed, &gMarioState->movePitch, &gMarioState->moveYaw);
+    vec3f_get_lateral_dist(gMarioState->prevPos, gMarioState->pos, &gMarioState->lateralSpeed);
     vec3f_copy(gMarioState->prevPos, gMarioState->pos);
 
     if (gMarioState->action) {
@@ -1778,7 +1779,7 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
             play_sound(SOUND_ENV_WIND2, gMarioState->marioObj->header.gfx.cameraToObject);
         }
 
-        if (gMarioState->floor->type == SURFACE_VERTICAL_WIND || gMarioState->floor->type == SURFACE_NEW_VERTICAL_WIND) {
+        if (SURFACE_IS_VERTICAL_WIND(gMarioState->floor->type)) {
             spawn_wind_particles(1, 0);
             play_sound(SOUND_ENV_WIND2, gMarioState->marioObj->header.gfx.cameraToObject);
         }

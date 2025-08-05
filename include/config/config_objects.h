@@ -17,7 +17,7 @@
 /**
  * Moving Coins flicker and disappear when they hit lava instead of being instantly deleted.
  */
-#define COIN_LAVA_FLICKER
+// #define COIN_LAVA_FLICKER
 
 /**
  * Allows for retries on collecting the remaining blue coins from a blue coin switch.
@@ -28,6 +28,11 @@
  * Allow previewing blue coin locations from a blue coin switch when Mario is standing on the blue coin switch.
  */
 // #define BLUE_COIN_SWITCH_PREVIEW
+
+/**
+ * Allow to collect the red coins in differente areas, the last red coin will make the star spawn above Mario
+ */
+ #define CROSS_AREA_RED_COINS
 
 /****************
  * -- GOOMBA --
@@ -56,7 +61,7 @@
 /**
  * Causes leaf particles to occasionally fall from trees which contain Hoot.
  */
-#define HOOT_TREE_PARTICLES
+// #define HOOT_TREE_PARTICLES
 
 /**************
  * -- MR I --
@@ -129,3 +134,12 @@
  * The number of segments Wiggler has, not including the head. Vanilla is 4.
  */
 #define WIGGLER_NUM_SEGMENTS     4
+
+/*********************
+ * -- KOOPA SHELL --
+ *********************/
+
+/**
+ * Falling from a platform with allows coyote time frame
+ */
+#define KOOPA_SHELL_COYOTE_TIME  10

@@ -16,8 +16,7 @@ struct WarpNode {
 
 struct ObjectWarpNode {
     /*0x00*/ struct WarpNode node;
-    /*0x04*/ struct Object *object;
-    /*0x08*/ struct ObjectWarpNode *next;
+    /*0x04*/ struct ObjectWarpNode *next;
 };
 
 struct InstantWarp {
@@ -147,12 +146,21 @@ enum MenuOption {
     MENU_OPT_1,
     MENU_OPT_2,
     MENU_OPT_3,
+#ifdef ENABLE_RESET_COURSE
+    MENU_OPT_4,
+#endif
     MENU_OPT_DEFAULT = MENU_OPT_1,
 
     // Course Pause Menu
     MENU_OPT_CONTINUE = MENU_OPT_1,
+#ifdef ENABLE_RESET_COURSE
+    MENU_OPT_RESET_COURSE = MENU_OPT_2,
+    MENU_OPT_EXIT_COURSE = MENU_OPT_3,
+    MENU_OPT_CAMERA_ANGLE_R = MENU_OPT_4,
+#else
     MENU_OPT_EXIT_COURSE = MENU_OPT_2,
     MENU_OPT_CAMERA_ANGLE_R = MENU_OPT_3,
+#endif
 
     // Save Menu
     MENU_OPT_SAVE_AND_CONTINUE = MENU_OPT_1,
@@ -185,6 +193,7 @@ void override_viewport_and_clip(Vp *a, Vp *b, u8 c, u8 d, u8 e);
 void print_intro_text(void);
 u32 get_mario_spawn_type(struct Object *obj);
 struct ObjectWarpNode *area_get_warp_node(u8 id);
+struct Object *get_destination_warp_object(u8 warpDestId);
 void clear_areas(void);
 void clear_area_graph_nodes(void);
 void load_area(s32 index);

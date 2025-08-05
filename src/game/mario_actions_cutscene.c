@@ -404,6 +404,12 @@ s32 act_waiting_for_dialog(struct MarioState *m) {
     return FALSE;
 }
 
+s32 act_cutscene_controlled(struct MarioState *m) {
+    vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
+    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
+    return FALSE;
+}
+
 // makes Mario disappear and triggers warp
 s32 act_disappeared(struct MarioState *m) {
     set_mario_animation(m, MARIO_ANIM_A_POSE);
@@ -517,6 +523,10 @@ s32 act_debug_free_move(struct MarioState *m) {
     struct WallCollisionData wallData;
     struct Surface *floor, *ceil;
     Vec3f pos;
+
+    if (gPlayer1Controller->buttonPressed & L_TRIG) {
+        m->health = 0x880;
+    }
 
     f32 speed = (gPlayer1Controller->buttonDown & B_BUTTON) ? 4.0f : 1.0f;
     if (gPlayer1Controller->buttonDown & Z_TRIG) speed = 0.01f;
@@ -2659,6 +2669,7 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
         case ACT_READING_SIGN:               cancel = act_reading_sign(m);               break;
         case ACT_JUMBO_STAR_CUTSCENE:        cancel = act_jumbo_star_cutscene(m);        break;
         case ACT_WAITING_FOR_DIALOG:         cancel = act_waiting_for_dialog(m);         break;
+        case ACT_CUTSCENE_CONTROLLED:        cancel = act_cutscene_controlled(m);         break;
         case ACT_STANDING_DEATH:             cancel = act_standing_death(m);             break;
         case ACT_QUICKSAND_DEATH:            cancel = act_quicksand_death(m);            break;
         case ACT_ELECTROCUTION:              cancel = act_electrocution(m);              break;

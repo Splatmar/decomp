@@ -209,7 +209,11 @@ u32 mario_update_moving_sand(struct MarioState *m) {
 u32 mario_update_windy_ground(struct MarioState *m) {
     struct Surface *floor = m->floor;
 
+#ifdef WIND_RESISTANT_METAL_CAP
+    if (floor->type == SURFACE_HORIZONTAL_WIND && !(m->flags & MARIO_METAL_CAP)) {
+#else
     if (floor->type == SURFACE_HORIZONTAL_WIND) {
+#endif
         f32 pushSpeed;
         s16 pushAngle = floor->force << 8;
 
@@ -245,8 +249,9 @@ u32 mario_update_moving_conveyor(struct MarioState *m) {
         s16 pushAngle = floor->force << 8;
         f32 pushSpeed = floor->force >> 8;
 
-        m->vel[0] += pushSpeed * sins(pushAngle);
-        m->vel[2] += pushSpeed * coss(pushAngle);
+        // divide by 2 to be more precise
+        m->vel[0] += ((f32)(pushSpeed) / 2) * sins(pushAngle);
+        m->vel[2] += ((f32)(pushSpeed) / 2) * coss(pushAngle);
 
         return TRUE;
     }
@@ -678,15 +683,19 @@ void apply_vertical_wind(struct MarioState *m) {
     f32 maxVelY;
     f32 offsetY;
 
+#ifdef WIND_RESISTANT_METAL_CAP
+    if (m->action != ACT_GROUND_POUND && !(m->flags & MARIO_METAL_CAP)) {
+#else
     if (m->action != ACT_GROUND_POUND) {
-        if(m->floor->type == SURFACE_NEW_VERTICAL_WIND) {
+#endif
+        if(m->floor->type == SURFACE_NEW_VERTICAL_WIND || m->floor->type == SURFACE_NEW_VERTICAL_WIND_NO_DEATH) {
             s16 height = m->floor->force;
             offsetY = m->pos[1] - height;
         } else {
             offsetY = m->pos[1] - -1500.0f;
         }
         
-        if ((m->floor->type == SURFACE_VERTICAL_WIND || m->floor->type == SURFACE_NEW_VERTICAL_WIND) && -3000.0f < offsetY && offsetY < 2000.0f) {
+        if (SURFACE_IS_VERTICAL_WIND(m->floor->type) && -3000.0f < offsetY && offsetY < 2000.0f) {
             if (offsetY >= 0.0f) {
                 maxVelY = 10000.0f / (offsetY + 200.0f);
             } else {

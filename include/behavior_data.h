@@ -459,6 +459,7 @@ extern const BehaviorScript bhvFloombaTripletSpawner[];
 #endif
 extern const BehaviorScript bhvChainChomp[];
 extern const BehaviorScript bhvChainChompChainPart[];
+//extern const BehaviorScript bhvSmallJumpingChainChomp[];
 extern const BehaviorScript bhvWoodenPost[];
 extern const BehaviorScript bhvChainChompGate[];
 extern const BehaviorScript bhvWigglerHead[];
@@ -546,4 +547,6 @@ extern const BehaviorScript bhvScale[];
 extern const BehaviorScript bhvPlane[];
 extern const BehaviorScript bhvObstacleManager[];
 extern const BehaviorScript bhvFireball[];
+extern const BehaviorScript bhvCubePlatform[];
+
 #endif // BEHAVIOR_DATA_H

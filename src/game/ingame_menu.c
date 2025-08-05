@@ -731,11 +731,11 @@ void handle_menu_scrolling(s8 scrollDirection, s8 *currentIndex, s8 minIndex, s8
     u8 index = 0;
 
     if (scrollDirection == MENU_SCROLL_VERTICAL) {
-        if ((gPlayer1Controller->rawStickY >  60) || (gPlayer1Controller->buttonDown & (U_CBUTTONS | U_JPAD))) index++;
-        if ((gPlayer1Controller->rawStickY < -60) || (gPlayer1Controller->buttonDown & (D_CBUTTONS | D_JPAD))) index += 2;
+        if (gPlayer1Controller->rawStickY >  60) index++;
+        if (gPlayer1Controller->rawStickY < -60) index += 2;
     } else if (scrollDirection == MENU_SCROLL_HORIZONTAL) {
-        if ((gPlayer1Controller->rawStickX >  60) || (gPlayer1Controller->buttonDown & (R_CBUTTONS | R_JPAD))) index += 2;
-        if ((gPlayer1Controller->rawStickX < -60) || (gPlayer1Controller->buttonDown & (L_CBUTTONS | L_JPAD))) index++;
+        if (gPlayer1Controller->rawStickX >  60) index += 2;
+        if (gPlayer1Controller->rawStickX < -60) index++;
     }
 
     if (((index ^ gMenuHoldKeyIndex) & index) == 2) {
@@ -1717,16 +1717,24 @@ void render_pause_red_coins(void) {
 
 /// By default, not needed as puppycamera has an option, but should you wish to revert that, you are legally allowed.
 
+#ifdef ENABLE_RESET_COURSE
+    #define TEXT_ASPECT_RATION_Y 15
+    #define TEXT_PRESS_L_Y 2
+#else
+    #define TEXT_ASPECT_RATION_Y 20
+    #define TEXT_PRESS_L_Y 7
+#endif
+
 #if defined(WIDE) && !defined(PUPPYCAM)
 void render_widescreen_setting(void) {
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
     if (!gConfig.widescreen) {
-        print_generic_string(10, 20, textCurrRatio43);
-        print_generic_string(10,  7, textPressL);
+        print_generic_string(10, TEXT_ASPECT_RATION_Y, textCurrRatio43);
+        print_generic_string(10, TEXT_PRESS_L_Y, textPressL);
     } else {
-        print_generic_string(10, 20, textCurrRatio169);
-        print_generic_string(10,  7, textPressL);
+        print_generic_string(10, TEXT_ASPECT_RATION_Y, textCurrRatio169);
+        print_generic_string(10, TEXT_PRESS_L_Y, textPressL);
     }
     gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
     if (gPlayer1Controller->buttonPressed & L_TRIG){
@@ -1855,21 +1863,44 @@ void render_pause_camera_options(s16 x, s16 y, s8 *index, s16 xIndex) {
 #define X_VAL8 4
 #define Y_VAL8 2
 
+#ifdef ENABLE_RESET_COURSE
+    #define TEXT_CONTINUE_Y_OFFSET 2
+    #define TEXT_RESET_COURSE_Y_OFFSET 17
+    #define TEXT_EXIT_COURSE_Y_OFFSET 32
+    #define TEXT_CAMERA_ANGLE_R_Y_OFFSET 47
+    #define MENU_OPT_CAMERA_ANGLE_R_Y_OFFSET 49
+#else
+    #define TEXT_CONTINUE_Y_OFFSET 2
+    #define TEXT_EXIT_COURSE_Y_OFFSET 17
+    #define TEXT_CAMERA_ANGLE_R_Y_OFFSET 33
+    #define MENU_OPT_CAMERA_ANGLE_R_Y_OFFSET 42
+#endif
+
+
 void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
     u8 textContinue[] = { TEXT_CONTINUE };
     u8 textExitCourse[] = { TEXT_EXIT_COURSE };
     u8 textCameraAngleR[] = { TEXT_CAMERA_ANGLE_R };
 
+#ifdef ENABLE_RESET_COURSE
+    u8 textResetCourse[] = { TEXT_RESET_COURSE };
+    handle_menu_scrolling(MENU_SCROLL_VERTICAL, index, 1, 4);
+#else
     handle_menu_scrolling(MENU_SCROLL_VERTICAL, index, 1, 3);
+#endif
 
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
 
-    print_generic_string(x + 10, y - 2, LANGUAGE_ARRAY(textContinue));
-    print_generic_string(x + 10, y - 17, LANGUAGE_ARRAY(textExitCourse));
+    print_generic_string(x + 10, y - TEXT_CONTINUE_Y_OFFSET, LANGUAGE_ARRAY(textContinue));
+
+#ifdef ENABLE_RESET_COURSE
+    print_generic_string(x + 10, y - TEXT_RESET_COURSE_Y_OFFSET, LANGUAGE_ARRAY(textResetCourse));
+#endif
+    print_generic_string(x + 10, y - TEXT_EXIT_COURSE_Y_OFFSET, LANGUAGE_ARRAY(textExitCourse));
 
     if (*index != MENU_OPT_CAMERA_ANGLE_R) {
-        print_generic_string(x + 10, y - 33, LANGUAGE_ARRAY(textCameraAngleR));
+        print_generic_string(x + 10, y - TEXT_CAMERA_ANGLE_R_Y_OFFSET, LANGUAGE_ARRAY(textCameraAngleR));
         gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
 
         create_dl_translation_matrix(MENU_MTX_PUSH, x - X_VAL8, (y - ((*index - 1) * yIndex)) - Y_VAL8, 0);
@@ -1880,7 +1911,7 @@ void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
     }
 
     if (*index == MENU_OPT_CAMERA_ANGLE_R) {
-        render_pause_camera_options(x - 42, y - 42, &gDialogCameraAngleIndex, 110);
+        render_pause_camera_options(x - 42, y - MENU_OPT_CAMERA_ANGLE_R_Y_OFFSET, &gDialogCameraAngleIndex, 110);
     }
 }
 
@@ -2085,8 +2116,11 @@ s32 render_pause_courses_and_castle(void) {
                 play_sound(SOUND_MENU_PAUSE_CLOSE, gGlobalSoundSource);
                 gDialogBoxState = DIALOG_STATE_OPENING;
                 gMenuMode = MENU_MODE_NONE;
-
+#ifdef ENABLE_RESET_COURSE
+                if ((gDialogLineNum == MENU_OPT_EXIT_COURSE) | (gDialogLineNum == MENU_OPT_RESET_COURSE)) {
+#else
                 if (gDialogLineNum == MENU_OPT_EXIT_COURSE) {
+#endif
                     index = gDialogLineNum;
                 } else { // MENU_OPT_CONTINUE or MENU_OPT_CAMERA_ANGLE_R
                     index = MENU_OPT_DEFAULT;
@@ -2102,7 +2136,7 @@ s32 render_pause_courses_and_castle(void) {
             render_pause_castle_menu_box(160, 143);
             render_pause_castle_main_strings(104, 60);
 
-            if (gPlayer1Controller->buttonPressed & (A_BUTTON | START_BUTTON | Z_TRIG)) {
+            if (gPlayer1Controller->buttonPressed & (A_BUTTON | START_BUTTON)) {
                 level_set_transition(0, NULL);
                 play_sound(SOUND_MENU_PAUSE_CLOSE, gGlobalSoundSource);
                 gMenuMode = MENU_MODE_NONE;

@@ -81,6 +81,28 @@ void bhv_red_coin_loop(void) {
             }
 #endif
         }
+#ifdef CROSS_AREA_RED_COINS
+        // no red coin star marker activate the cross-area red coin star
+        else {
+            gRedCoinsCollected++;
+
+            if (gRedCoinsCollected == 8) {
+                bhv_spawn_star_at_object(GET_BPARAM1(o->oBehParams), gMarioObject, COURSE_IS_MAIN_COURSE(gCurrCourseNum), FALSE);
+            } else {
+                if (gRedCoinsCollected > 99) {
+                    spawn_orange_number(9, 28, 0, 0);
+                    spawn_orange_number(9, -28, 0, 0);
+                } else if (gRedCoinsCollected >= 10) {
+                    spawn_orange_number(gRedCoinsCollected % 10, 28, 0, 0);
+                    spawn_orange_number(gRedCoinsCollected / 10, -28, 0, 0);
+                } else {
+                    spawn_orange_number(gRedCoinsCollected, 0, 0, 0);
+                }
+            }
+
+            play_sound(SOUND_MENU_COLLECT_RED_COIN + (((u8) 7 - (8 - gRedCoinsCollected)) << 16), gGlobalSoundSource);
+        }
+#endif
 
         coin_collected();
         // Despawn the coin.

@@ -250,6 +250,11 @@
 #define TEXT_MYSCORE _("MYSCORE")
 #define TEXT_CONTINUE _("CONTINUE")
 #define TEXT_EXIT_COURSE _("EXIT COURSE")
+
+#ifdef CUSTOM_EXIT_COURSE
+    #define TEXT_RESET_COURSE _("RESET COURSE")
+#endif
+
 #ifndef VERSION_EU // "R" text is different in EU
 #define TEXT_CAMERA_ANGLE_R _("SET CAMERA ANGLE WITH R")
 #endif

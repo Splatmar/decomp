@@ -47,10 +47,8 @@ enum ObjFlags {
     OBJ_FLAG_1000                              = (1 << 12), // 0x00001000
     OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO            = (1 << 13), // 0x00002000
     OBJ_FLAG_PERSISTENT_RESPAWN                = (1 << 14), // 0x00004000
-    OBJ_FLAG_VELOCITY_PLATFORM                 = (1 << 15), // 0x00008000
+    OBJ_FLAG_NO_AUTO_DISPLACEMENT              = (1 << 15), // 0x00008000
     OBJ_FLAG_DONT_CALC_COLL_DIST               = (1 << 16), // 0x00010000
-    OBJ_FLAG_UCODE_SMALL                       = (1 << 17), // 0x00020000
-    OBJ_FLAG_UCODE_LARGE                       = (1 << 18), // 0x00040000
     OBJ_FLAG_SILHOUETTE                        = (1 << 19), // 0x00080000
     OBJ_FLAG_OCCLUDE_SILHOUETTE                = (1 << 20), // 0x00100000
     OBJ_FLAG_OPACITY_FROM_CAMERA_DIST          = (1 << 21), // 0x00200000
@@ -216,7 +214,15 @@ enum ActiveParticleFlags {
 #define BPARAM3 GET_BPARAM3(o->oBehParams)
 #define BPARAM4 GET_BPARAM4(o->oBehParams)
 
+#define SET_ALPHAVALUE(behParams, val) SET_BPARAM1((behParams), val)
+#define SET_BLUEVALUE(behParams, val) SET_BPARAM2((behParams), val)
+#define SET_GREENVALUE(behParams, val) SET_BPARAM3((behParams), val)
+#define SET_REDVALUE(behParams, val) SET_BPARAM4((behParams), val)
 
+#define GET_ALPHAVALUE(behParams) GET_BPARAMS((behParams), 1, 1)
+#define GET_BLUEVALUE(behParams) GET_BPARAMS((behParams), 2, 1)
+#define GET_GREENVALUE(behParams) GET_BPARAMS((behParams), 3, 1)
+#define GET_REDVALUE(behParams) GET_BPARAMS((behParams), 4, 1)
 
 /* oBehParams2ndByte */
 enum ObjGeneralBehParams {
