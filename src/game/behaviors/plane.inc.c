@@ -7,7 +7,7 @@ void plane_stick_control(void){
 void bhv_rotate_plane_loop(void){
     //display the control gif for a short time
     if(o->oTimer < 100) {
-        render_plane_control_image(160, 160, 255, o->oTimer % 2);
+     //   render_plane_control_image(160, 160, 255, o->oTimer % 2);
     }
 
     plane_stick_control();
