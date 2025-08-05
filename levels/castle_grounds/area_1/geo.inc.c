@@ -3,9 +3,9 @@
 const GeoLayout castle_grounds_area_1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 18, 3166, -11741, 90, 0, 169, castle_grounds_dl_avion_mesh_layer_5),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 18, 3166, -11741, 90, 0, 169, castle_grounds_dl_avion_mesh_layer_1),
 		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_OPAQUE, castle_grounds_dl_avion_mesh_layer_1),
+			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, castle_grounds_dl_avion_mesh_layer_5),
 		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 6300, 1000, -13600, 18, 77, -4, castle_grounds_dl_champitron_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 6300, 600, -12900, 18, 77, -4, castle_grounds_dl_champitron_001_mesh_layer_1),

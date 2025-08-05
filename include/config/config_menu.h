@@ -30,7 +30,7 @@
 /**
  * Enable to reset a course using the pause menu, so it can be different in each level
  */
-//#define ENABLE_RESET_COURSE
+#define ENABLE_RESET_COURSE
 
 #define RESET_COURSE_AREA 0x01
 #define RESET_COURSE_NODE 0x0A
