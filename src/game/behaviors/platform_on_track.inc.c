@@ -1,4 +1,4 @@
-
+#include "actors/train/collision_header.h"
 /**
  * Behavior for bhvPlatformOnTrack and bhvTrackBall.
  * The platform spawns up to 5 track balls at a time, which then despawn
@@ -13,6 +13,7 @@ static Collision const *sPlatformOnTrackCollisionModels[] = {
     /* PLATFORM_ON_TRACK_TYPE_SKI_LIFT  */ ccm_seg7_collision_ropeway_lift,
     /* PLATFORM_ON_TRACK_TYPE_CHECKERED */ checkerboard_platform_seg8_collision_platform,
     /* PLATFORM_ON_TRACK_TYPE_GRATE     */ bitfs_seg7_collision_platform_on_track,
+    /* PLATFORM_DE_SPLATMAR             */ train_collision,
 };
 
 /**
@@ -136,6 +137,7 @@ static void platform_on_track_mario_not_on_platform(void) {
  * Init function for bhvPlatformOnTrack.
  */
 void bhv_platform_on_track_init(void) {
+    
     if (!(o->activeFlags & ACTIVE_FLAG_IN_DIFFERENT_ROOM)) {
         s16 pathIndex = (u16)(o->oBehParams >> 16) & PLATFORM_ON_TRACK_BP_MASK_PATH;
         o->oPlatformOnTrackType = ((u16)(o->oBehParams >> 16) & PLATFORM_ON_TRACK_BP_MASK_TYPE) >> 4;
@@ -210,7 +212,9 @@ static void platform_on_track_act_wait_for_mario(void) {
 /**
  * Move along the track. After reaching the end, either start falling,
  * return to the init action, or continue moving back to the start waypoint.
+ * 
  */
+ 
 static void platform_on_track_act_move_along_track(void) {
     s16 initialAngle;
 

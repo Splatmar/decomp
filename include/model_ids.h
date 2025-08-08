@@ -179,7 +179,7 @@
 #define MODEL_RR_TRICKY_TRIANGLES_FRAME4          0x45        // rr_geo_0009B8
 
 // castle grounds
-
+#define MODEL_RR_ROTATING_BRIDGE_PLATFORM         0x01        // geo_train
 // bitdw
 #define MODEL_BITDW_SQUARE_PLATFORM               0x36        // geo_bitdw_000558
 #define MODEL_BITDW_SEESAW_PLATFORM               0x37        // geo_bitdw_000540
@@ -464,7 +464,7 @@
 #define MODEL_RED_FLAME                   0x90        // red_flame_geo
 #define MODEL_BLUE_FLAME                  0x91        // blue_flame_geo
 #define MODEL_FIREBALL                    0x92        // blue_flame_geo
-// find me
+#define MODEL_TRAIN         0x93        // geo_train
 #define MODEL_BURN_SMOKE                  0x94        // burn_smoke_geo
 #define MODEL_SPARKLES                    0x95        // sparkles_geo
 #define MODEL_SMOKE                       0x96        // smoke_geo

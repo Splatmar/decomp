@@ -51,6 +51,7 @@ extern const BehaviorScript bhvWarpPipe[];
 extern const BehaviorScript bhvWhitePuffExplosion[];
 extern const BehaviorScript bhvSpawnedStarAtHome[];
 extern const BehaviorScript bhvSpawnedStarAtMario[];
+extern const BehaviorScript bhvPlatformMooving[];
 extern const BehaviorScript bhvMrIBlueCoin[];
 extern const BehaviorScript bhvCoinInsideBoo[];
 extern const BehaviorScript bhvCoinFormationSpawnedCoin[];

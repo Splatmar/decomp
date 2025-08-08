@@ -21,3 +21,4 @@
 #include "champi/geo.inc.c"
 #include "plane/geo.inc.c"
 #include "fireball/geo.inc.c"
+#include "train/geo.inc.c"

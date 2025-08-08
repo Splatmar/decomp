@@ -26,7 +26,34 @@ void bhv_moving_platform_loop(void) {
     
     
 }
+void platform_move_forward(void) {
+    print_text_fmt_int(20, 60, "TIMER: %d", o->oTimer);
 
+    // Détecte Mario proche
+    if (o->oDistanceToMario <= 100 && o->oF4 == 0) {
+        o->oF4 = 1;
+        o->oTimer = 0;
+        o->oVelY = 0.0f; // initialise la vitesse verticale
+    }
+
+    // Si déclenché, avance et incrémente le timer
+    if (o->oF4 == 1) {
+        o->oTimer++;
+
+        // Avance horizontalement tant que le timer < 300
+        if (o->oTimer < 1200) {
+            o->oPosX += 7;
+        }
+
+        // Après 300 frames, commence à descendre progressivement
+        if (o->oTimer >= 1200) {
+            // applique une vitesse verticale progressive
+            o->oVelY -= 0.5f;  // accélération vers le bas
+            if (o->oVelY < -1.5f) o->oVelY = -1.5f; // limite vitesse max
+            o->oPosY += o->oVelY;
+        }
+    }
+}
 void bhv_moving_forward_loop(void){
    if (o->oDistanceToMario <=2500  ){
         
@@ -56,7 +83,6 @@ void bhv_moving_forward_loop(void){
      }
    }
     }
-
 void scale_up_animation() {
     // Vérifier si Mario est assez proche et si l'animation n'a pas déjà commencé
     if (o->oDistanceToMario < 150  && o->oF8 == 0) {

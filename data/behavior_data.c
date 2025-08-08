@@ -53,7 +53,6 @@
 #include "levels/wf/header.h"
 #include "levels/bowser_2/header.h"
 #include "levels/ttm/header.h"
-
 #include "make_const_nonconst.h"
 #include "behavior_data.h"
 
@@ -5341,7 +5340,6 @@ const BehaviorScript bhvMontyMoleRock[] = {
         CALL_NATIVE(bhv_monty_mole_rock_update),
     END_LOOP(),
 };
-
 const BehaviorScript bhvPlatformOnTrack[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
@@ -5349,10 +5347,23 @@ const BehaviorScript bhvPlatformOnTrack[] = {
     CALL_NATIVE(bhv_init_room),
     CALL_NATIVE(bhv_platform_on_track_init),
     BEGIN_LOOP(),
-        CALL_NATIVE(bhv_platform_on_track_update),
+        //CALL_NATIVE(platform_on_track_act_wait_for_mario),
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
+const BehaviorScript bhvPlatformMooving[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    LOAD_COLLISION_DATA(train_collision),
+    CALL_NATIVE(bhv_init_room),
+    BEGIN_LOOP(),
+        
+        CALL_NATIVE(platform_move_forward),
+        CALL_NATIVE(load_object_collision_model),
+        
+    END_LOOP(),
+};
+
 
 const BehaviorScript bhvTrackBall[] = {
     BEGIN(OBJ_LIST_SURFACE),

@@ -2016,6 +2016,10 @@ s32 is_item_in_array(s8 item, s8 *array) {
 
 void bhv_init_room(void) {
     o->oRoom = get_room_at_pos(o->oPosX, o->oPosY, o->oPosZ);
+    
+o->oTimer = 0;
+o->oVelY = 0.0f;
+
 }
 
 s32 cur_obj_is_mario_in_room(void) {

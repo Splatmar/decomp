@@ -38,3 +38,5 @@
 #include "plane/model.inc.c"
 #include "fireball/model.inc.c"
 #include "fireball/collision.inc.c"
+#include "train/model.inc.c"
+#include "train/collision.inc.c"
