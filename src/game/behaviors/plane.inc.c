@@ -54,7 +54,62 @@ void bhv_obstacle_manager_loop(void) {
         o->oF4++;
     }
 }
+static Vec3f lava_positions[5] = {   
+    {7500, -700, 0},
+    {7500, -700,  -400},
+    {7500, -700, 400},
+    {7500, -700, -200},
+    {7500, -700, 200},
+};
 
+void spawn_multiple_fireballs(void) {
+    s32 SPAWN_INTERVAL = 150;
+
+  if (o->oTimer >= SPAWN_INTERVAL) {
+        int nextIndex = random_u16() % 5;
+       Vec3f pos;
+       vec3f_copy(pos,lava_positions[nextIndex]); // pointeur vers la position
+        spawn_object_abs_with_rot(o, 0, MODEL_LAVA_PIQUE,  bhvLavaWave, pos[0], pos[1], pos[2], 0, 0, 0);
+        o->oTimer = 0;
+    }
+}
+void bhv_lavawave_loop(void){
+    switch(o->oAction){
+        case 0 :
+        o->oPosY += 12;
+        o->oPosX -= 5;
+        if(o->oTimer > 45){
+            o->oAction++ ;
+        }
+        break;
+        case 1 :
+        o->oPosX -= 15;
+        if(o->oTimer > 200){
+            o->oAction++ ;
+        }
+        break;
+        case 2:
+        o->oPosY -= 5;
+        o->oPosX -= 5;
+        if(o->oTimer > 100){
+            obj_mark_for_deletion(o);
+        }
+        break;
+    }
+    print_text(10,10,"CAILLOU");
+}
+
+void bhv_gif_loop(void){
+    s32 time = o->oBehParams2ndByte ;
+    s32 nb_img = GET_BPARAM1(o->oBehParams);
+    if(o->oTimer >= time ){
+        o->oTimer=0 ;
+        o->oAnimState++;
+        if(o->oAnimState > nb_img -1){
+            o->oAnimState =0 ;
+        }
+    }
+}
 void bhv_fireball_loop(void) {
     o->oPosZ -= 100.0f;
     

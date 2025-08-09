@@ -17,3 +17,5 @@
 #include "levels/castle_courtyard/areas/1/geo.inc.c"
 
 #include "levels/castle_courtyard/geo.inc.c"
+
+#include "levels/castle_courtyard/gif_stick/geo.inc.c"

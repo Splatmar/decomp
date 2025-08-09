@@ -179,7 +179,7 @@
 #define MODEL_RR_TRICKY_TRIANGLES_FRAME4          0x45        // rr_geo_0009B8
 
 // castle grounds
-#define MODEL_RR_ROTATING_BRIDGE_PLATFORM         0x01        // geo_train
+
 // bitdw
 #define MODEL_BITDW_SQUARE_PLATFORM               0x36        // geo_bitdw_000558
 #define MODEL_BITDW_SEESAW_PLATFORM               0x37        // geo_bitdw_000540
@@ -275,6 +275,9 @@
 #define MODEL_CASTLE_GROUNDS_VCUTM_GRILL          0x36        // castle_grounds_geo_00070C
 #define MODEL_CASTLE_GROUNDS_FLAG                 0x37        // castle_grounds_geo_000660
 #define MODEL_CASTLE_GROUNDS_CANNON_GRILL         0x38        // castle_grounds_geo_000724
+
+//castle courtyard
+#define MODEL_GIF_STICK 0x36 
 
 // pss
 
@@ -468,7 +471,7 @@
 #define MODEL_BURN_SMOKE                  0x94        // burn_smoke_geo
 #define MODEL_SPARKLES                    0x95        // sparkles_geo
 #define MODEL_SMOKE                       0x96        // smoke_geo
-// find me
+#define MODEL_LAVA_PIQUE                      0x97        // lava_geo
 // find me
 // find me
 // find me

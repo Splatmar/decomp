@@ -1,14 +1,14 @@
 extern const GeoLayout train_geo[];
-extern Lights1 train_f3dlite_material_002_lights;
-extern Lights1 train_f3dlite_material_003_lights;
 extern u8 train_texture_indexed_fast64_i8[];
 extern u8 train_SUPER_MARIO_64_8AC74230_0_2_all_ci8[];
 extern u8 train_SUPER_MARIO_64_8AC74230_0_2_all_pal_rgba16[];
 extern u8 train_dent_ia8[];
-extern Vtx train_Cube_mesh_layer_1_vtx_0[184];
+extern Vtx train_Cube_mesh_layer_1_vtx_cull[8];
+extern Vtx train_Cube_mesh_layer_1_vtx_0[155];
 extern Gfx train_Cube_mesh_layer_1_tri_0[];
-extern Vtx train_Cube_mesh_layer_1_vtx_1[23];
+extern Vtx train_Cube_mesh_layer_1_vtx_1[20];
 extern Gfx train_Cube_mesh_layer_1_tri_1[];
+extern Vtx train_Cube_mesh_layer_5_vtx_cull[8];
 extern Vtx train_Cube_mesh_layer_5_vtx_0[4];
 extern Gfx train_Cube_mesh_layer_5_tri_0[];
 extern Gfx mat_train_f3dlite_material[];

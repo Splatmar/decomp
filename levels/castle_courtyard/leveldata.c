@@ -18,3 +18,5 @@
 #include "levels/castle_courtyard/areas/1/movtext.inc.c"
 
 #include "levels/castle_courtyard/leveldata.inc.c"
+
+#include "levels/castle_courtyard/gif_stick/model.inc.c"

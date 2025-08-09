@@ -355,4 +355,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "train/geo_header.h"
 
+#include "lava_pique/geo_header.h"
+
+#include "lava_pique/collision_header.h"
+
 #endif

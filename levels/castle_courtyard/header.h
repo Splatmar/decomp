@@ -23,4 +23,6 @@ extern const LevelScript level_castle_courtyard_entry[];
 
 #include "levels/castle_courtyard/header.inc.h"
 
+#include "levels/castle_courtyard/gif_stick/geo_header.h"
+
 #endif

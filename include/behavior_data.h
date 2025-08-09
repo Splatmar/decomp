@@ -549,5 +549,8 @@ extern const BehaviorScript bhvPlane[];
 extern const BehaviorScript bhvObstacleManager[];
 extern const BehaviorScript bhvFireball[];
 extern const BehaviorScript bhvCubePlatform[];
+extern const BehaviorScript bhvLavaWaveSpawner[];
+extern const BehaviorScript bhvGif[];
+extern const BehaviorScript  bhvLavaWave[];
 
 #endif // BEHAVIOR_DATA_H

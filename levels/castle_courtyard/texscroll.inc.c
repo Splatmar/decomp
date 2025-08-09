@@ -1,6 +1,6 @@
 void scroll_castle_courtyard_dl_Circle_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 39;
+	int count = 24;
 	int height = 32 * 0x20;
 
 	static int currentY = 0;

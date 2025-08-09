@@ -6,17 +6,13 @@
 #include "dialog_ids.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
-
+#include "actors/lava_pique/geo_header.h"
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
 
 #include "actors/common1.h"
 #include "actors/common1.h"
-
-/* Fast64 begin persistent block [includes] */
-/* Fast64 end persistent block [includes] */
-
 #include "make_const_nonconst.h"
 #include "levels/bob/header.h"
 
@@ -46,14 +42,15 @@ const LevelScript level_bob_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_BOB_SEESAW_PLATFORM, bob_geo_000458), 
 	LOAD_MODEL_FROM_GEO(MODEL_BOB_BARS_GRILLS, bob_geo_000470), 
 	LOAD_MODEL_FROM_GEO(MODEL_TRAIN, train_geo), 
-
+	LOAD_MODEL_FROM_GEO(MODEL_LAVA_PIQUE, lava_pique_geo), 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, bob_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_NONE, 3734, 72, 0, 0, 0, 0, 0x00000000, bhvLavaWaveSpawner),
 		MARIO_POS(0x01, 0, -17, 4, 0),
-		OBJECT(MODEL_TRAIN, 1806, -132, -70, 0, 0, 0, (80 << 16), bhvPlatformMooving),
+		OBJECT(MODEL_TRAIN, 2404, -132, 85, 0, 0, 0, (80 << 16), bhvPlatformMooving),
 		TERRAIN(bob_area_1_collision),
 		MACRO_OBJECTS(bob_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),
@@ -61,7 +58,6 @@ const LevelScript level_bob_entry[] = {
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
-
 	FREE_LEVEL_POOL(),
 	MARIO_POS(0x01, 0, -17, 4, 0),
 	CALL(0, lvl_init_or_update),

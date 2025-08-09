@@ -40,3 +40,6 @@
 #include "fireball/collision.inc.c"
 #include "train/model.inc.c"
 #include "train/collision.inc.c"
+
+#include "lava_pique/model.inc.c"
+#include "lava_pique/collision.inc.c"

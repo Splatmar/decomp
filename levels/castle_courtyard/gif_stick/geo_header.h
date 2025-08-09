@@ -1,0 +1,14 @@
+extern const GeoLayout gif_stick_Bone_001_opt1[];
+extern const GeoLayout gif_stick_geo[];
+extern u8 gif_stick_stick_droit_ci8[];
+extern u8 gif_stick_stick_droit_pal_rgba16[];
+extern u8 gif_stick_stick_gauche_ci8[];
+extern u8 gif_stick_stick_gauche_pal_rgba16[];
+extern Vtx gif_stick_Bone_002_mesh_layer_5_vtx_0[4];
+extern Gfx gif_stick_Bone_002_mesh_layer_5_tri_0[];
+extern Gfx mat_gif_stick_f3dlite_material[];
+extern Gfx mat_revert_gif_stick_f3dlite_material[];
+extern Gfx mat_gif_stick_f3dlite_material_001[];
+extern Gfx mat_revert_gif_stick_f3dlite_material_001[];
+extern Gfx gif_stick_Bone_002_mesh_layer_5[];
+extern Gfx gif_stick_Bone_002_mesh_layer_5_mat_override_f3dlite_material_001_0[];

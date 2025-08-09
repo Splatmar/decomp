@@ -5363,6 +5363,30 @@ const BehaviorScript bhvPlatformMooving[] = {
         
     END_LOOP(),
 };
+const BehaviorScript bhvGif[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    BILLBOARD(),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_gif_loop),
+    END_LOOP(),
+};
+const BehaviorScript bhvLavaWaveSpawner[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL)),
+    BEGIN_LOOP(),
+        CALL_NATIVE(spawn_multiple_fireballs),  
+    END_LOOP(),
+};
+const BehaviorScript bhvLavaWave[] ={
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL)),
+    LOAD_COLLISION_DATA(lava_pique_collision),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_lavawave_loop),
+        CALL_NATIVE(load_object_collision_model),  
+    END_LOOP(),
+};
 
 
 const BehaviorScript bhvTrackBall[] = {

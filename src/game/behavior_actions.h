@@ -560,6 +560,9 @@ void bhv_obstacle_manager_init(void);
 void bhv_fireball_loop(void);
 void bhv_move_plan(void);
 void platform_move_forward(void);
+void spawn_multiple_fireballs(void);
+void bhv_gif_loop(void);
+void bhv_lavawave_loop(void) ;
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Bowser
