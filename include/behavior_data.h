@@ -552,5 +552,6 @@ extern const BehaviorScript bhvCubePlatform[];
 extern const BehaviorScript bhvLavaWaveSpawner[];
 extern const BehaviorScript bhvGif[];
 extern const BehaviorScript  bhvLavaWave[];
+extern const BehaviorScript bhvlavaBull[];
 
 #endif // BEHAVIOR_DATA_H

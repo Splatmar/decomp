@@ -43,3 +43,5 @@
 
 #include "lava_pique/model.inc.c"
 #include "lava_pique/collision.inc.c"
+#include "lava_bull/collision.inc.c"
+#include "lava_bull/model.inc.c"

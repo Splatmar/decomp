@@ -472,7 +472,7 @@
 #define MODEL_SPARKLES                    0x95        // sparkles_geo
 #define MODEL_SMOKE                       0x96        // smoke_geo
 #define MODEL_LAVA_PIQUE                      0x97        // lava_geo
-// find me
+#define MODEL_LAVA_BULL                     0x98        // lava_bulle_geo
 // find me
 // find me
 // find me

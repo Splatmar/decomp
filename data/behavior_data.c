@@ -5387,6 +5387,15 @@ const BehaviorScript bhvLavaWave[] ={
         CALL_NATIVE(load_object_collision_model),  
     END_LOOP(),
 };
+const BehaviorScript bhvlavaBull[] ={
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL)),
+    
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_lavaBulle_loop),
+     
+    END_LOOP(),
+};
 
 
 const BehaviorScript bhvTrackBall[] = {

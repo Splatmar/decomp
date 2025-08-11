@@ -27,7 +27,7 @@ void bhv_moving_platform_loop(void) {
     
 }
 void platform_move_forward(void) {
-    print_text_fmt_int(20, 60, "TIMER: %d", o->oTimer);
+    
 
     // Détecte Mario proche
     if (o->oDistanceToMario <= 100 && o->oF4 == 0) {
@@ -51,6 +51,9 @@ void platform_move_forward(void) {
             o->oVelY -= 0.5f;  // accélération vers le bas
             if (o->oVelY < -1.5f) o->oVelY = -1.5f; // limite vitesse max
             o->oPosY += o->oVelY;
+        }
+        if(o->oTimer >=1900){
+            obj_mark_for_deletion(o);
         }
     }
 }

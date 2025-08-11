@@ -73,6 +73,83 @@ void spawn_multiple_fireballs(void) {
         o->oTimer = 0;
     }
 }
+void bhv_lavaBulle_loop(void) {
+    if (o->oTimer == 0 && o->oAction == 0) {
+        o->o10C = (random_u16() % 31); // délai aléatoire 0-30 frames
+
+        // mémoriser position et rotation initiales
+        o->oF4 = o->oPosX;
+        o->o100 = o->oPosY;
+        o->oF8 = o->oPosZ;
+
+        o->oFC = o->oFaceAnglePitch;
+        o->o104 = o->oFaceAngleYaw;
+        o->o110 = o->oFaceAngleRoll;
+    }
+
+    // Phase 0 : attente du délai
+    if (o->oAction == 0) {
+        if (o->oTimer > o->o10C) {
+            o->oAction++;
+            o->oTimer = 0;  // reset timer au début de l'action 1
+        }
+        return; // on ne fait rien d'autre tant que le délai n'est pas passé
+    }
+
+    // Ici, on est dans les phases 1 à 4, on peut utiliser o->oTimer directement
+
+    switch (o->oAction) {
+        case 1:
+            o->oPosY += 45;
+            if (o->oTimer > 11) {
+                o->oAction++;
+                o->oTimer = 0;
+            }
+            break;
+
+        case 2:
+            o->oFaceAnglePitch += 2020;
+            o->oPosY += 14;
+            if (o->oTimer >= 7) {
+                o->oAction++;
+                o->oTimer = 0;
+            }
+            break;
+
+        case 3:
+            o->oFaceAnglePitch += 2020;
+            o->oPosY -= 14;
+            if (o->oTimer >= 7) {
+                o->oAction++;
+                o->oTimer = 0;
+            }
+            break;
+
+        case 4:
+            o->oPosY -= 40;
+            if (o->oTimer > 75) {
+                o->oAction = 0;
+                o->oTimer = 0;
+
+                // reset position initiale
+                o->oPosX = o->oF4;
+                o->oPosY = o->o100;
+                o->oPosZ = o->oF8;
+
+                // reset rotation initiale
+                o->oFaceAnglePitch = o->oFC;
+                o->oFaceAngleYaw = o->o104;
+                o->oFaceAngleRoll = o->o110;
+
+                // reset vitesse
+                o->oVelX = 0;
+                o->oVelY = 0;
+                o->oVelZ = 0;
+            }
+            break;
+    }
+}
+
 void bhv_lavawave_loop(void){
     switch(o->oAction){
         case 0 :
@@ -96,7 +173,7 @@ void bhv_lavawave_loop(void){
         }
         break;
     }
-    print_text(10,10,"CAILLOU");
+    
 }
 
 void bhv_gif_loop(void){
