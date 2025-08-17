@@ -41,12 +41,12 @@ void platform_move_forward(void) {
         o->oTimer++;
 
         // Avance horizontalement tant que le timer < 300
-        if (o->oTimer < 1600) {
+        if (o->oTimer < 1350) {
             o->oPosX += 7;
         }
 
         // Après 300 frames, commence à descendre progressivement
-        if (o->oTimer >= 1600) {
+        if (o->oTimer >= 1350) {
             // applique une vitesse verticale progressive
             o->oVelY -= 0.5f;  // accélération vers le bas
             if (o->oVelY < -1.5f) o->oVelY = -1.5f; // limite vitesse max
