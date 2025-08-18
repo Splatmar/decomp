@@ -24,3 +24,4 @@
 #include "train/geo.inc.c"
 #include "lava_pique/geo.inc.c"
 #include "lava_bull/geo.inc.c"
+#include "grille/geo.inc.c"

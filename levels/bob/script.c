@@ -8,6 +8,7 @@
 #include "level_commands.h"
 #include "actors/lava_bull/geo_header.h"
 #include "actors/lava_pique/geo_header.h"
+#include "actors/grille/geo_header.h"
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
@@ -45,13 +46,16 @@ const LevelScript level_bob_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_TRAIN, train_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_LAVA_PIQUE, lava_pique_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_LAVA_BULL, lava_bull_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_GRILLE, grille_geo), 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, bob_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_GRILLE, 14748, 677, 7167, 0, 0, 0, 0x00000000, breaking_surface),
 		OBJECT(MODEL_NONE, 3734, 72, 0, 0, 0, 0, 0x00000000, bhvLavaWaveSpawner),
 		MARIO_POS(0x01, 0, -17, 4, 0),
+		OBJECT(MODEL_BOBOMB_BUDDY, 14572, -145, 7506, 0, 0, 0, 0x00000000, bhvMonkeyBreakGrill),
 		OBJECT(MODEL_RED_FLAME, 3582, 1378, 1169, 0, 0, 0, 0x00000000, bhvFlameBigger),
 		OBJECT(MODEL_RED_FLAME, 7137, 1378, 1169, 0, 0, 0, 0x00000000, bhvFlameBigger),
 		OBJECT(MODEL_RED_FLAME, 5355, 1378, 1169, 0, 0, 0, 0x00000000, bhvFlameBigger),
@@ -64,9 +68,8 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(MODEL_LAVA_BULL, 6413, -335, 1065, 0, 142, 0, (35 << 24), bhvlavaBull),
 		OBJECT(MODEL_LAVA_BULL, 4821, -335, -1058, 0, -118, 0, (24 << 24), bhvlavaBull),
 		OBJECT(MODEL_LAVA_BULL, 6638, -335, -1058, 0, -118, 0, (30 << 24), bhvlavaBull),
-		OBJECT(MODEL_RED_FLAME, 15445, 671, 6403, 0, 0, 0, 0x00000000, bhvFlame),
-		OBJECT(MODEL_RED_FLAME, 15445, 671, 7947, 0, 0, 0, 0x00000000, bhvFlame),
 		OBJECT(MODEL_TRAIN, 2613, -211, 85, 0, 0, 0, (80 << 16), bhvPlatformMooving),
+		OBJECT(MODEL_WHOMP, 10588, -68, 7635, 0, 0, 0, 0x00000000, bhvWhompKingBoss),
 		TERRAIN(bob_area_1_collision),
 		MACRO_OBJECTS(bob_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),

@@ -259,6 +259,7 @@
 #define /*0x0F8*/ oBobombBuddyHasTalkedToMario OBJECT_FIELD_S32(0x1C)
 #define /*0x0FC*/ oBobombBuddyRole             OBJECT_FIELD_S32(0x1D)
 #define /*0x100*/ oBobombBuddyCannonStatus     OBJECT_FIELD_S32(0x1E)
+#define /*0x0F4*/ oMonkeyBreakTheGrill OBJECT_FIELD_S32(0x1F)
 #define /*0x108*/ O_BOBOMB_BUDDY_POS_COPY_INDEX   0x20
 #define /*0x108*/ oBobombBuddyPosCopyVec       OBJECT_FIELD_F32(O_BOBOMB_BUDDY_POS_COPY_INDEX)
 #define /*0x108*/ oBobombBuddyPosXCopy         OBJECT_FIELD_F32(O_BOBOMB_BUDDY_POS_COPY_INDEX + 0)

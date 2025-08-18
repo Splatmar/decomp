@@ -45,7 +45,7 @@
 #include "save_file.h"
 #include "seq_ids.h"
 #include "spawn_sound.h"
-
+#include "behaviors/monkey_break_grill.inc.c"
 //! TODO: remove static
 
 enum ObjPositionOperation {

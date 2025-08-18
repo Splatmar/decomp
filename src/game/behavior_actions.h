@@ -564,6 +564,9 @@ void spawn_multiple_fireballs(void);
 void bhv_gif_loop(void);
 void bhv_lavawave_loop(void) ;
 void bhv_lavaBulle_loop(void);
+void bhv_monkey_break_grill_loop(void);
+void bhv_grille_loop(void);
+void bhv_monkey_break_grill_init(void);
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Bowser

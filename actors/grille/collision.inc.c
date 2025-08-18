@@ -1,0 +1,19 @@
+const Collision grille_collision[] = {
+	COL_INIT(),
+	COL_VERTEX_INIT(7),
+	COL_VERTEX(699, -115, -206),
+	COL_VERTEX(701, -329, -244),
+	COL_VERTEX(701, -802, -244),
+	COL_VERTEX(681, -802, 240),
+	COL_VERTEX(681, -329, 240),
+	COL_VERTEX(682, -115, 202),
+	COL_VERTEX(691, 6, -2),
+	COL_TRI_INIT(SURFACE_DEFAULT, 5),
+	COL_TRI(0, 1, 2),
+	COL_TRI(2, 3, 4),
+	COL_TRI(4, 5, 6),
+	COL_TRI(6, 0, 2),
+	COL_TRI(2, 4, 6),
+	COL_TRI_STOP(),
+	COL_END()
+};

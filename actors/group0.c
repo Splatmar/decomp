@@ -45,3 +45,5 @@
 #include "lava_pique/collision.inc.c"
 #include "lava_bull/collision.inc.c"
 #include "lava_bull/model.inc.c"
+#include "grille/collision.inc.c"
+#include "grille/model.inc.c"

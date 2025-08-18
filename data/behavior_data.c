@@ -6208,3 +6208,27 @@ const BehaviorScript bhvFireball[] ={
 };
 
 // test
+const BehaviorScript bhvMonkeyBreakGrill[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INTERACT_TYPE(INTERACT_TEXT),
+    DROP_TO_FLOOR(),
+    SET_HITBOX(/*Radius*/ 100, /*Height*/ 60),
+    LOAD_ANIMATIONS(oAnimations, bobomb_seg8_anims_0802396C),
+    DROP_TO_FLOOR(),
+    ANIMATE(BOBOMB_ANIM_WALKING),
+    SET_HOME(),
+    CALL_NATIVE(bhv_monkey_break_grill_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_monkey_break_grill_loop),
+    END_LOOP(),
+};
+const BehaviorScript breaking_surface[] ={
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_PERSISTENT_RESPAWN | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(grille_collision),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_grille_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};

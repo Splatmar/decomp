@@ -473,7 +473,7 @@
 #define MODEL_SMOKE                       0x96        // smoke_geo
 #define MODEL_LAVA_PIQUE                      0x97        // lava_geo
 #define MODEL_LAVA_BULL                     0x98        // lava_bulle_geo
-// find me
+#define MODEL_GRILLE                    0x99       // lava_bulle_geo
 // find me
 // find me
 #define MODEL_BURN_SMOKE_UNUSED           0x9C        // burn_smoke_geo - unused & duplicated

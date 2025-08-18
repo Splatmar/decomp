@@ -1036,20 +1036,17 @@ if you're not quick to\n\
 collect them! Too bad."))
 
 DEFINE_DIALOG(DIALOG_079, 1, 4, 30, 200, _("\
-Owwwuu! Let me go!\n\
-Uukee-kee! I was only\n\
-teasing! Can't you take\n\
-a joke?\n\
-I'll tell you what, let's\n\
-trade. If you let me go,\n\
-I'll give you something\n\
-really good.\n\
-So, how about it?\n\
-\n\
-//Free him/ Hold on"))
+you are not allowed \n\
+to get ...\n\
+Oh .. you defeated\n\
+our guardian..So\n\
+I guess I have to\n\
+let you pass.."))
 
 DEFINE_DIALOG(DIALOG_080, 1, 1, 30, 200, _("\
-Eeeh hee hee hee!"))
+who are you ? \n\
+you are not allowed \n\
+to get in "))
 
 DEFINE_DIALOG(DIALOG_081, 1, 4, 30, 200, _("\
 The mystery is of Wet\n\
@@ -1357,26 +1354,16 @@ courses to activate the\n\
 Cap Blocks."))
 
 DEFINE_DIALOG(DIALOG_114, 1, 5, 95, 200, _("\
-It makes me so mad! We\n\
-build your houses, your\n\
-castles. We pave your\n\
-roads, and still you\n\
-walk all over us.\n\
-Do you ever say thank\n\
-you? No! Well, you're not\n\
-going to wipe your feet\n\
-on me! I think I'll crush\n\
-you just for fun!\n\
-Do you have a problem\n\
-with that? Just try to\n\
-pound me, wimp! Ha!"))
+I KNOW YOU ! my owner \n\
+wondered me to beat you \n\
+so good luck little boy "))
 
 DEFINE_DIALOG(DIALOG_115, 1, 5, 95, 200, _("\
 No! Crushed again!\n\
 I'm just a stepping stone,\n\
 after all. I won't gravel,\n\
 er, grovel. Here, you win.\n\
-Take this with you!"))
+sorry"))
 
 DEFINE_DIALOG(DIALOG_116, 1, 5, 95, 200, _("\
 Whaaa....Whaaat?\n\
