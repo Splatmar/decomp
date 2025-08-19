@@ -152,7 +152,7 @@ u8 grille_grille_rouge_pal_rgba16[] = {
 	0x4a, 0x56, 
 };
 
-Vtx grille_grille_mesh_layer_5_vtx_cull[8] = {
+Vtx grille_grille_mesh_layer_4_vtx_cull[8] = {
 	{{ {-495, -3806, 240}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {-495, 6, 240}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {-495, 6, -312}, 0, {0, 0}, {0, 0, 0, 0} }},
@@ -163,18 +163,18 @@ Vtx grille_grille_mesh_layer_5_vtx_cull[8] = {
 	{{ {701, -3806, -312}, 0, {0, 0}, {0, 0, 0, 0} }},
 };
 
-Vtx grille_grille_mesh_layer_5_vtx_0[7] = {
-	{{ {699, -115, -206}, 0, {1747, 2511}, {139, 139, 139, 255} }},
-	{{ {701, -329, -244}, 0, {2017, 987}, {145, 140, 140, 255} }},
-	{{ {701, -802, -244}, 0, {2014, -2379}, {255, 255, 255, 255} }},
-	{{ {691, 6, -2}, 0, {291, 3371}, {120, 97, 100, 255} }},
-	{{ {681, -329, 240}, 0, {-1434, 987}, {120, 117, 117, 255} }},
-	{{ {681, -802, 240}, 0, {-1432, -2379}, {121, 121, 121, 255} }},
-	{{ {682, -115, 202}, 0, {-1164, 2511}, {120, 117, 118, 255} }},
+Vtx grille_grille_mesh_layer_4_vtx_0[7] = {
+	{{ {699, -115, -206}, 0, {1747, 2511}, {129, 0, 251, 255} }},
+	{{ {701, -329, -244}, 0, {2017, 987}, {129, 0, 251, 255} }},
+	{{ {701, -802, -244}, 0, {2014, -2379}, {129, 0, 251, 255} }},
+	{{ {691, 6, -2}, 0, {291, 3371}, {129, 0, 251, 255} }},
+	{{ {681, -329, 240}, 0, {-1434, 987}, {129, 0, 251, 255} }},
+	{{ {681, -802, 240}, 0, {-1432, -2379}, {129, 0, 251, 255} }},
+	{{ {682, -115, 202}, 0, {-1164, 2511}, {129, 0, 251, 255} }},
 };
 
-Gfx grille_grille_mesh_layer_5_tri_0[] = {
-	gsSPVertex(grille_grille_mesh_layer_5_vtx_0 + 0, 7, 0),
+Gfx grille_grille_mesh_layer_4_tri_0[] = {
+	gsSPVertex(grille_grille_mesh_layer_4_vtx_0 + 0, 7, 0),
 	gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
 	gsSP2Triangles(2, 4, 3, 0, 2, 5, 4, 0),
 	gsSP1Triangle(4, 6, 3, 0),
@@ -182,14 +182,19 @@ Gfx grille_grille_mesh_layer_5_tri_0[] = {
 };
 
 
-Gfx mat_grille_f3dlite_material_074[] = {
-	gsSPGeometryMode(G_LIGHTING, 0),
+Gfx mat_grille_f3dlite_material_074_layer4[] = {
+	gsSPGeometryMode(G_CULL_BACK, G_FOG),
+	gsSPLightColor(LIGHT_1, 0xFFFFFFFF),
+	gsSPLightColor(LIGHT_2, 0x7F7F7FFF),
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
+	gsDPSetFogColor(0, 0, 0, 255),
+	gsSPFogPosition(985, 1000),
 	gsDPSetAlphaDither(G_AD_NOISE),
 	gsDPSetTextureLUT(G_TT_RGBA16),
+	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
 	gsSPTexture(65535, 65535, 0, 0, 1),
-	gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, grille_grille_rouge_pal_rgba16),
 	gsDPSetTile(0, 0, 0, 256, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
 	gsDPLoadTLUTCmd(5, 64),
@@ -201,22 +206,24 @@ Gfx mat_grille_f3dlite_material_074[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_grille_f3dlite_material_074[] = {
-	gsSPGeometryMode(0, G_LIGHTING),
+Gfx mat_revert_grille_f3dlite_material_074_layer4[] = {
+	gsSPGeometryMode(G_FOG, G_CULL_BACK),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsDPSetTextureLUT(G_TT_NONE),
+	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2),
 	gsSPEndDisplayList(),
 };
 
-Gfx grille_grille_mesh_layer_5[] = {
+Gfx grille_grille_mesh_layer_4[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
-	gsSPVertex(grille_grille_mesh_layer_5_vtx_cull + 0, 8, 0),
+	gsSPVertex(grille_grille_mesh_layer_4_vtx_cull + 0, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPCullDisplayList(0, 7),
-	gsSPDisplayList(mat_grille_f3dlite_material_074),
-	gsSPDisplayList(grille_grille_mesh_layer_5_tri_0),
-	gsSPDisplayList(mat_revert_grille_f3dlite_material_074),
+	gsSPDisplayList(mat_grille_f3dlite_material_074_layer4),
+	gsSPDisplayList(grille_grille_mesh_layer_4_tri_0),
+	gsSPDisplayList(mat_revert_grille_f3dlite_material_074_layer4),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
