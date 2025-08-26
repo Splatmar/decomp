@@ -1,22 +1,40 @@
 void plane_stick_control(void){
     s16 stickX = gPlayer1Controller->rawStickX;
+
+    // Deadzone
     if (stickX < 10 && stickX > -10) stickX = 0;
+
+    // Contrôle du roll
     o->oMoveAngleRoll -= 10 * stickX;
 }
 
 void bhv_rotate_plane_loop(void){
-    //display the control gif for a short time
-    if(o->oTimer < 100) {
-     //   render_plane_control_image(160, 160, 255, o->oTimer % 2);
-    }
+    // Timer debug
+   
 
+    // Contrôle du plane
     plane_stick_control();
+
+    // Active le mode plane au début
     if(o->oTimer == 10) {
         gMarioState->usedObj = o;
         gLakituState.mode = CAMERA_MODE_PLANE;
     }
+
+    // Spawn du warp **une seule fois** après un certain temps (sécurisé)
+    if(o->oTimer == 1000){  // exemple : frame 1000
+        struct Object *warpObj = spawn_object_abs_with_rot(
+            gMarioObject, 0, MODEL_NONE, bhvInstantActiveWarp,
+            gMarioState->pos[0], gMarioState->pos[1] + 20, gMarioState->pos[2],
+            0, 0, 0
+        );
+        warpObj->oBehParams = (0x0A << 16); // doit correspondre au WARP_NODE
+    }
+
+    // Toujours garder le dialogue (optionnel)
     set_mario_npc_dialog(MARIO_DIALOG_LOOK_FRONT);
 }
+
 
 #define TIMER_INDEX 3
 
@@ -186,9 +204,10 @@ void bhv_gif_loop(void){
             o->oAnimState =0 ;
         }
     }
-}
+}   
 void bhv_fireball_loop(void) {
     o->oPosZ -= 100.0f;
+
     
 }
 

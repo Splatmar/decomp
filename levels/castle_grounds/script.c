@@ -12,10 +12,6 @@
 #include "levels/scripts.h"
 
 #include "actors/common1.h"
-
-/* Fast64 begin persistent block [includes] */
-/* Fast64 end persistent block [includes] */
-
 #include "make_const_nonconst.h"
 #include "levels/castle_grounds/header.h"
 
@@ -25,7 +21,7 @@
 const LevelScript level_castle_grounds_entry[] = {
 	INIT_LEVEL(),
 	LOAD_YAY0(0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd), 
-	LOAD_YAY0(0x0A, _water_skybox_yay0SegmentRomStart, _water_skybox_yay0SegmentRomEnd), 
+	LOAD_YAY0(0x0A, _bitfs_skybox_yay0SegmentRomStart, _bitfs_skybox_yay0SegmentRomEnd), 
 	LOAD_YAY0_TEXTURE(0x09, _outside_yay0SegmentRomStart, _outside_yay0SegmentRomEnd), 
 	LOAD_YAY0(0x05, _group10_yay0SegmentRomStart, _group10_yay0SegmentRomEnd), 
 	LOAD_RAW(0x0C, _group10_geoSegmentRomStart, _group10_geoSegmentRomEnd), 
@@ -48,27 +44,25 @@ const LevelScript level_castle_grounds_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_VCUTM_GRILL, castle_grounds_geo_00070C), 
 	LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_FLAG, castle_grounds_geo_000660), 
 	LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_CANNON_GRILL, castle_grounds_geo_000724), 
-
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, castle_grounds_area_1),
-		WARP_NODE(0x01, LEVEL_CASTLE_COURTYARD, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		OBJECT(MODEL_HEART, 5800, 100, -11800, 0, 0, 0, 0x00000000, bhvRecoveryHeart),
+		WARP_NODE(0x0A, LEVEL_CASTLE_GROUNDS, 0x01, 0x01, WARP_NO_CHECKPOINT),
 		MARIO_POS(0x01, -180, 0, 162, 0),
+		OBJECT(MODEL_HEART, 5800, 100, -11800, 0, 0, 0, 0x00000000, bhvRecoveryHeart),
 		OBJECT(MODEL_PLATFORM, -100, 2160, -2327, 0, 145, 0, (10 << 24) | (20 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, 2213, 2240, -5912, 138, -20, -89, (8 << 24) | (25 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, 1242, 2112, -7384, -144, -6, -110, (7 << 24) | (25 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, -5258, 1412, -7384, 18, 12, -73, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, -5658, 1312, -4284, 18, 12, -73, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, -4758, 1512, -1484, 18, 12, -73, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, 4042, 412, -1884, 18, 12, -73, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
-		OBJECT(MODEL_PLATFORM, 7142, 1412, -7284, 18, 12, -73, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, 2213, 2240, -5912, 16, -136, -77, (8 << 24) | (25 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, 1242, 2112, -7384, 16, 147, -77, (7 << 24) | (25 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, -5258, 1412, -7384, 16, -14, -77, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, -5658, 1312, -4284, 16, -14, -77, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, -4758, 1512, -1484, 16, -14, -77, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, 4042, 412, -1884, 16, -14, -77, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
+		OBJECT(MODEL_PLATFORM, 7142, 1412, -7284, 16, -14, -77, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
 		OBJECT(MODEL_PLATFORM, 6000, 2060, -11627, 0, 145, 0, (10 << 24) | (20 << 16) | (2 << 8), bhvMoovingForward),
 		OBJECT(MODEL_CHAMPI, 6400, 1000, -12900, 0, 0, 0, 0x00000000, bhvScale),
 		OBJECT(MODEL_CHAMPI, 6400, 1400, -13600, 0, 0, 0, 0x00000000, bhvScale),
 		OBJECT(MODEL_TOAD, 5100, -1170, -8600, 0, 42, 0, (8 << 24), bhvToadMessage),
-		OBJECT(MODEL_NONE, -137, 3008, -12381, 0, 0, 0, (1 << 16), bhvWarp),
 		TERRAIN(castle_grounds_area_1_collision),
 		MACRO_OBJECTS(castle_grounds_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),
@@ -76,7 +70,6 @@ const LevelScript level_castle_grounds_entry[] = {
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
-
 	FREE_LEVEL_POOL(),
 	MARIO_POS(0x01, -180, 0, 162, 0),
 	CALL(0, lvl_init_or_update),

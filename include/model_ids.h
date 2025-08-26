@@ -1,3 +1,4 @@
+
 #ifndef MODEL_IDS_H
 #define MODEL_IDS_H
 
@@ -474,8 +475,8 @@
 #define MODEL_LAVA_PIQUE                      0x97        // lava_geo
 #define MODEL_LAVA_BULL                     0x98        // lava_bulle_geo
 #define MODEL_GRILLE                    0x99       // lava_bulle_geo
-// find me
-// find me
+#define MODEL_ROTATING_BALL           0x9A        // rotating_ball_geo
+#define MODEL_ASCENCEUR               0x9B        // ASCENCEUR DANS BOWSER CASTLE
 #define MODEL_BURN_SMOKE_UNUSED           0x9C        // burn_smoke_geo - unused & duplicated
 // find me
 #define MODEL_WHITE_PARTICLE_DL           0x9E        // white_particle_dl

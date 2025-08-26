@@ -556,4 +556,6 @@ extern const BehaviorScript  bhvLavaWave[];
 extern const BehaviorScript bhvlavaBull[];
 extern const BehaviorScript bhvMonkeyBreakGrill[];
 extern const BehaviorScript breaking_surface[];
+extern const BehaviorScript bhvSwingingBall[];
+extern const BehaviorScript bhvCustomElevator[];
 #endif // BEHAVIOR_DATA_H

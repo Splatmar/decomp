@@ -47,3 +47,7 @@
 #include "lava_bull/model.inc.c"
 #include "grille/collision.inc.c"
 #include "grille/model.inc.c"
+#include "rotatingball/collision.inc.c"
+#include "rotatingball/model.inc.c"
+#include "ascenceur/collision.inc.c"
+#include "ascenceur/model.inc.c"

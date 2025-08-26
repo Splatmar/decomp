@@ -25,3 +25,5 @@
 #include "lava_pique/geo.inc.c"
 #include "lava_bull/geo.inc.c"
 #include "grille/geo.inc.c"
+#include "rotatingball/geo.inc.c"
+#include "ascenceur/geo.inc.c"

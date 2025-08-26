@@ -143,3 +143,59 @@ void bhv_grille_loop(void){
         
     }
 }
+
+void bhv_swinging_ball_loop(void) {
+    f32 speed = 0x250; // vitesse oscillation
+    s16 phaseOffset = GET_BPARAM1(o->oBehParams) * 0x800; // décalage
+
+    s16 angle = sins((o->oTimer * speed) + phaseOffset) * 0x2000;
+
+    o->oFaceAngleRoll = angle; // gauche-droite
+}
+
+void bhv_custom_elevator_loop(void) {
+    s32 rise_frames = GET_BPARAM1(o->oBehParams) * 62.0f;
+    f32 bottomY = o->oHomeY; // position de départ
+    
+    s32 pause_frames = 45;
+
+    switch (o->oAction) {
+        case 0: // WAITING
+            if (o->oDistanceToMario < 100.0f) {
+                o->oAction = 1;
+                o->oTimer = 0;
+            }
+            break;
+
+        case 1: // GOING UP
+            o->oPosY += 10;
+            o->oTimer++;
+            if (o->oTimer >= rise_frames) {
+                o->oPosY +=25;
+                o->oAction = 2;
+                o->oTimer = 0;
+            }
+            break;
+
+        case 2: // PAUSE
+            o->oTimer++;
+            if (o->oTimer >= pause_frames) {
+                o->oAction = 3;
+                o->oTimer = 0;
+            }
+            break;
+
+        case 3: // GOING DOWN
+            o->oPosY -= 10;
+            o->oTimer++;
+            if (o->oTimer >= rise_frames) {
+                o->oPosY -=25;
+                o->oAction = 0;
+                o->oTimer = 0;
+            }
+            break;
+    }
+
+    
+}
+

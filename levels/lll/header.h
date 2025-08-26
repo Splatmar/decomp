@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "game/moving_texture.h"
-
+#include "actors/lava_bull/geo_header.h"
 // geo
 extern const GeoLayout lll_geo_0009E0[];
 extern const GeoLayout lll_geo_0009F8[];
@@ -128,4 +128,6 @@ extern const Gfx lll_dl_lavafall_volcano[];
 // script
 extern const LevelScript level_lll_entry[];
 
+
+#include "levels/lll/header.inc.h"
 #endif

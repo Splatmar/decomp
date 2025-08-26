@@ -155,6 +155,8 @@ extern const struct Animation *const door_seg3_anims_030156C0[];
 extern const Collision door_seg3_collision_door[];
 extern const GeoLayout fireball_geo[];
 extern const GeoLayout train_geo[];
+extern const GeoLayout rotatingball_geo[];
+extern const GeoLayout ascenceur_geo[];
 
 // explosion
 extern const GeoLayout explosion_geo[];

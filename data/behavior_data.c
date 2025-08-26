@@ -5405,10 +5405,10 @@ const BehaviorScript bhvLavaWave[] ={
 const BehaviorScript bhvlavaBull[] ={
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL)),
-    
+    LOAD_COLLISION_DATA(lava_bull_collision),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_lavaBulle_loop),
-     
+        CALL_NATIVE(load_object_collision_model), 
     END_LOOP(),
 };
 
@@ -6231,5 +6231,26 @@ const BehaviorScript breaking_surface[] ={
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_grille_loop),
         CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhvSwingingBall[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(rotatingball_collision),
+    BEGIN_LOOP(),
+
+    CALL_NATIVE(bhv_swinging_ball_loop),
+    CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvCustomElevator[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW| OBJ_FLAG_COMPUTE_DIST_TO_MARIO),
+    LOAD_COLLISION_DATA(ascenceur_collision), // ton modèle/collision d'ascenceur
+    
+    BEGIN_LOOP(),
+    CALL_NATIVE(bhv_custom_elevator_loop),
+    CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };

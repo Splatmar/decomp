@@ -321,6 +321,7 @@ s32 envfx_init_bubble(s32 mode) {
         case ENVFX_JETSTREAM_BUBBLES:
             sBubbleParticleCount = 60;
             break;
+        
     }
 
     gEnvFxBuffer = mem_pool_alloc(gEffectsMemoryPool,
