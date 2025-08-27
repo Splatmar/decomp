@@ -558,4 +558,6 @@ extern const BehaviorScript bhvMonkeyBreakGrill[];
 extern const BehaviorScript breaking_surface[];
 extern const BehaviorScript bhvSwingingBall[];
 extern const BehaviorScript bhvCustomElevator[];
+extern const BehaviorScript bhvTurningPlatform[];
+extern const BehaviorScript bhvRotatingPlatformGrille[];
 #endif // BEHAVIOR_DATA_H

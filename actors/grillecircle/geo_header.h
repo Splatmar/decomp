@@ -1,0 +1,17 @@
+extern const GeoLayout grillecircle_geo[];
+extern u8 grillecircle_tex1_128x128_m_c0a30e583ec9e197_14_mip2_ci8[];
+extern u8 grillecircle_tex1_128x128_m_c0a30e583ec9e197_14_mip2_pal_rgba16[];
+extern u8 grillecircle_tex1_128x128_1b44d9b2a22e6e5d_14_ci8[];
+extern u8 grillecircle_tex1_128x128_1b44d9b2a22e6e5d_14_pal_rgba16[];
+extern Vtx grillecircle_Cylinder_mesh_layer_5_vtx_cull[8];
+extern Vtx grillecircle_Cylinder_mesh_layer_5_vtx_0[40];
+extern Gfx grillecircle_Cylinder_mesh_layer_5_tri_0[];
+extern Vtx grillecircle_Cylinder_mesh_layer_1_vtx_cull[8];
+extern Vtx grillecircle_Cylinder_mesh_layer_1_vtx_0[75];
+extern Gfx grillecircle_Cylinder_mesh_layer_1_tri_0[];
+extern Gfx mat_grillecircle_f3dlite_material[];
+extern Gfx mat_revert_grillecircle_f3dlite_material[];
+extern Gfx mat_grillecircle_f3dlite_material_001[];
+extern Gfx mat_revert_grillecircle_f3dlite_material_001[];
+extern Gfx grillecircle_Cylinder_mesh_layer_5[];
+extern Gfx grillecircle_Cylinder_mesh_layer_1[];

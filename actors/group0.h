@@ -375,4 +375,16 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "ascenceur/geo_header.h"
 
+#include "polebowser/collision_header.h"
+
+#include "polebowser/geo_header.h"
+
+#include "rotstares/collision_header.h"
+
+#include "rotstares/geo_header.h"
+
+#include "grillecircle/collision_header.h"
+
+#include "grillecircle/geo_header.h"
+
 #endif

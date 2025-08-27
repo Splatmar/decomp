@@ -1,0 +1,15 @@
+extern const GeoLayout rotstares_geo[];
+extern u8 rotstares_tex1_128x128_20e302eebfd0f776_14_ci8[];
+extern u8 rotstares_tex1_128x128_20e302eebfd0f776_14_pal_rgba16[];
+extern u8 rotstares_tex1_128x128_1ce263028dcda6a3_14_ci8[];
+extern u8 rotstares_tex1_128x128_1ce263028dcda6a3_14_pal_rgba16[];
+extern Vtx rotstares_Cylinder_mesh_layer_1_vtx_cull[8];
+extern Vtx rotstares_Cylinder_mesh_layer_1_vtx_0[128];
+extern Gfx rotstares_Cylinder_mesh_layer_1_tri_0[];
+extern Vtx rotstares_Cylinder_mesh_layer_1_vtx_1[22];
+extern Gfx rotstares_Cylinder_mesh_layer_1_tri_1[];
+extern Gfx mat_rotstares_f3dlite_material[];
+extern Gfx mat_revert_rotstares_f3dlite_material[];
+extern Gfx mat_rotstares_f3dlite_material_001[];
+extern Gfx mat_revert_rotstares_f3dlite_material_001[];
+extern Gfx rotstares_Cylinder_mesh_layer_1[];

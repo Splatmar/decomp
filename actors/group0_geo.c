@@ -27,3 +27,6 @@
 #include "grille/geo.inc.c"
 #include "rotatingball/geo.inc.c"
 #include "ascenceur/geo.inc.c"
+#include "polebowser/geo.inc.c"
+#include "rotstares/geo.inc.c"
+#include "grillecircle/geo.inc.c"

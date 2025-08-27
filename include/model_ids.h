@@ -478,7 +478,7 @@
 #define MODEL_ROTATING_BALL           0x9A        // rotating_ball_geo
 #define MODEL_ASCENCEUR               0x9B        // ASCENCEUR DANS BOWSER CASTLE
 #define MODEL_BURN_SMOKE_UNUSED           0x9C        // burn_smoke_geo - unused & duplicated
-// find me
+#define MODEL_POLEBOWSER                 0x9D        // pole_bowser_geo
 #define MODEL_WHITE_PARTICLE_DL           0x9E        // white_particle_dl
 #define MODEL_SAND_DUST                   0x9F        // sand_seg3_dl_particle
 #define MODEL_WHITE_PARTICLE              0xA0        // white_particle_dl
@@ -490,9 +490,9 @@
 #define MODEL_IDLE_WATER_WAVE             0xA6        // idle_water_wave_geo
 #define MODEL_WATER_SPLASH                0xA7        // water_splash_geo
 #define MODEL_BUBBLE                      0xA8        // bubble_geo
-// find me
+#define MODEL_ROTSTARE                    0xA9        // rotstare_geo
 #define MODEL_PURPLE_MARBLE               0xAA        // purple_marble_geo
-// find me
+#define MODEL_GRILLECIRCLE              0xAB        // grille_circle_geo
 #define MODEL_UNKNOWN_AC                  0xAC        // according to an special preset, it was the original id of the castle floor trap
 #define MODEL_WF_SLIDING_PLATFORM         0xAD        // wf_geo_000A98
 #define MODEL_WF_SMALL_BOMP               0xAE        // wf_geo_000A00
