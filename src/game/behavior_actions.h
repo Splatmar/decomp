@@ -569,6 +569,7 @@ void bhv_grille_loop(void);
 void bhv_monkey_break_grill_init(void);
 void bhv_swinging_ball_loop(void);
 void bhv_custom_elevator_loop(void);
+void bhv_zipline_loop(void);
  
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 

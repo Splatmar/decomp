@@ -514,6 +514,12 @@ s32 act_backflip(struct MarioState *m) {
     play_flip_sounds(m, 2, 3, 17);
     return FALSE;
 }
+s32 act_zipline(struct MarioState *m) {
+    m->vel[1] = 0;
+    play_sound(SOUND_MOVING_TERRAIN_SLIDE, m->marioObj->header.gfx.cameraToObject);
+    common_air_action_step(m, ACT_DOUBLE_JUMP_LAND, MARIO_ANIM_IDLE_ON_LEDGE, AIR_STEP_CHECK_LEDGE_GRAB | AIR_STEP_CHECK_HANG);
+    return FALSE;
+    }
 
 s32 act_freefall(struct MarioState *m) {
     s32 animation = MARIO_ANIM_GENERAL_FALL;
@@ -2085,6 +2091,7 @@ s32 mario_execute_airborne_action(struct MarioState *m) {
         case ACT_TOP_OF_POLE_JUMP:     cancel = act_top_of_pole_jump(m);     break;
         case ACT_VERTICAL_WIND:        cancel = act_vertical_wind(m);        break;
         case ACT_TRAMPOLINE:          cancel = act_trampoline(m);           break;
+        case ACT_ZIPLINE:              cancel = act_zipline(m);              break;
     }
     /* clang-format on */
 

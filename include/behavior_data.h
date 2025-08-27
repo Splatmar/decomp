@@ -560,4 +560,5 @@ extern const BehaviorScript bhvSwingingBall[];
 extern const BehaviorScript bhvCustomElevator[];
 extern const BehaviorScript bhvTurningPlatform[];
 extern const BehaviorScript bhvRotatingPlatformGrille[];
+extern const BehaviorScript bhvZipline[];   
 #endif // BEHAVIOR_DATA_H

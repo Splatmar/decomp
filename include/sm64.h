@@ -665,7 +665,7 @@ enum MarioActionFlags {
 #define ACT_UNUSED_198                 0x00000198 // (0x198)
 #define ACT_UNUSED_199                 0x00000199 // (0x199)
 #define ACT_UNUSED_19A                 0x0000019A // (0x19A)
-#define ACT_UNUSED_19B                 0x0000019B // (0x19B)
+#define ACT_ZIPLINE                 0x0000019B // (0x19B)
 #define ACT_UNUSED_19C                 0x0000019C // (0x19C)
 #define ACT_UNUSED_19D                 0x0000019D // (0x19D)
 #define ACT_UNUSED_19E                 0x0000019E // (0x19E)

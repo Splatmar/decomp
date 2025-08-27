@@ -3,10 +3,12 @@
 const GeoLayout lll_area_1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 839, 911, 0, lll_dl_Cube_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 1670, 3497, 3344, lll_dl_Cube_001_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 6866, 5032, 5378, lll_dl_Cube_002_mesh_layer_1),
 		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, lll_dl_Cube_mesh_layer_5),
+			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, lll_dl_Cube_002_mesh_layer_5),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 1945, 5030, 4177, 7, 165, -92, lll_dl_Cylinder_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

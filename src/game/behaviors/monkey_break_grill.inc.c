@@ -199,3 +199,55 @@ void bhv_custom_elevator_loop(void) {
     
 }
 
+void bhv_zipline_loop() {
+    if (o->oAction == 0) {
+        if (o->oDistanceToMario < 200.0f) { 
+            // Orientation qui fonctionnait dans ton code précédent
+            gMarioState->faceAngle[0] = 0;
+            gMarioState->faceAngle[1] = 0x4000; // l’angle que tu avais choisi pour être droit
+            gMarioState->faceAngle[2] = 0;
+
+            gMarioObject->header.gfx.angle[0] = gMarioState->faceAngle[0];
+            gMarioObject->header.gfx.angle[1] = gMarioState->faceAngle[1];
+            gMarioObject->header.gfx.angle[2] = gMarioState->faceAngle[2];
+
+            set_mario_action(gMarioState, ACT_ZIPLINE, 0);
+            o->oAction = 1;
+
+            o->oForwardVel = 50.0f;
+            o->oHomeY = gMarioState->forwardVel;
+        }
+    }
+
+    if (o->oAction == 1) {
+        if (o->oHomeY < 60.0f) o->oHomeY += 15.0f;
+        o->oForwardVel += 22.0f;
+
+        // Position suivant la trajectoire de l’objet
+        gMarioState->pos[0] = o->oPosX + o->oForwardVel * sins(o->oFaceAngleYaw) * coss(o->oFaceAnglePitch);
+        gMarioState->pos[1] = o->oPosY - o->oForwardVel * sins(o->oFaceAnglePitch);
+        gMarioState->pos[2] = o->oPosZ + o->oForwardVel * coss(o->oFaceAngleYaw) * coss(o->oFaceAnglePitch);
+
+        // On garde l’orientation correcte
+        gMarioState->faceAngle[0] = 0;
+        gMarioState->faceAngle[1] = 0xC000;
+        gMarioState->faceAngle[2] = 0;
+
+        gMarioObject->header.gfx.pos[0] = gMarioState->pos[0];
+        gMarioObject->header.gfx.pos[1] = gMarioState->pos[1];
+        gMarioObject->header.gfx.pos[2] = gMarioState->pos[2];
+        gMarioObject->header.gfx.angle[0] = gMarioState->faceAngle[0];
+        gMarioObject->header.gfx.angle[1] = gMarioState->faceAngle[1];
+        gMarioObject->header.gfx.angle[2] = gMarioState->faceAngle[2];
+
+        set_mario_animation(gMarioState, MARIO_ANIM_HANG_ON_CEILING);
+        play_sound(SOUND_MOVING_TERRAIN_SLIDE, gMarioObject->header.gfx.cameraToObject);
+
+        if (o->oForwardVel > o->oBehParams2ndByte*100.0f) {
+            o->oAction = 0;
+            gMarioState->forwardVel = o->oHomeY;
+            set_mario_action(gMarioState, ACT_FREEFALL, 0);
+        }
+    }
+}
+
