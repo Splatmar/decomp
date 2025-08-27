@@ -426,6 +426,7 @@ s32 update_fixed_camera(struct Camera *c, Vec3f focus, Vec3f pos);
 s32 update_8_directions_camera(struct Camera *c, Vec3f focus, Vec3f pos);
 s32 update_slide_or_0f_camera(struct Camera *c, Vec3f focus, Vec3f pos);
 s32 update_spiral_stairs_camera(struct Camera *c, Vec3f focus, Vec3f pos);
+u16 timerSplatCutscene = 0;
 
 typedef s32 (*CameraTransition)(struct Camera *c, Vec3f focus, Vec3f pos);
 CameraTransition sModeTransitions[] = {
@@ -2367,7 +2368,14 @@ s32 update_spiral_stairs_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
 void mode_spiral_stairs_camera(struct Camera *c) {
     c->nextYaw = update_spiral_stairs_camera(c, c->focus, c->pos);
 }
-
+void mode_stuck_camera(struct Camera *c) {
+    c->pos[0]=1400;
+    c->pos[1]=700;
+    c->pos[2]=-500;
+    c->focus[0]=c->pos[0]+1000;
+    c->focus[1]=c->pos[1]-200;
+    c->focus[2]=c->pos[2];
+}
 void mode_plane_camera(struct Camera *c) {
 
     sLakituPitch = 0;
@@ -2993,6 +3001,9 @@ void update_camera(struct Camera *c) {
                 case CAMERA_MODE_PLANE:
                     mode_plane_camera(c);
                     break;
+                case CAMERA_MODE_STUCK:
+                    mode_stuck_camera(c);
+                    break;
 
                 default:
                     mode_mario_camera(c);
@@ -3057,6 +3068,9 @@ void update_camera(struct Camera *c) {
 
                 case CAMERA_MODE_PLANE:
                     mode_plane_camera(c);
+                    break;
+                case CAMERA_MODE_STUCK:
+                    mode_stuck_camera(c);
                     break;
             }
         }

@@ -57,3 +57,5 @@
 #include "rotstares/model.inc.c"
 #include "grillecircle/collision.inc.c"
 #include "grillecircle/model.inc.c"
+#include "platform_with_id/collision.inc.c"
+#include "platform_with_id/model.inc.c"

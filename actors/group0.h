@@ -387,4 +387,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "grillecircle/geo_header.h"
 
+#include "platform_with_id/collision_header.h"
+
+#include "platform_with_id/geo_header.h"
+
 #endif

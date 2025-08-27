@@ -1,6 +1,6 @@
 void scroll_lll_dl_Cube_002_mesh_layer_1_vtx_3() {
 	int i = 0;
-	int count = 22;
+	int count = 26;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;

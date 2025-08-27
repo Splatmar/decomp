@@ -81,10 +81,12 @@ const LevelScript level_lll_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_POLEBOWSER, polebowser_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_ROTSTARE, rotstares_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_GRILLECIRCLE, grillecircle_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_PLAT_WITH_ID, platform_with_id_geo), 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, lll_area_1),
+		OBJECT(MODEL_PLAT_WITH_ID , 7621, -1417, -679, 0, 0, 0, 0x00020000, bhvPlatform_with_id),
 		OBJECT(MODEL_GRILLECIRCLE, 6713, 3371, 5449, 0, -180, 0, 0x00000000, bhvRotatingPlatformGrille),
 		OBJECT(MODEL_GRILLECIRCLE, 7240, 3817, 4410, 0, 0, 0, 0x00000000, bhvRotatingPlatformGrille),
 		MARIO_POS(0x01, 0, 0, 0, 0),
@@ -97,6 +99,8 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_NONE, 7159, 4535, 4460, 0, 0, 0, 0x00960200, bhvPoleGrabbing),
 		OBJECT(MODEL_POLEBOWSER, 7159, 4529, 4460, 0, 0, 0, 0x00000000, bhvStaticObject),
 		OBJECT(MODEL_POLEBOWSER, 5702, 2801, 6264, 0, 0, 0, 0x00000000, bhvStaticObject),
+		OBJECT(MODEL_PURPLE_SWITCH, 84, 4169, 3444, 0, 90, 0, 0x00000000, bhvFloorSwitchHardcodedModel2),
+		OBJECT(MODEL_PURPLE_SWITCH, 7050, 3181, -2945, 0, -90, 0, 0x00000000, bhvFloorSwitchHardcodedModel2),
 		OBJECT(MODEL_ROTSTARE, 414, 59, 5435, 0, 0, 0, 0x00000000, bhvTurningPlatform),
 		OBJECT(MODEL_ROTATING_BALL, 813, 4685, -5997, 0, 0, 0, (45 << 24), bhvSwingingBall),
 		OBJECT(MODEL_ROTATING_BALL, 847, 4628, -7495, 0, 0, 0, (120 << 24), bhvSwingingBall),

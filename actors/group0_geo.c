@@ -30,3 +30,4 @@
 #include "polebowser/geo.inc.c"
 #include "rotstares/geo.inc.c"
 #include "grillecircle/geo.inc.c"
+#include "platform_with_id/geo.inc.c"

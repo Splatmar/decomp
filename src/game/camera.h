@@ -122,6 +122,7 @@ enum CameraModes {
     /*16*/ CAMERA_MODE_FREE_ROAM,
     /*17*/ CAMERA_MODE_SPIRAL_STAIRS,
     /*18*/ CAMERA_MODE_PLANE,
+    /*19*/ CAMERA_MODE_STUCK,
 };
 
 enum CameraMovementFlags {

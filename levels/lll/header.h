@@ -6,7 +6,9 @@
 #include "actors/lava_bull/geo_header.h"
 #include "actors/polebowser/geo_header.h"
 #include "actors/rotstares/geo_header.h"
-#include "actors/grillecircle/geo_header.h" 
+#include "actors/grillecircle/geo_header.h"
+#include "actors/platform_with_id/geo_header.h" 
+
 // geo
 extern const GeoLayout lll_geo_0009E0[];
 extern const GeoLayout lll_geo_0009F8[];

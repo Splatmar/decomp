@@ -1,0 +1,15 @@
+extern const GeoLayout platform_with_id_geo[];
+extern u8 platform_with_id_tex1_128x128_1ce263028dcda6a3_14_ci8[];
+extern u8 platform_with_id_tex1_128x128_1ce263028dcda6a3_14_pal_rgba16[];
+extern u8 platform_with_id_tex1_128x128_4e24c757de9a5f31_4_ci8[];
+extern u8 platform_with_id_tex1_128x128_4e24c757de9a5f31_4_pal_rgba16[];
+extern Vtx platform_with_id_Cube_mesh_layer_1_vtx_cull[8];
+extern Vtx platform_with_id_Cube_mesh_layer_1_vtx_0[4];
+extern Gfx platform_with_id_Cube_mesh_layer_1_tri_0[];
+extern Vtx platform_with_id_Cube_mesh_layer_1_vtx_1[40];
+extern Gfx platform_with_id_Cube_mesh_layer_1_tri_1[];
+extern Gfx mat_platform_with_id_f3dlite_material[];
+extern Gfx mat_revert_platform_with_id_f3dlite_material[];
+extern Gfx mat_platform_with_id_f3dlite_material_001[];
+extern Gfx mat_revert_platform_with_id_f3dlite_material_001[];
+extern Gfx platform_with_id_Cube_mesh_layer_1[];

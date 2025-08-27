@@ -6281,3 +6281,23 @@ const BehaviorScript bhvZipline[] = {
         CALL_NATIVE(bhv_zipline_loop),
     END_LOOP(),
 };
+const BehaviorScript bhvFloorSwitchHardcodedModel2[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    // Floor switch - common:
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(purple_switch_seg8_collision_0800C7A8),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_purple_switch_special_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhvPlatform_with_id[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(platform_with_id_collision),
+    SET_FLOAT(oDrawingDistance, 15000),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_platform_with_id_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
