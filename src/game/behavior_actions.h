@@ -572,6 +572,9 @@ void bhv_custom_elevator_loop(void);
 void bhv_zipline_loop(void);
 void bhv_purple_switch_special_loop(void);
 void bhv_platform_with_id_loop(void);
+void bhvMoovingFloor_loop(void);
+void bhv_crackedFloor_init(void);
+void bhv_crackedFloor_loop(void);
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Bowser

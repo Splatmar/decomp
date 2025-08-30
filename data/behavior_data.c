@@ -6295,9 +6295,31 @@ const BehaviorScript bhvPlatform_with_id[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     LOAD_COLLISION_DATA(platform_with_id_collision),
-    SET_FLOAT(oDrawingDistance, 15000),
+    SET_FLOAT(oDrawingDistance, 4000),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_platform_with_id_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhvMoovingFloor[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(mooving_floor_collision),
+    SET_FLOAT(oDrawingDistance, 6000),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhvMoovingFloor_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhvCrackedFloor[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO| OBJ_FLAG_COMPUTE_DIST_TO_MARIO),
+    SET_INT(oIntangibleTimer, 0),
+    CALL_NATIVE(bhv_crackedFloor_init),
+    LOAD_COLLISION_DATA(breakable_floor_bowser_collision),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_crackedFloor_loop),
+        CALL_NATIVE(cur_obj_move_standard), // mouvement basique
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };

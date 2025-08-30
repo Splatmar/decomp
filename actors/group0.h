@@ -391,4 +391,12 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "platform_with_id/geo_header.h"
 
+#include "mooving_floor/collision_header.h"
+
+#include "mooving_floor/geo_header.h"
+
+#include "breakable_floor_bowser/collision_header.h"
+
+#include "breakable_floor_bowser/geo_header.h"
+
 #endif

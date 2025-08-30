@@ -10,6 +10,7 @@
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
+extern const GeoLayout peach_geo[];
 
 #include "actors/common1.h"
 #include "make_const_nonconst.h"
@@ -82,10 +83,17 @@ const LevelScript level_lll_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_ROTSTARE, rotstares_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_GRILLECIRCLE, grillecircle_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_PLAT_WITH_ID, platform_with_id_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_MOOVING_FLOOR, mooving_floor_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_BREAKABLE_FLOOR_BOWSER, breakable_floor_bowser_geo),
+	LOAD_MODEL_FROM_GEO(MODEL_PEACH_CUSTOM, peach_geo),
+
+
+	 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, lll_area_1),
+		OBJECT(MODEL_BREAKABLE_FLOOR_BOWSER, -147, 4226, 3519, 0, 0, 0, 0x00000000, bhvCrackedFloor),
 		OBJECT(MODEL_PLAT_WITH_ID , 7621, -1417, -679, 0, 0, 0, 0x00020000, bhvPlatform_with_id),
 		OBJECT(MODEL_GRILLECIRCLE, 6713, 3371, 5449, 0, -180, 0, 0x00000000, bhvRotatingPlatformGrille),
 		OBJECT(MODEL_GRILLECIRCLE, 7240, 3817, 4410, 0, 0, 0, 0x00000000, bhvRotatingPlatformGrille),
@@ -93,18 +101,21 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_NONE, 1675, 3497, 3349, 0, 0, 0, 0x01960200, bhvPoleGrabbing),
 		OBJECT(MODEL_ASCENCEUR, 760, -322, -11583, 0, 0, 0, (10 << 24), bhvCustomElevator),
 		OBJECT(MODEL_LAVA_BULL, 997, -968, -8407, 0, 0, 0, 0x00000000, bhvlavaBull),
+		OBJECT(MODEL_MOOVING_FLOOR, 3519, 2529, -458, 0, 0, 0, 0x00000000, bhvMoovingFloor),
 		OBJECT(MODEL_POLEBOWSER, 4838, 1769, 6664, 0, 0, 0, 0x00000000, bhvStaticObject),
 		OBJECT(MODEL_NONE, 4836, 1778, 6654, 0, 0, 0, 0x00960200, bhvPoleGrabbing),
 		OBJECT(MODEL_NONE, 5701, 2800, 6263, 0, 0, 0, 0x00990200, bhvPoleGrabbing),
 		OBJECT(MODEL_NONE, 7159, 4535, 4460, 0, 0, 0, 0x00960200, bhvPoleGrabbing),
 		OBJECT(MODEL_POLEBOWSER, 7159, 4529, 4460, 0, 0, 0, 0x00000000, bhvStaticObject),
 		OBJECT(MODEL_POLEBOWSER, 5702, 2801, 6264, 0, 0, 0, 0x00000000, bhvStaticObject),
-		OBJECT(MODEL_PURPLE_SWITCH, 84, 4169, 3444, 0, 90, 0, 0x00000000, bhvFloorSwitchHardcodedModel2),
-		OBJECT(MODEL_PURPLE_SWITCH, 7050, 3181, -2945, 0, -90, 0, 0x00000000, bhvFloorSwitchHardcodedModel2),
+		OBJECT(MODEL_PURPLE_SWITCH, -152, 4161, 3515, 0, 90, 0, 0x00000000, bhvFloorSwitchHardcodedModel2),
+		OBJECT(MODEL_PURPLE_SWITCH, 5789, 3195, 2119, 0, -180, 0, 0x00000000, bhvFloorSwitchHardcodedModel2),
 		OBJECT(MODEL_ROTSTARE, 414, 59, 5435, 0, 0, 0, 0x00000000, bhvTurningPlatform),
 		OBJECT(MODEL_ROTATING_BALL, 813, 4685, -5997, 0, 0, 0, (45 << 24), bhvSwingingBall),
 		OBJECT(MODEL_ROTATING_BALL, 847, 4628, -7495, 0, 0, 0, (120 << 24), bhvSwingingBall),
 		OBJECT(MODEL_ROTATING_BALL, 3307, 3922, -2969, 0, 0, 0, (9 << 24), bhvSwingingBall),
+		OBJECT(MODEL_PEACH_CUSTOM, 0, 0, 0, 0, 0, 0, 0, bhvStaticObject),
+
 		OBJECT(MODEL_ROTSTARE, 342, -332, 3894, 0, 0, 0, 0x00000000, bhvTurningPlatform),
 		OBJECT(MODEL_NONE, 6677, 5319, 5460, 7, -105, -90, 0x00390000, bhvZipline),
 		TERRAIN(lll_area_1_collision),

@@ -563,5 +563,7 @@ extern const BehaviorScript bhvRotatingPlatformGrille[];
 extern const BehaviorScript bhvZipline[]; 
 extern const BehaviorScript bhvPlatform_with_id[];
 extern const BehaviorScript bhvFloorSwitchHardcodedModel2[];
+extern const BehaviorScript bhvMoovingFloor[];
+extern const BehaviorScript bhvCrackedFloor[];
   
 #endif // BEHAVIOR_DATA_H

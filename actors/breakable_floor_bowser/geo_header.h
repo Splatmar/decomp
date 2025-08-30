@@ -1,0 +1,9 @@
+extern const GeoLayout breakable_floor_bowser_geo[];
+extern u8 breakable_floor_bowser_tex1_128x128_5d5e557b2f8d8f58_14_ci8[];
+extern u8 breakable_floor_bowser_tex1_128x128_5d5e557b2f8d8f58_14_pal_rgba16[];
+extern Vtx breakable_floor_bowser_Plane_mesh_layer_1_vtx_cull[8];
+extern Vtx breakable_floor_bowser_Plane_mesh_layer_1_vtx_0[30];
+extern Gfx breakable_floor_bowser_Plane_mesh_layer_1_tri_0[];
+extern Gfx mat_breakable_floor_bowser_f3dlite_material_057[];
+extern Gfx mat_revert_breakable_floor_bowser_f3dlite_material_057[];
+extern Gfx breakable_floor_bowser_Plane_mesh_layer_1[];

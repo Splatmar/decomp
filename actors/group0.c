@@ -59,3 +59,7 @@
 #include "grillecircle/model.inc.c"
 #include "platform_with_id/collision.inc.c"
 #include "platform_with_id/model.inc.c"
+#include "mooving_floor/collision.inc.c"
+#include "mooving_floor/model.inc.c"
+#include "breakable_floor_bowser/collision.inc.c"
+#include "breakable_floor_bowser/model.inc.c"

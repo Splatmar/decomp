@@ -8,6 +8,17 @@
 #include "actors/rotstares/geo_header.h"
 #include "actors/grillecircle/geo_header.h"
 #include "actors/platform_with_id/geo_header.h" 
+#include "actors/mooving_floor/geo_header.h"
+#include "actors/breakable_floor_bowser/geo_header.h"
+#include "actors/common0.h"
+#include "actors/common1.h"
+
+
+
+
+
+
+
 
 // geo
 extern const GeoLayout lll_geo_0009E0[];

@@ -190,3 +190,42 @@ void bhv_platform_with_id_loop(void) {
             break;
     }
 }
+void bhvMoovingFloor_loop(){
+    switch (o->oAction) {
+        case 0:
+        o->oPosY += 4.0f;
+           if( o->oTimer >113){
+               o->oAction = 1;
+            }
+        break;
+        case 1:
+        o->oPosY -= 4.0f;
+           if( o->oTimer >113){
+               o->oAction = 0; 
+           }
+        break;
+    }
+}
+// Init du sol fissuré
+void bhv_crackedFloor_init(void) {
+    o->oDamageOrCoinValue = 0;  // pas de pièce
+    o->oHealth = 1;
+    cur_obj_scale(1.0f);        // garde taille normale
+}
+
+void bhv_crackedFloor_loop(void) {
+    float yMargin = 30.0f;
+    print_text_fmt_int(20, 20, "Dist: %d", (s32)o->oDistanceToMario);
+    if (o->oDistanceToMario < 190.0f) { // Mario proche
+        if (gMarioState->action == ACT_GROUND_POUND
+             || gMarioState->action == ACT_GROUND_POUND_LAND) {
+                spawn_mist_particles_variable(0, 0, 46.0f);
+                cur_obj_play_sound_2(SOUND_GENERAL_BREAK_BOX);
+                obj_mark_for_deletion(o);
+                return;
+            }
+            
+        }
+    }
+
+
