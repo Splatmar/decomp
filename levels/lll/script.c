@@ -89,6 +89,8 @@ const LevelScript level_lll_entry[] = {
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, lll_area_1),
+		WARP_NODE(0x14, LEVEL_LLL, 0x02, 0x14, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x15, LEVEL_LLL, 0x03, 0x15, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_BREAKABLE_FLOOR_BOWSER, -147, 4226, 3519, 0, 0, 0, 0x00000000, bhvCrackedFloor),
 		OBJECT(MODEL_PLAT_WITH_ID , 7621, -1417, -679, 0, 0, 0, 0x00020000, bhvPlatform_with_id),
 		OBJECT(MODEL_GRILLECIRCLE, 6713, 3371, 5449, 0, -180, 0, 0x00000000, bhvRotatingPlatformGrille),
@@ -115,10 +117,33 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_STATUE_BOWSER, 9941, -416, -1328, 0, -180, 0, 0x00000000, bhvPushableStatue),
 		OBJECT(MODEL_STATUE_BOWSER, 9945, -416, 562, 0, 0, 0, 0x00000000, bhvPushableStatue),
 		OBJECT(MODEL_ROTSTARE, 342, -332, 3894, 0, 0, 0, 0x00000000, bhvTurningPlatform),
+		OBJECT(MODEL_NONE, 9881, -605, 637, 0, 0, 0, 0x00140000, bhvWarp),
+		OBJECT(MODEL_NONE, 11966, -154, -493, 0, 0, 0, 0x00150000, bhvWarp),
 		OBJECT(MODEL_NONE, 6677, 5319, 5460, 7, -105, -90, 0x00390000, bhvZipline),
 		TERRAIN(lll_area_1_collision),
 		MACRO_OBJECTS(lll_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),
+		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
+	END_AREA(),
+	AREA(2, lll_area_2),
+		WARP_NODE(0x14, LEVEL_LLL, 0x01, 0x14, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_NONE, 1487, 493, -1631, 0, 0, 0, 0x00140000, bhvWarp),
+		OBJECT(MODEL_WOODEN_SIGNPOST, -774, 11, 900, 0, 117, 0, (45 << 24) | (45 << 16) | (45 << 8) | (45), bhvMessagePanel),
+		TERRAIN(lll_area_2_collision),
+		MACRO_OBJECTS(lll_area_2_macro_objs),
+		SET_BACKGROUND_MUSIC(0x01, SEQ_LEVEL_UNDERGROUND),
+		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
+	END_AREA(),
+	AREA(3, lll_area_3),
+		WARP_NODE(0x15, LEVEL_LLL, 0x01, 0x15, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_NONE, -4192, -303, -335, 0, 0, 0, 0x00150000, bhvWarp),
+		TERRAIN(lll_area_3_collision),
+		MACRO_OBJECTS(lll_area_3_macro_objs),
+		STOP_MUSIC(0),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

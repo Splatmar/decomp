@@ -572,12 +572,8 @@ Watch my shadow, and\n\
 grab on."))
 
 DEFINE_DIALOG(DIALOG_045, 1, 6, 95, 200, _("\
-Whew! I'm just about\n\
-flapped out. You should\n\
-lay off the pasta, Mario!\n\
-That's it for now. Press\n\
-[A] to let go. Okay,\n\
-bye byyyyyyeeee!"))
+Fourth one from the left\n\
+U,U,L,L,U,U,R,U."))
 
 DEFINE_DIALOG(DIALOG_046, 1, 5, 30, 200, _("\
 You have to master three\n\
