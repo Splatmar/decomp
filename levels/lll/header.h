@@ -12,6 +12,8 @@
 #include "actors/breakable_floor_bowser/geo_header.h"
 #include "actors/common0.h"
 #include "actors/common1.h"
+#include "actors/statue_bowser/geo_header.h"
+
 
 
 

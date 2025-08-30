@@ -33,3 +33,4 @@
 #include "platform_with_id/geo.inc.c"
 #include "mooving_floor/geo.inc.c"
 #include "breakable_floor_bowser/geo.inc.c"
+#include "statue_bowser/geo.inc.c"

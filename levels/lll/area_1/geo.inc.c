@@ -3,7 +3,6 @@
 const GeoLayout lll_area_1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 9804, 402, 556, 90, 0, -90, lll_dl_bowser_001_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 1670, 3497, 3344, lll_dl_Cube_001_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 8892, 853, -2318, lll_dl_Cube_006_mesh_layer_1),
 		GEO_OPEN_NODE(),

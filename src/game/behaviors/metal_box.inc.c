@@ -6,7 +6,7 @@ struct ObjectHitbox sMetalBoxHitbox = {
     /* damageOrCoinValue: */ 0,
     /* health:            */ 1,
     /* numLootCoins:      */ 0,
-    /* radius:            */ 220,
+    /* radius:            */ 400,
     /* height:            */ 300,
     /* hurtboxRadius:     */ 220,
     /* hurtboxHeight:     */ 300,

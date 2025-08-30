@@ -399,4 +399,8 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "breakable_floor_bowser/geo_header.h"
 
+#include "statue_bowser/collision_header.h"
+
+#include "statue_bowser/geo_header.h"
+
 #endif

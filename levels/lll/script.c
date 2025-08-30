@@ -10,7 +10,6 @@
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
-extern const GeoLayout peach_geo[];
 
 #include "actors/common1.h"
 #include "make_const_nonconst.h"
@@ -25,8 +24,8 @@ const LevelScript level_lll_entry[] = {
 	LOAD_YAY0_TEXTURE(0x09, _fire_yay0SegmentRomStart, _fire_yay0SegmentRomEnd), 
 	LOAD_YAY0(0x0A, _bitfs_skybox_yay0SegmentRomStart, _bitfs_skybox_yay0SegmentRomEnd), 
 	LOAD_YAY0(0x0B, _effect_yay0SegmentRomStart, _effect_yay0SegmentRomEnd), 
-	LOAD_YAY0(0x05, _group2_yay0SegmentRomStart, _group2_yay0SegmentRomEnd), 
-	LOAD_RAW(0x0C, _group2_geoSegmentRomStart, _group2_geoSegmentRomEnd), 
+	LOAD_YAY0(0x05, _group10_yay0SegmentRomStart, _group10_yay0SegmentRomEnd), 
+	LOAD_RAW(0x0C, _group10_geoSegmentRomStart, _group10_geoSegmentRomEnd), 
 	LOAD_YAY0(0x06, _group17_yay0SegmentRomStart, _group17_yay0SegmentRomEnd), 
 	LOAD_RAW(0x0D, _group17_geoSegmentRomStart, _group17_geoSegmentRomEnd), 
 	LOAD_YAY0(0x08, _common0_yay0SegmentRomStart, _common0_yay0SegmentRomEnd), 
@@ -34,7 +33,7 @@ const LevelScript level_lll_entry[] = {
 	ALLOC_LEVEL_POOL(),
 	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
 	JUMP_LINK(script_func_global_1), 
-	JUMP_LINK(script_func_global_3), 
+	JUMP_LINK(script_func_global_11), 
 	JUMP_LINK(script_func_global_18), 
 	LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_03, lll_geo_0009E0), 
 	LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_04, lll_geo_0009F8), 
@@ -84,11 +83,8 @@ const LevelScript level_lll_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_GRILLECIRCLE, grillecircle_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_PLAT_WITH_ID, platform_with_id_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_MOOVING_FLOOR, mooving_floor_geo), 
-	LOAD_MODEL_FROM_GEO(MODEL_BREAKABLE_FLOOR_BOWSER, breakable_floor_bowser_geo),
-	LOAD_MODEL_FROM_GEO(MODEL_PEACH_CUSTOM, peach_geo),
-
-
-	 
+	LOAD_MODEL_FROM_GEO(MODEL_BREAKABLE_FLOOR_BOWSER, breakable_floor_bowser_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_STATUE_BOWSER, statue_bowser_geo), 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
@@ -100,9 +96,11 @@ const LevelScript level_lll_entry[] = {
 		MARIO_POS(0x01, 0, 0, 0, 0),
 		OBJECT(MODEL_NONE, 1675, 3497, 3349, 0, 0, 0, 0x01960200, bhvPoleGrabbing),
 		OBJECT(MODEL_ASCENCEUR, 760, -322, -11583, 0, 0, 0, (10 << 24), bhvCustomElevator),
+		OBJECT(MODEL_BREAKABLE_BOX, 11774, -714, -5130, 0, 0, 0, 0x00000000, bhvBreakableBox),
 		OBJECT(MODEL_LAVA_BULL, 997, -968, -8407, 0, 0, 0, 0x00000000, bhvlavaBull),
 		OBJECT(MODEL_MOOVING_FLOOR, 3519, 2529, -458, 0, 0, 0, 0x00000000, bhvMoovingFloor),
 		OBJECT(MODEL_POLEBOWSER, 4838, 1769, 6664, 0, 0, 0, 0x00000000, bhvStaticObject),
+		OBJECT(MODEL_PEACH, 12306, -685, -6647, 0, 0, 0, (40 << 16), bhvTalkingPeach),
 		OBJECT(MODEL_NONE, 4836, 1778, 6654, 0, 0, 0, 0x00960200, bhvPoleGrabbing),
 		OBJECT(MODEL_NONE, 5701, 2800, 6263, 0, 0, 0, 0x00990200, bhvPoleGrabbing),
 		OBJECT(MODEL_NONE, 7159, 4535, 4460, 0, 0, 0, 0x00960200, bhvPoleGrabbing),
@@ -114,8 +112,8 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_ROTATING_BALL, 813, 4685, -5997, 0, 0, 0, (45 << 24), bhvSwingingBall),
 		OBJECT(MODEL_ROTATING_BALL, 847, 4628, -7495, 0, 0, 0, (120 << 24), bhvSwingingBall),
 		OBJECT(MODEL_ROTATING_BALL, 3307, 3922, -2969, 0, 0, 0, (9 << 24), bhvSwingingBall),
-		OBJECT(MODEL_PEACH_CUSTOM, 0, 0, 0, 0, 0, 0, 0, bhvStaticObject),
-
+		OBJECT(MODEL_STATUE_BOWSER, 9941, -416, -1328, 0, -180, 0, 0x00000000, bhvPushableStatue),
+		OBJECT(MODEL_STATUE_BOWSER, 9945, -416, 562, 0, 0, 0, 0x00000000, bhvPushableStatue),
 		OBJECT(MODEL_ROTSTARE, 342, -332, 3894, 0, 0, 0, 0x00000000, bhvTurningPlatform),
 		OBJECT(MODEL_NONE, 6677, 5319, 5460, 7, -105, -90, 0x00390000, bhvZipline),
 		TERRAIN(lll_area_1_collision),

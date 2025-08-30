@@ -63,3 +63,5 @@
 #include "mooving_floor/model.inc.c"
 #include "breakable_floor_bowser/collision.inc.c"
 #include "breakable_floor_bowser/model.inc.c"
+#include "statue_bowser/collision.inc.c"
+#include "statue_bowser/model.inc.c"

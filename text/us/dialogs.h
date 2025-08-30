@@ -501,9 +501,24 @@ course.\n\
 //--The Big Bob-omb"))
 
 DEFINE_DIALOG(DIALOG_040, 1, 3, 30, 200, _("\
-Warning!\n\
-Cold, Cold Crevasse\n\
-Below!"))
+OH Mario!\n\
+You are finally here!\n\
+Thank you for freeing me!\n\
+Now, avenge me against\n\
+that pesky Koopa!\n\
+By the way… I think \n\
+I heard him mumbling \n\
+that he always forgets \n\
+the right way to get\n\
+to his throne room,\n\
+and luckily, he built a\n\
+secret room with the\n\
+answer.\n\
+If I remember correctly…\n\
+you will need to move\n\
+something to find the\n\
+entrance… but what…?"))
+
 
 DEFINE_DIALOG(DIALOG_041, 1, 3, 30, 200, _("\
 I win! You lose!\n\

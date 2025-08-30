@@ -325,6 +325,7 @@ extern const BehaviorScript bhvSeaweedBundle[];
 extern const BehaviorScript bhvBobomb[];
 extern const BehaviorScript bhvBobombFuseSmoke[];
 extern const BehaviorScript bhvBobombBuddy[];
+extern const BehaviorScript bhvTalkingPeach[];
 extern const BehaviorScript bhvBobombBuddyOpensCannon[];
 extern const BehaviorScript bhvCannonClosed[];
 extern const BehaviorScript bhvWhirlpool[];
@@ -565,5 +566,6 @@ extern const BehaviorScript bhvPlatform_with_id[];
 extern const BehaviorScript bhvFloorSwitchHardcodedModel2[];
 extern const BehaviorScript bhvMoovingFloor[];
 extern const BehaviorScript bhvCrackedFloor[];
+extern const BehaviorScript bhvPushableStatue[];
   
 #endif // BEHAVIOR_DATA_H
