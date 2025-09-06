@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "game/puppycam2.h"
-
+#include "actors/rotatingball/geo_header.h"
 // scripts
 extern const LevelScript level_main_scripts_entry[];
 extern const LevelScript script_func_global_1[];

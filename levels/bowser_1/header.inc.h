@@ -1,0 +1,18 @@
+extern const GeoLayout bowser_1_area_1_geo[];
+extern const GeoLayout bowser_1_area_1[];
+extern const Collision bowser_1_area_1_collision[];
+extern const MacroObject bowser_1_area_1_macro_objs[];
+extern u8 bowser_1_dl_tex1_128x128_b53e167bdc655fa5_14_ci8[];
+extern u8 bowser_1_dl_tex1_128x128_b53e167bdc655fa5_14_pal_rgba16[];
+extern u8 bowser_1_dl_tex1_128x128_2ca553a47db0c9be_14_ci8[];
+extern u8 bowser_1_dl_tex1_128x128_2ca553a47db0c9be_14_pal_rgba16[];
+extern Vtx bowser_1_dl_Cube_mesh_layer_1_vtx_cull[8];
+extern Vtx bowser_1_dl_Cube_mesh_layer_1_vtx_0[10];
+extern Gfx bowser_1_dl_Cube_mesh_layer_1_tri_0[];
+extern Vtx bowser_1_dl_Cube_mesh_layer_1_vtx_1[60];
+extern Gfx bowser_1_dl_Cube_mesh_layer_1_tri_1[];
+extern Gfx mat_bowser_1_dl_f3dlite_material[];
+extern Gfx mat_revert_bowser_1_dl_f3dlite_material[];
+extern Gfx mat_bowser_1_dl_f3dlite_material_001[];
+extern Gfx mat_revert_bowser_1_dl_f3dlite_material_001[];
+extern Gfx bowser_1_dl_Cube_mesh_layer_1[];

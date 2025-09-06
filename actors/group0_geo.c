@@ -34,3 +34,6 @@
 #include "mooving_floor/geo.inc.c"
 #include "breakable_floor_bowser/geo.inc.c"
 #include "statue_bowser/geo.inc.c"
+#include "falling_grill/geo.inc.c"
+#include "bowser_lava/geo.inc.c"
+#include "lava_bowser/geo.inc.c"

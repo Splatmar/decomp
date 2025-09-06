@@ -1,0 +1,17 @@
+extern const GeoLayout falling_grill_geo[];
+extern u8 falling_grill_tex1_128x128_m_c0a30e583ec9e197_14_mip2_ci8[];
+extern u8 falling_grill_tex1_128x128_m_c0a30e583ec9e197_14_mip2_pal_rgba16[];
+extern u8 falling_grill_tex1_128x128_8a769bd9a9c0426c_14_ci8[];
+extern u8 falling_grill_tex1_128x128_8a769bd9a9c0426c_14_pal_rgba16[];
+extern Vtx falling_grill_Cube_001_mesh_layer_5_vtx_cull[8];
+extern Vtx falling_grill_Cube_001_mesh_layer_5_vtx_0[32];
+extern Gfx falling_grill_Cube_001_mesh_layer_5_tri_0[];
+extern Vtx falling_grill_Cube_001_mesh_layer_1_vtx_cull[8];
+extern Vtx falling_grill_Cube_001_mesh_layer_1_vtx_0[32];
+extern Gfx falling_grill_Cube_001_mesh_layer_1_tri_0[];
+extern Gfx mat_falling_grill_f3dlite_material_003[];
+extern Gfx mat_revert_falling_grill_f3dlite_material_003[];
+extern Gfx mat_falling_grill_f3dlite_material_004[];
+extern Gfx mat_revert_falling_grill_f3dlite_material_004[];
+extern Gfx falling_grill_Cube_001_mesh_layer_5[];
+extern Gfx falling_grill_Cube_001_mesh_layer_1[];

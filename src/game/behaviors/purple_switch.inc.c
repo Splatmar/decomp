@@ -206,6 +206,40 @@ void bhvMoovingFloor_loop(){
         break;
     }
 }
+void bhvMoovingFloor_loop_bowser() {
+    // Vérifie si Bowser existe et est vivant
+    struct Object *bowser = cur_obj_nearest_object_with_behavior(bhvBowserCustom);
+
+    if (bowser == NULL || bowser->oHealth <= 0) {
+        // Si Bowser est mort → bloque le plancher à Y = 100
+        o->oPosY = 500.0f;
+        return;
+    }
+
+    // Sinon, comportement normal
+    switch (o->oAction) {
+        case 0:
+            o->oPosY += 12.0f;
+            if (o->oTimer > 86) {
+                o->oAction = 1;
+            }
+            break;
+
+        case 1:
+            if (o->oTimer >= 35) {
+                o->oAction = 2;
+            }
+            break;
+
+        case 2:
+            o->oPosY -= 12.0f;
+            if (o->oTimer > 86) {
+                o->oAction = 0; 
+            }
+            break;
+    }
+}
+
 // Init du sol fissuré
 void bhv_crackedFloor_init(void) {
     o->oDamageOrCoinValue = 0;  // pas de pièce

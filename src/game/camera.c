@@ -2376,6 +2376,25 @@ void mode_stuck_camera(struct Camera *c) {
     c->focus[1]=c->pos[1]-200;
     c->focus[2]=c->pos[2];
 }
+
+#define OFFSET_CAMERA_BEHIND_MARIO 3000
+void mode_turn_around_camera(struct Camera *c) {
+    sLakituPitch = 0;
+    gCameraMovementFlags &= ~CAM_MOVING_INTO_MODE;
+    sStatusFlags &= ~CAM_FLAG_BLOCK_SMOOTH_MOVEMENT;
+
+    s16 angleToCenter = atan2s(gMarioObject->oPosZ, gMarioObject->oPosX);
+
+    c->pos[0] = gMarioObject->oPosX + (OFFSET_CAMERA_BEHIND_MARIO * sins(angleToCenter));
+    c->pos[1] = gMarioObject->oPosY + 500;
+    c->pos[2] = gMarioObject->oPosZ + (OFFSET_CAMERA_BEHIND_MARIO * coss(angleToCenter));
+
+    c->focus[0] = 0;
+    c->focus[1] = 1300;
+    c->focus[2] = 0;
+    update_camera_yaw(c);
+}
+
 void mode_plane_camera(struct Camera *c) {
 
     sLakituPitch = 0;
@@ -3004,6 +3023,9 @@ void update_camera(struct Camera *c) {
                 case CAMERA_MODE_STUCK:
                     mode_stuck_camera(c);
                     break;
+                case CAMERA_MODE_TURN_AROUND:
+                    mode_turn_around_camera(c);
+                    break;
 
                 default:
                     mode_mario_camera(c);
@@ -3071,6 +3093,9 @@ void update_camera(struct Camera *c) {
                     break;
                 case CAMERA_MODE_STUCK:
                     mode_stuck_camera(c);
+                    break;
+                case CAMERA_MODE_TURN_AROUND:
+                    mode_turn_around_camera(c);
                     break;
             }
         }
@@ -3302,17 +3327,17 @@ void init_camera(struct Camera *c) {
 #ifdef ENABLE_VANILLA_CAM_PROCESSING
         //! Hardcoded position checks determine which cutscene to play when Mario enters castle grounds.
         case LEVEL_CASTLE_GROUNDS:
-            if (is_within_100_units_of_mario(-1328.f, 260.f, 4664.f) != 1) {
-                marioOffset[0] = -400.f;
-                marioOffset[2] = -800.f;
-            }
-            if (is_within_100_units_of_mario(-6901.f, 2376.f, -6509.f) == 1) {
-                start_cutscene(c, CUTSCENE_EXIT_WATERFALL);
-            }
-            if (is_within_100_units_of_mario(5408.f, 4500.f, 3637.f) == 1) {
-                start_cutscene(c, CUTSCENE_EXIT_FALL_WMOTR);
-            }
-            gLakituState.mode = CAMERA_MODE_FREE_ROAM;
+            //if (is_within_100_units_of_mario(-1328.f, 260.f, 4664.f) != 1) {
+            //    marioOffset[0] = -400.f;
+            //    marioOffset[2] = -800.f;
+            //}
+            //if (is_within_100_units_of_mario(-6901.f, 2376.f, -6509.f) == 1) {
+            //    start_cutscene(c, CUTSCENE_EXIT_WATERFALL);
+            //}
+            //if (is_within_100_units_of_mario(5408.f, 4500.f, 3637.f) == 1) {
+            //    start_cutscene(c, CUTSCENE_EXIT_FALL_WMOTR);
+            //}
+            //gLakituState.mode = CAMERA_MODE_FREE_ROAM;
             break;
         case LEVEL_SA:
             marioOffset[2] = 200.f;
@@ -3337,27 +3362,27 @@ void init_camera(struct Camera *c) {
     switch (gCurrLevelArea) {
 #ifdef ENABLE_VANILLA_CAM_PROCESSING
         case AREA_SSL_EYEROK:
-            vec3f_set(marioOffset, 0.f, 500.f, -100.f);
+            //vec3f_set(marioOffset, 0.f, 500.f, -100.f);
             break;
         case AREA_CCM_SLIDE:
-            marioOffset[2] = -300.f;
+            //marioOffset[2] = -300.f;
             break;
         case AREA_THI_WIGGLER:
-            marioOffset[2] = -300.f;
+            //marioOffset[2] = -300.f;
             break;
         case AREA_SL_IGLOO:
-            marioOffset[2] = -300.f;
+            //marioOffset[2] = -300.f;
             break;
         case AREA_SL_OUTSIDE:
-            if (is_within_100_units_of_mario(257.f, 2150.f, 1399.f) == 1) {
-                marioOffset[2] = -300.f;
-            }
+            //if (is_within_100_units_of_mario(257.f, 2150.f, 1399.f) == 1) {
+            //    marioOffset[2] = -300.f;
+            //}
             break;
         case AREA_CCM_OUTSIDE:
-            gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
+            //gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
             break;
         case AREA_TTM_OUTSIDE:
-            gLakituState.mode = CAMERA_MODE_RADIAL;
+            //gLakituState.mode = CAMERA_MODE_RADIAL;
             break;
 #endif
     }
@@ -5330,13 +5355,13 @@ void parallel_tracking_init(struct Camera *c, struct ParallelTrackingPoint *path
  */
 void set_fixed_cam_axis_sa_lobby(UNUSED s16 preset) {
     switch (gCurrLevelArea) {
-        case AREA_SA:
-            vec3f_set(sFixedModeBasePosition, 646.f, 143.f, -1513.f);
-            break;
-
-        case AREA_CASTLE_LOBBY:
-            vec3f_set(sFixedModeBasePosition, -577.f, 143.f, 1443.f);
-            break;
+        //case AREA_SA:
+        //    vec3f_set(sFixedModeBasePosition, 646.f, 143.f, -1513.f);
+        //    break;
+//
+        //case AREA_CASTLE_LOBBY:
+        //    vec3f_set(sFixedModeBasePosition, -577.f, 143.f, 1443.f);
+        //    break;
     }
 }
 
@@ -6120,6 +6145,12 @@ struct CameraTrigger sCamCastleCourtyard[] = {
 struct CameraTrigger sCamLLL[] = {
 	NULL_TRIGGER
 };
+struct CameraTrigger sCamBowser_1[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamSA[] = {
+	NULL_TRIGGER
+};
 struct CameraTrigger *sCameraTriggers[LEVEL_COUNT + 1] = {
     NULL,
     #include "levels/level_defines.h"
@@ -6310,107 +6341,8 @@ s16 camera_course_processing(struct Camera *c) {
     // Area-specific camera processing
     if (!(sStatusFlags & CAM_FLAG_BLOCK_AREA_PROCESSING)) {
         switch (gCurrLevelArea) {
-            case AREA_WF:
-                if (sMarioCamState->action == ACT_RIDING_HOOT) {
-                    transition_to_camera_mode(c, CAMERA_MODE_SLIDE_HOOT, 60);
-                } else {
-                    switch (sMarioGeometry.currFloorType) {
-                        case SURFACE_CAMERA_8_DIR:
-                            transition_to_camera_mode(c, CAMERA_MODE_8_DIRECTIONS, 90);
-                            s8DirModeBaseYaw = DEGREES(90);
-                            break;
-
-                        case SURFACE_BOSS_FIGHT_CAMERA:
-                            if (gCurrActNum == 1) {
-                                set_camera_mode_boss_fight(c);
-                            } else {
-                                set_camera_mode_radial(c, 60);
-                            }
-                            break;
-                        default:
-                            set_camera_mode_radial(c, 60);
-                    }
-                }
-                break;
-
-            case AREA_BBH:
-                // if camera is fixed at bbh_room_13_balcony_camera (but as floats)
-                if (vec3f_compare(sFixedModeBasePosition, 210.f, 420.f, 3109.f) == TRUE) {
-                    if (sMarioCamState->pos[1] < 1800.f) {
-                        transition_to_camera_mode(c, CAMERA_MODE_CLOSE, 30);
-                    }
-                }
-                break;
-
-            case AREA_SSL_PYRAMID:
-                set_mode_if_not_set_by_surface(c, CAMERA_MODE_OUTWARD_RADIAL);
-                break;
-
-            case AREA_SSL_OUTSIDE:
-                set_mode_if_not_set_by_surface(c, CAMERA_MODE_RADIAL);
-                break;
-
-            case AREA_THI_HUGE:
-                break;
-
-            case AREA_THI_TINY:
-                surface_type_modes_thi(c);
-                break;
-
-            case AREA_TTC:
-                set_mode_if_not_set_by_surface(c, CAMERA_MODE_OUTWARD_RADIAL);
-                break;
-
-            case AREA_BOB:
-                if (set_mode_if_not_set_by_surface(c, CAMERA_MODE_NONE) == 0) {
-                    if (sMarioGeometry.currFloorType == SURFACE_BOSS_FIGHT_CAMERA) {
-                        set_camera_mode_boss_fight(c);
-                    } else {
-                        if (c->mode == CAMERA_MODE_CLOSE) {
-                            transition_to_camera_mode(c, CAMERA_MODE_RADIAL, 60);
-                        } else {
-                            set_camera_mode_radial(c, 60);
-                        }
-                    }
-                }
-                break;
-
-            case AREA_WDW_MAIN:
-                switch (sMarioGeometry.currFloorType) {
-                    case SURFACE_INSTANT_WARP_1B:
-                        c->defMode = CAMERA_MODE_RADIAL;
-                        break;
-                }
-                break;
-
-            case AREA_WDW_TOWN:
-                switch (sMarioGeometry.currFloorType) {
-                    case SURFACE_INSTANT_WARP_1C:
-                        c->defMode = CAMERA_MODE_CLOSE;
-                        break;
-                }
-                break;
-
-            case AREA_DDD_WHIRLPOOL:
-                //! @bug this does nothing
-                gLakituState.defMode = CAMERA_MODE_OUTWARD_RADIAL;
-                break;
-
-            case AREA_DDD_SUB:
-                if ((c->mode != CAMERA_MODE_BEHIND_MARIO)
-                    && (c->mode != CAMERA_MODE_WATER_SURFACE)) {
-                    if (((sMarioCamState->action & ACT_FLAG_ON_POLE) != 0)
-                        || (sMarioGeometry.currFloorHeight > 800.f)) {
-                        transition_to_camera_mode(c, CAMERA_MODE_8_DIRECTIONS, 60);
-
-                    } else {
-                        if (sMarioCamState->pos[1] < 800.f) {
-                            transition_to_camera_mode(c, CAMERA_MODE_FREE_ROAM, 60);
-                        }
-                    }
-                }
-                //! @bug this does nothing
-                gLakituState.defMode = CAMERA_MODE_FREE_ROAM;
+            case AREA_SA:
+                transition_to_camera_mode(c, CAMERA_MODE_TURN_AROUND, 0);
                 break;
         }
     }
@@ -10465,7 +10397,7 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // TTC            | RR
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // CASTLE_GROUNDS | BITDW
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // VCUTM          | BITFS
-	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // SA             | BITS
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // SA             | BITS
 	ZOOMOUT_AREA_MASK(1, 1, 1, 0, 0, 0, 0, 0), // LLL            | DDD
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // WF             | ENDING
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // COURTYARD      | PSS

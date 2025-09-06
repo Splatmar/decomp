@@ -34,6 +34,7 @@ struct ExclamationBoxContents sExclamationBoxContents[] = {
     [EXCLAMATION_BOX_BP_STAR_4          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           3 },
     [EXCLAMATION_BOX_BP_STAR_5          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           4 },
     [EXCLAMATION_BOX_BP_STAR_6          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           5 },
+    [EXCLAMATION_BOX_DAMAGE_BOWSER   ] = { MODEL_NONE,             NULL,                     0 },
 };
 
 void bhv_rotating_exclamation_mark_loop(void) {
@@ -132,16 +133,26 @@ void exclamation_box_spawn_contents(struct ExclamationBoxContents *contentsList,
 }
 
 void exclamation_box_act_explode(void) {
-    exclamation_box_spawn_contents(sExclamationBoxContents, o->oBehParams2ndByte);
     spawn_mist_particles_variable(0, 0, 46.0f);
     spawn_triangle_break_particles(20, MODEL_CARTOON_STAR, 0.3f, o->oAnimState);
-    create_sound_spawner(SOUND_GENERAL_BREAK_BOX);
-    if (o->oBehParams2ndByte <= EXCLAMATION_BOX_BP_KOOPA_SHELL) {
-        // Cap boxes + Koopa shell boxes.
-        o->oAction = EXCLAMATION_BOX_ACT_WAIT_FOR_RESPAWN;
-        cur_obj_hide();
-    } else {
+    
+    if(o->oBehParams2ndByte == EXCLAMATION_BOX_DAMAGE_BOWSER){
+        struct Object *bowser = cur_obj_nearest_object_with_behavior(bhvBowserCustom);
+        if(bowser != NULL){
+            bowser->oAction = 3; // Bowser prend des dégats
+            cur_obj_play_sound_2(SOUND_OBJ_BOWSER_TAIL_PICKUP);
+        }
         obj_mark_for_deletion(o);
+    } else {
+        exclamation_box_spawn_contents(sExclamationBoxContents, o->oBehParams2ndByte);
+        if (o->oBehParams2ndByte <= EXCLAMATION_BOX_BP_KOOPA_SHELL) {
+            // Cap boxes + Koopa shell boxes.
+            o->oAction = EXCLAMATION_BOX_ACT_WAIT_FOR_RESPAWN;
+            cur_obj_hide();
+        } else {
+            
+            obj_mark_for_deletion(o);
+        }
     }
 }
 

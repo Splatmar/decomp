@@ -1,5 +1,5 @@
 // bowser.inc.c
-
+#include "actors/fireball/geo_header.h"
 /**
  * Behavior for Bowser and it's actions (Tail, Flame, Body)
  */
@@ -466,7 +466,7 @@ void bowser_act_default(void) {
  * called as a child obj behavior in Bowser
  */
 void bowser_act_breath_fire(void) {
-    o->oForwardVel = 0.0f;
+    //o->oForwardVel = 0.0f;
     if (o->oTimer == 0) {
         cur_obj_play_sound_2(SOUND_OBJ_BOWSER_INHALING);
     }
@@ -1883,4 +1883,207 @@ Gfx *geo_bits_bowser_coloring(s32 callContext, struct GraphNode *node, UNUSED s3
     }
 
     return gfxHead;
+}
+
+void bhv_bowser_custom_init(void) {
+    cur_obj_init_animation_with_sound(BOWSER_ANIM_IDLE);
+    o->oF4 = 100;
+}
+
+
+//
+// Boucle principale Bowser custom
+//
+
+static void bhv_bowser_custom_intro(void) {
+    if(o->oTimer > 50)
+        o->oAction++;
+}
+
+void bhv_bowser_custom_turn_to_mario(void) {
+    s16 angleToMario = obj_angle_to_object(o, gMarioObject);
+    s16 angleDiffMoveYawToMario = abs_angle_diff(o->oMoveAngleYaw, angleToMario);
+    cur_obj_init_animation(BOWSER_ANIM_IDLE);
+    cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x100);
+        // Si Bowser est aligné avec Mario, il souffle
+    if (angleDiffMoveYawToMario < 0x020 && o->oF4 <= 0) {
+        o->oAction++;
+    } 
+}
+
+void bhv_bowser_custom_spit_fireball() {
+    if (o->oTimer == 1) {cur_obj_play_sound_1(SOUND_OBJ_BOWSER_INHALING | SOUND_NO_VOLUME_LOSS);}
+    
+
+    if(cur_obj_init_animation_and_check_if_near_end(BOWSER_ANIM_BREATH)) {
+        o->oAction = 1;
+        o->oF4 = 100;
+    }
+    if(o->header.gfx.animInfo.animFrame == 35) {
+            // spawn une boule de feu
+            cur_obj_play_sound_1(SOUND_OBJ_FLAME_BLOWN | SOUND_NO_VOLUME_LOSS);
+
+        spawn_object_relative(0, 0, 1000, 1000, o, MODEL_FIREBALL, bhvBowserFlame);
+    }
+}
+
+void bhv_bowser_custom_take_damage(void) {
+    // Lance l'animation de dance et attend qu'elle soit presque finie
+    if (cur_obj_init_animation_and_check_if_near_end(BOWSER_ANIM_DANCE)) {
+        
+        // Si Bowser a exactement 2 points de vie
+        if (o->oHealth == 2) {
+            o->oHealth--;       // on enlève 1 PV
+            o->oAction = 4;     // passe à l'action 4 spéciale
+        } 
+        else if (o->oHealth == 1) {
+            o->oHealth--;       // on enlève 1 PV
+            o->oAction = 5;     // passe à l'action 5 de mort
+        }
+        else if(o->oHealth ==3) {
+            // Sinon, comportement normal
+            o->oHealth--;
+            o->oAction = 1;
+        }
+    }
+}
+
+
+void bhv_bowser_custom_loop(void) {
+
+    switch (o->oAction) {
+        case 0: //cinématique d'intro
+            bhv_bowser_custom_intro();
+            break;
+        case 1: //Bowser se tourne vers mario
+            bhv_bowser_custom_turn_to_mario();
+            break;
+        case 2: //Bowser crache des boules de feu
+            bhv_bowser_custom_spit_fireball();
+            break;
+        case 3: // bowser prend des dégats
+            
+            bhv_bowser_custom_take_damage();
+            break;
+        case 4: //Bowser fait tomber des météorite
+            bhv_bowser_act_spawn_fire();
+            break;
+        case 5: //Bowser décède
+            bhv_bowser_act_die();
+            break;
+    }
+
+    // reduit le cooldown de la boule de feu
+    o->oF4--;
+    if(o->oF4 < 0) {
+        o->oF4 = 0;
+    }
+    //print_text_fmt_int(20, 10, "oHealth: %d", o->oHealth);
+    //print_text_fmt_int(20, 30, "ACTION: %d", o->oAction);
+    //print_text_fmt_int(20, 50, "COOLDOWN: %d", o->oF4);
+    //print_text_fmt_int(20, 50, "ANGLE: %d", o->oAngleToMario);
+    print_text_fmt_int(10, 10, "CAM MODE %d", gLakituState.mode);
+}
+void bhv_bowser_act_die(void) {
+    // Lance l'animation de dance et attend qu'elle soit presque finie
+    if (o->oSubAction == 0) {
+        if (cur_obj_init_animation_and_check_if_near_end(BOWSER_ANIM_DANCE)) {
+            o->oSubAction = 1;
+        }
+    } else if (o->oSubAction == 1) {
+        // Lance l'animation de mort
+        cur_obj_init_animation_with_sound(BOWSER_ANIM_FLIP_DOWN);
+        o->oSubAction = 2;
+    }
+    else if (o->oSubAction == 2) {
+        // Affiche la boite de dialogue
+        if (cur_obj_update_dialog(MARIO_DIALOG_LOOK_UP, 
+            (DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED), 
+            DIALOG_163, 0)) {
+            
+            o->oSubAction = 3;
+            o->oTimer = 0; // Initialise le timer pour la disparition
+        }
+    }
+    // A la fin de l'anim de mort, Bowser disparait
+    else if (o->oSubAction == 3) {
+        if (o->oTimer = 30) { // Attend 60 frames
+
+            cur_obj_play_sound_2(SOUND_GENERAL_BOWSER_BOMB_EXPLOSION);
+
+            // Explosion un peu au-dessus de Bowser
+            struct Object *expl = spawn_object_abs_with_rot(
+                o, 0,
+             MODEL_EXPLOSION, bhvExplosion,
+                o->oPosX,
+                1000,
+                o->oPosZ,
+                0, 0, 0
+                    );
+
+                
+
+    // Bonus : fumée en plus
+    spawn_mist_particles();
+            // Spawn l'étoile au-dessus de Mario
+            spawn_default_star(
+                gMarioObject->oPosX,
+                gMarioObject->oPosY + 250.0f,
+                gMarioObject->oPosZ
+            );
+
+            // Supprime Bowser
+            obj_mark_for_deletion(o); 
+            
+            // Rend le contrôle à Mario
+            gMarioState->flags &= ~MARIO_DIALOG_STOP; 
+            set_mario_action(gMarioState, ACT_IDLE, 0);
+        }
+    }
+}
+
+void bhv_bowser_act_spawn_fire(void) {
+    // Vérifie si l'animation de crache n'a pas encore commencé
+    if (o->oAnimState != BOWSER_ANIM_DANCE) {
+        // Lance l'animation de crache vers le haut
+        cur_obj_init_animation_with_sound(BOWSER_ANIM_DANCE);
+        o->oAnimState = BOWSER_ANIM_DANCE;
+        o->oTimer = 0; // reset timer pour suivre l'anim
+    }
+
+    // Spawn du générateur à la fin de l'animation
+    if (cur_obj_check_if_near_animation_end()) {
+        // Spawn de l'objet générateur à la position de Bowser
+        spawn_object_relative(
+            0, 0, 0, 0,               // offset X, Y, Z et angle
+            o,                         // parent
+            MODEL_PLATFORM,            // modèle du générateur
+            bhvBowserObstacleManager   // comportement du générateur
+        );
+
+        o->oAction = 1; // Retourne à l'action de base
+    }
+}
+
+
+
+void bhv_bowser_flame_loop(void) {
+    o->oMoveAngleYaw = o->parentObj->oFaceAngleYaw;
+    o->oFlags &= ~OBJ_FLAG_TRANSFORM_RELATIVE_TO_PARENT;
+    o->oForwardVel = 60.0f;
+}
+void bhv_falling_grill_init(void) {
+    o->oF4 = o->oPosY; // Stocke la position de départ
+}
+
+void bhv_falling_grill_loop(void) {
+    if (o->oDistanceToMario < 500.0f) {
+        // Descend si Mario est proche
+        o->oPosY -= 8.0f;
+    } else {
+        if (o->oPosY < o->oF4){
+            o->oPosY+= 5.0f; // Remonte sinon
+        }
+        
+    }
 }

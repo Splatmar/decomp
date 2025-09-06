@@ -2,6 +2,10 @@
 #define SA_HEADER_H
 
 #include "types.h"
+#include "actors/falling_grill/geo_header.h"
+#include "actors/lava_bowser/geo_header.h"
+#include "actors/turning_platform/geo_header.h"
+
 
 // geo
 extern const GeoLayout sa_geo_000170[];
@@ -15,4 +19,6 @@ extern const MacroObject sa_seg7_macro_objs[];
 // script
 extern const LevelScript level_sa_entry[];
 
+
+#include "levels/sa/header.inc.h"
 #endif

@@ -60,6 +60,45 @@ s32 sObstacleCoordList[][4] = {
 void bhv_obstacle_manager_init(void) {
     o->oF4 = 0; // index pour parcourir le tableau
 }
+void bhv_spawn_manager_loop(void) {
+    // Vérifie si Bowser existe encore
+    struct Object *bowser = cur_obj_nearest_object_with_behavior(bhvBowserCustom);
+
+    if (bowser == NULL || bowser->oHealth <= 0) {
+        // Si Bowser est mort ou introuvable → supprime le manager
+        obj_mark_for_deletion(o);
+        return;
+    }
+
+    // Toutes les 120 frames → spawn
+    if (o->oTimer % 120 == 0) {
+        // Offset aléatoire pour éviter spawn direct sur Mario
+        f32 offsetX = (random_float() * 200.0f) - 100.0f; // [-100, +100]
+        f32 offsetZ = (random_float() * 200.0f) - 100.0f; // [-100, +100]
+
+        // Position relative à Mario
+        f32 spawnX = gMarioObject->oPosX + offsetX;
+        f32 spawnY = 4000; // même hauteur que le manager
+        f32 spawnZ = gMarioObject->oPosZ + offsetZ;
+
+        // Spawn de l’objet cible
+        spawn_object_abs_with_rot(
+            o, 0,
+            MODEL_PLATFORM,           // modèle
+            bhvBowserMoovingForward,  // comportement
+            spawnX, spawnY, spawnZ,
+            0, 0, 0                   // orientation
+        );
+    }
+}
+
+
+
+
+
+
+
+
 
 void bhv_obstacle_manager_loop(void) {
     s32 timer = sObstacleCoordList[o->oF4][TIMER_INDEX];
@@ -209,6 +248,11 @@ void bhv_fireball_loop(void) {
     o->oPosZ -= 100.0f;
 
     
+}
+void bhvFireball_bowser_loop(void) {
+    // Avancer selon l'angle
+    o->oPosX += sins(o->oMoveAngleYaw) * 20.0f;
+    o->oPosZ += coss(o->oMoveAngleYaw) * 20.0f;
 }
 
 void bhv_move_plan(void){   

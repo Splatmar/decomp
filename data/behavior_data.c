@@ -12,7 +12,7 @@
 #include "game/debug.h"
 #include "menu/file_select.h"
 #include "engine/surface_load.h"
-
+#include "actors/fireball/geo_header.h"
 #include "actors/common0.h"
 #include "actors/common1.h"
 #include "actors/group0.h"
@@ -2042,6 +2042,31 @@ const BehaviorScript bhvBowser[] = {
         CALL_NATIVE(bhv_bowser_loop),
     END_LOOP(),
 };
+
+
+const BehaviorScript bhvBowserCustom[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    
+    DROP_TO_FLOOR(),
+    //SET_HOME(),
+    LOAD_ANIMATIONS(oAnimations, bowser_seg6_anims_06057690),
+    SET_INT(oOpacity, 255),
+    SET_INT(oHealth, 3),
+    //SET_HITBOX(/*Radius*/ 400, /*Height*/ 400),
+    SCALE(/*Unused*/ 0, /*Field*/ 700),
+    // Beta leftover that spawn 50 coins when Bowser is defeated
+    //SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 0, /*Gravity*/ -400, /*Bounciness*/ -70, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
+    //SET_HOME(),
+    CALL_NATIVE(bhv_bowser_custom_init), // On ne veut pas le comportement par défaut de Bowser
+    BEGIN_LOOP(),
+        // Ici, tu mettras ton code personnalisé pour le comportement de Bowser
+        // Par exemple :
+        CALL_NATIVE(bhv_bowser_custom_loop),
+    END_LOOP(),
+};
+
+
 
 const BehaviorScript bhvBowserBodyAnchor[] = {
     BEGIN(OBJ_LIST_GENACTOR),
@@ -6192,14 +6217,39 @@ const BehaviorScript bhvMoovingForward[] = {
     SET_FLOAT(oDrawingDistance, 2300),
     CALL_NATIVE(bhv_moving_platform_init),
     BEGIN_LOOP(),
-        CALL_NATIVE(bhv_moving_forward_loop),
+        CALL_NATIVE(bhv_moving_down_until_floor),
         CALL_NATIVE(load_object_collision_model),
         
         
         
     END_LOOP(),
 };
-
+const BehaviorScript bhvBowserMoovingForward[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL|OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    LOAD_COLLISION_DATA(turning_platform_collision),
+    SCALE(/*Unused*/ 0, /*Field*/ 150),
+    SET_FLOAT(oDrawingDistance, 30000),
+    
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_moving_down_until_floor_bowser),
+        CALL_NATIVE(bhv_fake_meteorite_spawn),
+        CALL_NATIVE(load_object_collision_model),
+        
+        
+        
+    END_LOOP(),
+};
+const BehaviorScript bhvFakeMeterorite[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE )),
+    SCALE(/*Unused*/ 0, /*Field*/ 400),
+    SET_FLOAT(oDrawingDistance, 200000),
+    
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_fake_meteorite_loop),
+    END_LOOP(),
+};
 const BehaviorScript bhvScale[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE |OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
@@ -6226,6 +6276,16 @@ const BehaviorScript bhvObstacleManager[] ={
         CALL_NATIVE(bhv_obstacle_manager_loop),
     END_LOOP(),
 };
+const BehaviorScript bhvBowserObstacleManager[] ={
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oDrawingDistance, 60000),
+    LOAD_COLLISION_DATA(turning_platform_collision),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_spawn_manager_loop),
+        LOAD_COLLISION_DATA(turning_platform_collision),
+    END_LOOP(),
+};
 
 const BehaviorScript bhvFireball[] ={
     BEGIN(OBJ_LIST_LEVEL),
@@ -6234,7 +6294,13 @@ const BehaviorScript bhvFireball[] ={
         CALL_NATIVE(bhv_fireball_loop),
     END_LOOP(),
 };
-
+const BehaviorScript bhvFireballBowser[] ={
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhvFireball_bowser_loop),
+    END_LOOP(),
+};
 // test
 const BehaviorScript bhvMonkeyBreakGrill[] = {
     BEGIN(OBJ_LIST_GENACTOR),
@@ -6264,6 +6330,7 @@ const BehaviorScript breaking_surface[] ={
 const BehaviorScript bhvSwingingBall[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    SET_FLOAT(oCollisionDistance, 200),
     LOAD_COLLISION_DATA(rotatingball_collision),
     BEGIN_LOOP(),
 
@@ -6339,6 +6406,16 @@ const BehaviorScript bhvMoovingFloor[] = {
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
+const BehaviorScript bhvBowserMoovingFloor[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(lava_bowser_collision),
+    SET_FLOAT(oDrawingDistance, 6000),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhvMoovingFloor_loop_bowser),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
 const BehaviorScript bhvCrackedFloor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO| OBJ_FLAG_COMPUTE_DIST_TO_MARIO),
@@ -6348,6 +6425,28 @@ const BehaviorScript bhvCrackedFloor[] = {
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_crackedFloor_loop),
         CALL_NATIVE(cur_obj_move_standard), // mouvement basique
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvBowserFlame[] ={
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL),
+    LOAD_COLLISION_DATA(fireball_collision),
+    SET_FLOAT(oDrawingDistance, 3000),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bowser_flame_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhv_falling_grill[] ={
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    LOAD_COLLISION_DATA(falling_grill_collision),
+    SET_FLOAT(oDrawingDistance, 6000),
+    CALL_NATIVE(bhv_falling_grill_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_falling_grill_loop),
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };

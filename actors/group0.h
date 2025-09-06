@@ -403,4 +403,16 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "statue_bowser/geo_header.h"
 
+#include "falling_grill/collision_header.h"
+
+#include "falling_grill/geo_header.h"
+
+#include "bowser_lava/collision_header.h"
+
+#include "bowser_lava/geo_header.h"
+
+#include "lava_bowser/collision_header.h"
+
+#include "lava_bowser/geo_header.h"
+
 #endif

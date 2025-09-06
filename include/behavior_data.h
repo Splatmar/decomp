@@ -156,7 +156,10 @@ extern const BehaviorScript bhvBulletBill[];
 extern const BehaviorScript bhvWhitePuffSmoke[];
 extern const BehaviorScript bhvBowserTailAnchor[];
 extern const BehaviorScript bhvBowser[];
+extern const  BehaviorScript bhvBowserCustom[];
 extern const BehaviorScript bhvBowserBodyAnchor[];
+extern const BehaviorScript bhvBowserFlame[];
+extern const BehaviorScript bhv_falling_grill[];
 extern const BehaviorScript bhvBowserFlameSpawn[];
 extern const BehaviorScript bhvTiltingBowserLavaPlatform[];
 extern const BehaviorScript bhvFallingBowserPlatform[];
@@ -546,10 +549,14 @@ extern const BehaviorScript bhvIntroScene[];
 extern const BehaviorScript bhvUnusedFakeStar[];
 extern const BehaviorScript bhvMooving[];
 extern const BehaviorScript bhvMoovingForward[];
+extern const BehaviorScript bhvBowserMoovingForward[];
+extern const BehaviorScript bhvFakeMeterorite[];
 extern const BehaviorScript bhvScale[];
 extern const BehaviorScript bhvPlane[];
 extern const BehaviorScript bhvObstacleManager[];
+extern const BehaviorScript bhvBowserObstacleManager[];
 extern const BehaviorScript bhvFireball[];
+extern const BehaviorScript bhvFireballBowser[];
 extern const BehaviorScript bhvCubePlatform[];
 extern const BehaviorScript bhvLavaWaveSpawner[];
 extern const BehaviorScript bhvGif[];
@@ -567,5 +574,7 @@ extern const BehaviorScript bhvFloorSwitchHardcodedModel2[];
 extern const BehaviorScript bhvMoovingFloor[];
 extern const BehaviorScript bhvCrackedFloor[];
 extern const BehaviorScript bhvPushableStatue[];
+extern const BehaviorScript bhvBowserMoovingFloor[];
+
   
 #endif // BEHAVIOR_DATA_H
