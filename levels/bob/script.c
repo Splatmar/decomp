@@ -51,7 +51,7 @@ const LevelScript level_bob_entry[] = {
 		MARIO_POS(0x01, 0, -17, 4, 0),
 		OBJECT(MODEL_LAVA_BULL, 9992, -278, -1398, 0, 0, 0, 0x00000000, bhv_big_flame_talking),
 		OBJECT(MODEL_BOBOMB_BUDDY, 14719, -65, 7636, 0, 0, 0, 0x00000000, bhvMonkeyBreakGrill),
-		OBJECT(MODEL_EXCLAMATION_BOX, 9103, -115, 531, 0, 0, 0, (16 << 16), bhvExclamationBox),
+		OBJECT(MODEL_EXCLAMATION_BOX, 9103, -115, 531, 0, 0, 0, (1 << 24) | (16 << 16) | (1 << 8) | (1), bhvExclamationBox),
 		OBJECT(MODEL_BULLY, 8918, 146, 2063, 0, 0, 0, 0x00000000, bhvSmallBully),
 		OBJECT(MODEL_BULLY, 10129, 145, 3287, 0, 0, 0, 0x00000000, bhvSmallBully),
 		OBJECT(MODEL_BULLY, 1797, 652, 7363, 0, 0, 0, 0x00000000, bhvSmallBully),

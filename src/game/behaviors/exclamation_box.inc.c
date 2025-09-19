@@ -54,11 +54,19 @@ void exclamation_box_act_init(void) {
                           || (GET_BPARAM1(o->oBehParams) != EXCLAMATION_BOX_BP1_NEEDS_SWITCH));
 #endif
         o->oAction = tangible ? EXCLAMATION_BOX_ACT_ACTIVE : EXCLAMATION_BOX_ACT_OUTLINE;
+
+    } else if (o->oBehParams2ndByte == EXCLAMATION_BOX_DELETE_FLAME) {
+        //  Forcer la box "delete flame" à être rouge
+        o->oAnimState = 0; // 0 = rouge dans geo_switch
+        o->oAction = EXCLAMATION_BOX_ACT_ACTIVE;
+
     } else {
+        // Tous les autres spéciaux (Bowser damage, stars, etc.) restent jaunes
         o->oAnimState = EXCLAMATION_BOX_ANIM_STATE_YELLOW;
         o->oAction = EXCLAMATION_BOX_ACT_ACTIVE;
     }
 }
+
 
 void exclamation_box_act_outline(void) {
     cur_obj_become_intangible();
