@@ -2675,11 +2675,13 @@ const BehaviorScript bhvExclamationBox[] = {
     OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     LOAD_COLLISION_DATA(exclamation_box_outline_seg8_collision_08025F78),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-    SET_FLOAT(oCollisionDistance, 300),
+    SET_FLOAT(oCollisionDistance, 400),
+    
     SET_HOME(),
     CALL_NATIVE(bhv_init_room),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_exclamation_box_loop),
+        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
 
@@ -6276,8 +6278,19 @@ const BehaviorScript bhvScale[] = {
 const BehaviorScript bhvPlane[] = {
     BEGIN(OBJ_LIST_GENACTOR),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE|OBJ_FLAG_SET_FACE_ANGLE_TO_MOVE_ANGLE)),
+    CALL_NATIVE(bhv_plane_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_rotate_plane_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvPlaneHitboxes[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    SET_INTERACT_TYPE(INTERACT_IGLOO_BARRIER),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_plane_hitboxes_loop),
     END_LOOP(),
 };
 
@@ -6487,6 +6500,7 @@ const BehaviorScript bhv_big_flame_talking[] ={
     SCALE(/*Unused*/ 0, /*Field*/ 400),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_big_flame_talking_loop),
+            
     END_LOOP(),
 
 };

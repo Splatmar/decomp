@@ -97,7 +97,7 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_PLAT_WITH_ID , 7621, -1417, -679, 0, 0, 0, 0x00020000, bhvPlatform_with_id),
 		OBJECT(MODEL_GRILLECIRCLE, 6713, 3371, 5449, 0, -180, 0, 0x00000000, bhvRotatingPlatformGrille),
 		OBJECT(MODEL_GRILLECIRCLE, 7240, 3817, 4410, 0, 0, 0, 0x00000000, bhvRotatingPlatformGrille),
-		OBJECT(MODEL_NONE, 0, 0, -367, 0, 0, 0, (0x0B << 16), bhvWarp),
+		OBJECT(MODEL_NONE, 0, 0, -367, 0, 90, 0, (0x0B << 16) | (191), bhvInstantActiveWarp),
 		OBJECT(MODEL_NONE, 1675, 3497, 3349, 0, 0, 0, 0x01960200, bhvPoleGrabbing),
 		OBJECT(MODEL_ASCENCEUR, 760, -322, -11583, 0, 0, 0, (10 << 24), bhvCustomElevator),
 		OBJECT(MODEL_BREAKABLE_BOX, 11774, -714, -5130, 0, 0, 0, 0x00000000, bhvBreakableBox),
@@ -132,21 +132,11 @@ const LevelScript level_lll_entry[] = {
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
-	AREA(2, lll_area_2),
-		WARP_NODE(0x14, LEVEL_LLL, 0x01, 0x14, WARP_NO_CHECKPOINT),
-		OBJECT(MODEL_NONE, 1487, 493, -1631, 0, 0, 0, 0x00140000, bhvWarp),
-		OBJECT(MODEL_WOODEN_SIGNPOST, -774, 11, 900, 0, 117, 0, (45 << 24) | (45 << 16) | (45 << 8) | (45), bhvMessagePanel),
-		TERRAIN(lll_area_2_collision),
-		MACRO_OBJECTS(lll_area_2_macro_objs),
-		SET_BACKGROUND_MUSIC(0x01, SEQ_LEVEL_UNDERGROUND),
-		TERRAIN_TYPE(TERRAIN_GRASS),
-		/* Fast64 begin persistent block [area commands] */
-		/* Fast64 end persistent block [area commands] */
-	END_AREA(),
+	
 	AREA(3, lll_area_3),
 		WARP_NODE(0x15, LEVEL_LLL, 0x01, 0x15, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_SA, 0x01, 0x0B, WARP_NO_CHECKPOINT),
-		OBJECT(MODEL_THI_WARP_PIPE, 14755, -1124, -550, 0, 0, 0, (0x0B << 16), bhvWarpPipe),
+		OBJECT(MODEL_NONE, 14755, -1124, -550, 0, 0, 0, (0x0B << 16), bhvWarpPipe),
 		OBJECT(MODEL_NONE, 8812, -262, -931, 0, 0, 0, 0x00000000, bhvGoombaTripletSpawner),
 		OBJECT(MODEL_NONE, 8613, -262, 43, 0, 0, 0, 0x00000000, bhvGoombaTripletSpawner),
 		OBJECT(MODEL_WOODEN_SIGNPOST, -2874, -303, -1301, 0, -90, 0, (30 << 16), bhvMessagePanel),
@@ -154,6 +144,17 @@ const LevelScript level_lll_entry[] = {
 		TERRAIN(lll_area_3_collision),
 		MACRO_OBJECTS(lll_area_3_macro_objs),
 		STOP_MUSIC(0),
+		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
+	END_AREA(),
+	AREA(2, lll_area_2),
+		WARP_NODE(0x14, LEVEL_LLL, 0x01, 0x14, WARP_NO_CHECKPOINT),
+		OBJECT(MODEL_NONE, 1487, 493, -1631, 0, 0, 0, 0x00140000, bhvWarp),
+		OBJECT(MODEL_WOODEN_SIGNPOST, -774, 11, 900, 0, 117, 0, (45 << 24) | (45 << 16) | (45 << 8) | (45), bhvMessagePanel),
+		TERRAIN(lll_area_2_collision),
+		MACRO_OBJECTS(lll_area_2_macro_objs),
+		SET_BACKGROUND_MUSIC(0x01, SEQ_LEVEL_UNDERGROUND),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

@@ -2113,7 +2113,7 @@ static void bhv_timer_for_lava_loop(void) {
     if (o->oTimer >= 450) {
         // Si la box existe encore, elle redescend
         if (box != NULL) {
-            box->oPosY -= 1000;
+            box->oPosY -= 700;
         }
 
         level_control_timer(TIMER_CONTROL_STOP);
@@ -2141,6 +2141,7 @@ void bhv_big_flame_talking_loop(void) {
             o->oF4 = 0;
 
             if (o->oDistanceToMario < 1000) {
+                
                 if (cur_obj_update_dialog(
                         MARIO_DIALOG_LOOK_UP,
                         DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED,
@@ -2162,7 +2163,7 @@ void bhv_big_flame_talking_loop(void) {
             // Monter la box de 1000 unités
             struct Object *box = cur_obj_nearest_object_with_behavior(bhvExclamationBox);
             if (box != NULL) {
-                box->oPosY += 1000;
+                box->oPosY += 700;
             }
 
             o->oTimer = 0;

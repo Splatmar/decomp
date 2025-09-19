@@ -555,6 +555,7 @@ extern const BehaviorScript bhvBowserMoovingForward[];
 extern const BehaviorScript bhvFakeMeterorite[];
 extern const BehaviorScript bhvScale[];
 extern const BehaviorScript bhvPlane[];
+extern const BehaviorScript bhvPlaneHitboxes[];
 extern const BehaviorScript bhvObstacleManager[];
 extern const BehaviorScript bhvBowserObstacleManager[];
 extern const BehaviorScript bhvFireball[];

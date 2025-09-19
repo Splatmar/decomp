@@ -8,7 +8,63 @@ void plane_stick_control(void){
     o->oMoveAngleRoll -= 10 * stickX;
 }
 
-void bhv_rotate_plane_loop(void){
+#define WING_HITBOXES_OFFSET 320
+#define HITBOXES_PER_WING 6
+#define HITBOXES_INCREMENT_OFFSET_TO_PLANE_WING 55
+void bhv_plane_init(void) {
+    
+    // left wing hitboxes
+    for(int i = 1; i <= HITBOXES_PER_WING; i++) {
+        struct Object *leftHitbox = spawn_object_relative(WING_HITBOXES_OFFSET * i, 0, 0, 0, o, MODEL_NONE, bhvPlaneHitboxes);
+        leftHitbox->oF4 =  (HITBOXES_INCREMENT_OFFSET_TO_PLANE_WING * i);
+    }
+
+    // right wing hitboxs
+    for(int i = 1; i <= HITBOXES_PER_WING; i++) {
+        struct Object *rightHitbox = spawn_object_relative(-WING_HITBOXES_OFFSET * i, 0, 0, 0, o, MODEL_NONE, bhvPlaneHitboxes);
+        rightHitbox->oF4 = (HITBOXES_INCREMENT_OFFSET_TO_PLANE_WING * i);
+    }
+}
+
+void bhv_plane_hitboxes_loop(void) {
+    s32 offsetFromAnchor = o->oBehParams2ndByte;
+    s32 offsetToMatchWingShape = o->oF4;
+    f32 yOffset = (offsetFromAnchor * sins(o->parentObj->oFaceAngleRoll));
+    f32 xOffset = (offsetFromAnchor * coss(o->parentObj->oFaceAngleRoll));
+    
+    o->oPosX = o->parentObj->oPosX + xOffset - (offsetToMatchWingShape * sins(o->parentObj->oFaceAngleRoll));
+    o->oPosY = o->parentObj->oPosY + yOffset + (offsetToMatchWingShape * coss(o->parentObj->oFaceAngleRoll));
+    
+    struct Object *meteorite = cur_obj_nearest_object_with_behavior(bhvFireball);
+    if(meteorite != NULL && dist_between_objects(o, meteorite) < 450 && o->parentObj->oF8) {
+    gMarioState->health -= 500;
+    set_camera_shake_from_hit(SHAKE_LARGE_DAMAGE);
+    play_sound(SOUND_MARIO_ATTACKED, gGlobalSoundSource);
+    
+    if (gMarioState->health <= 500) {
+        gMarioState->health = 0;
+        set_mario_action(gMarioState, ACT_DEATH_ON_BACK, 0);
+    }
+
+    // the plane cant take damage for the next 30 frames 
+    o->parentObj->oF8 = 0;
+    o->parentObj->oF4 = 30;
+}
+
+    
+
+
+}
+
+void bhv_rotate_plane_loop(void) {
+    gMarioState->pos[0] = 0000.0f; // X
+gMarioState->pos[1] = 0160.0f; // Y
+gMarioState->pos[2] = 000.0f; // Z
+
+gMarioState->marioObj->oPosX = gMarioState->pos[0];
+gMarioState->marioObj->oPosY = gMarioState->pos[1];
+gMarioState->marioObj->oPosZ = gMarioState->pos[2];
+
     // Timer debug
    
 
@@ -22,17 +78,21 @@ void bhv_rotate_plane_loop(void){
     }
 
     // Spawn du warp **une seule fois** après un certain temps (sécurisé)
-    if(o->oTimer == 1000){  // exemple : frame 1000
-        struct Object *warpObj = spawn_object_abs_with_rot(
-            gMarioObject, 0, MODEL_NONE, bhvInstantActiveWarp,
-            gMarioState->pos[0], gMarioState->pos[1] + 20, gMarioState->pos[2],
-            0, 0, 0
-        );
-        warpObj->oBehParams = (0x0A << 16); // doit correspondre au WARP_NODE
+    if(o->oTimer == 100){  // exemple : frame 1000 
+        initiate_warp(LEVEL_BOB & 0x7F, 1, 0x0A, WARP_FLAGS_NONE);
+        play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x10, 0, 0, 0);
+        level_set_transition(0x10, NULL);
     }
 
     // Toujours garder le dialogue (optionnel)
     set_mario_npc_dialog(MARIO_DIALOG_LOOK_FRONT);
+
+    // if can't take damage and cooldown over, reset the damage
+    if(o->oF8 == 0 && o->oF4 == 0) {
+        o->oF8 = 1;
+    } else {
+        o->oF4--;
+    }
 }
 
 

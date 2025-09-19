@@ -57,7 +57,7 @@ void exclamation_box_act_init(void) {
 
     } else if (o->oBehParams2ndByte == EXCLAMATION_BOX_DELETE_FLAME) {
         //  Forcer la box "delete flame" à être rouge
-        o->oAnimState = 0; // 0 = rouge dans geo_switch
+        o->oAnimState = 1; // 0 = rouge dans geo_switch
         o->oAction = EXCLAMATION_BOX_ACT_ACTIVE;
 
     } else {
@@ -65,6 +65,7 @@ void exclamation_box_act_init(void) {
         o->oAnimState = EXCLAMATION_BOX_ANIM_STATE_YELLOW;
         o->oAction = EXCLAMATION_BOX_ACT_ACTIVE;
     }
+    
 }
 
 
@@ -190,6 +191,6 @@ ObjActionFunc sExclamationBoxActions[] = {
 };
 
 void bhv_exclamation_box_loop(void) {
-    cur_obj_scale(2.0f);
+    cur_obj_scale(3.0f);
     cur_obj_call_action_function(sExclamationBoxActions);
 }

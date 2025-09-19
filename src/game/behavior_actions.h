@@ -558,6 +558,8 @@ void bhv_moving_platform_init(void);
 void bhv_moving_down_until_floor(void);
 void bhv_moving_down_until_floor_bowser(void);
 void scale_up_animation(void);
+void bhv_plane_init(void);
+void bhv_plane_hitboxes_loop(void);
 void bhv_rotate_plane_loop(void);
 void bhv_obstacle_manager_loop(void);
 void bhv_obstacle_manager_init(void);
