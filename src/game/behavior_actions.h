@@ -566,6 +566,7 @@ void bhv_fireball_loop(void);
 void bhvFireball_bowser_loop(void);
 void bhv_move_plan(void);
 void platform_move_forward(void);
+void platform_move_forward_bowser(void);
 void bhv_fake_meteorite_spawn(void) ;
 void bhv_fake_meteorite_loop(void);
 void spawn_multiple_fireballs(void);
@@ -576,6 +577,7 @@ void bhv_monkey_break_grill_loop(void);
 void bhv_grille_loop(void);
 void bhv_monkey_break_grill_init(void);
 void bhv_swinging_ball_loop(void);
+void bhv_swinging_ball_bottom_hitbox_loop(void);
 void bhv_custom_elevator_loop(void);
 void bhv_zipline_loop(void);
 void bhv_purple_switch_special_loop(void);
@@ -586,6 +588,7 @@ void bhvMoovingFloor_loop_bowser(void);
 void bhv_crackedFloor_loop(void);
 void bhv_falling_grill_loop(void);
 void bhv_falling_grill_init(void);
+void bhv_big_flame_talking_loop(void);
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Bowser

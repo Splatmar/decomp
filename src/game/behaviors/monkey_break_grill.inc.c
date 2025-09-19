@@ -150,7 +150,18 @@ void bhv_swinging_ball_loop(void) {
 
     s16 angle = sins((o->oTimer * speed) + phaseOffset) * 0x2000;
 
-    o->oFaceAngleRoll = angle; // gauche-droite
+    o->oFaceAnglePitch = angle; // gauche-droite
+}
+
+void bhv_swinging_ball_bottom_hitbox_loop(void) {
+    s32 offsetFromAnchor = 1400;
+    f32 xOffset = (offsetFromAnchor * sins(o->parentObj->oFaceAngleYaw)) * (-sins(o->parentObj->oFaceAnglePitch));
+    f32 yOffset = -offsetFromAnchor * coss(o->parentObj->oFaceAnglePitch);
+    f32 zOffset = (offsetFromAnchor * coss(o->parentObj->oFaceAngleYaw)) * (-sins(o->parentObj->oFaceAnglePitch));
+    
+    o->oPosX = o->parentObj->oPosX + xOffset;
+    o->oPosY = o->parentObj->oPosY + yOffset;
+    o->oPosZ = o->parentObj->oPosZ + zOffset;
 }
 
 void bhv_custom_elevator_loop(void) {

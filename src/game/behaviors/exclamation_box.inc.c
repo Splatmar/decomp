@@ -35,6 +35,7 @@ struct ExclamationBoxContents sExclamationBoxContents[] = {
     [EXCLAMATION_BOX_BP_STAR_5          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           4 },
     [EXCLAMATION_BOX_BP_STAR_6          ] = { MODEL_STAR,             bhvSpawnedStarAtHome,           5 },
     [EXCLAMATION_BOX_DAMAGE_BOWSER   ] = { MODEL_NONE,             NULL,                     0 },
+    [EXCLAMATION_BOX_DELETE_FLAME   ] = { MODEL_MARIOS_WING_CAP,             NULL,                     0 },
 };
 
 void bhv_rotating_exclamation_mark_loop(void) {
@@ -143,7 +144,16 @@ void exclamation_box_act_explode(void) {
             cur_obj_play_sound_2(SOUND_OBJ_BOWSER_TAIL_PICKUP);
         }
         obj_mark_for_deletion(o);
-    } else {
+    } else if(o->oBehParams2ndByte == EXCLAMATION_BOX_DELETE_FLAME){
+        struct Object *flame1 = cur_obj_nearest_object_with_behavior_and_bparam(bhvFlameBigger,1,1,0);
+        struct Object *flame2 = cur_obj_nearest_object_with_behavior_and_bparam(bhvFlameBigger,1,2,0);
+        if(flame1 != NULL &&flame2 != NULL ){
+            obj_mark_for_deletion(flame1);
+            obj_mark_for_deletion(flame2);
+        }
+        obj_mark_for_deletion(o);
+    }
+    else {
         exclamation_box_spawn_contents(sExclamationBoxContents, o->oBehParams2ndByte);
         if (o->oBehParams2ndByte <= EXCLAMATION_BOX_BP_KOOPA_SHELL) {
             // Cap boxes + Koopa shell boxes.

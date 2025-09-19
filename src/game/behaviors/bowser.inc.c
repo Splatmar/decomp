@@ -1982,7 +1982,6 @@ void bhv_bowser_custom_loop(void) {
     //print_text_fmt_int(20, 30, "ACTION: %d", o->oAction);
     //print_text_fmt_int(20, 50, "COOLDOWN: %d", o->oF4);
     //print_text_fmt_int(20, 50, "ANGLE: %d", o->oAngleToMario);
-    print_text_fmt_int(10, 10, "CAM MODE %d", gLakituState.mode);
 }
 void bhv_bowser_act_die(void) {
     // Lance l'animation de dance et attend qu'elle soit presque finie
@@ -2045,15 +2044,14 @@ void bhv_bowser_act_die(void) {
 void bhv_bowser_act_spawn_fire(void) {
     // Vérifie si l'animation de crache n'a pas encore commencé
     if (o->oAnimState != BOWSER_ANIM_DANCE) {
-        // Lance l'animation de crache vers le haut
         cur_obj_init_animation_with_sound(BOWSER_ANIM_DANCE);
         o->oAnimState = BOWSER_ANIM_DANCE;
         o->oTimer = 0; // reset timer pour suivre l'anim
+        
     }
 
-    // Spawn du générateur à la fin de l'animation
-    if (cur_obj_check_if_near_animation_end()) {
-        // Spawn de l'objet générateur à la position de Bowser
+    // Spawn du manager à la fin de l'animation, une seule fois
+    if (cur_obj_check_if_near_animation_end() && o->o100 == 0) {
         spawn_object_relative(
             0, 0, 0, 0,               // offset X, Y, Z et angle
             o,                         // parent
@@ -2061,23 +2059,35 @@ void bhv_bowser_act_spawn_fire(void) {
             bhvBowserObstacleManager   // comportement du générateur
         );
 
+        o->o100 = 1;   // Marque que le manager est créé
         o->oAction = 1; // Retourne à l'action de base
     }
+    return;
+    
 }
+
 
 
 
 void bhv_bowser_flame_loop(void) {
     o->oMoveAngleYaw = o->parentObj->oFaceAngleYaw;
     o->oFlags &= ~OBJ_FLAG_TRANSFORM_RELATIVE_TO_PARENT;
-    o->oForwardVel = 60.0f;
+    o->oForwardVel = 100.0f;
+
+    // Rend la flamme "dangereuse" pour Mario
+    o->oInteractType = INTERACT_FLAME;
+    o->oDamageOrCoinValue = 2; // dégâts infligés
 }
+
+
+
+
 void bhv_falling_grill_init(void) {
     o->oF4 = o->oPosY; // Stocke la position de départ
 }
 
 void bhv_falling_grill_loop(void) {
-    if (o->oDistanceToMario < 500.0f) {
+    if (gMarioObject->platform == o) {
         // Descend si Mario est proche
         o->oPosY -= 8.0f;
     } else {
@@ -2087,3 +2097,83 @@ void bhv_falling_grill_loop(void) {
         
     }
 }
+
+// Timer lié au Big Flame Talking
+static void bhv_timer_for_lava_loop(void) {
+    struct Object *box = cur_obj_nearest_object_with_behavior(bhvExclamationBox);
+
+    // Vérifie si la box a été détruite avant la fin du timer
+    if (box == NULL) {
+        o->oF8 = 1;  // flag : PNJ ne parle plus
+        level_control_timer(TIMER_CONTROL_STOP);
+        level_control_timer(TIMER_CONTROL_HIDE);
+    }
+
+    // Timer terminé (450 frames ~ 15 sec à 30 fps)
+    if (o->oTimer >= 450) {
+        // Si la box existe encore, elle redescend
+        if (box != NULL) {
+            box->oPosY -= 1000;
+        }
+
+        level_control_timer(TIMER_CONTROL_STOP);
+        level_control_timer(TIMER_CONTROL_HIDE);
+
+        // Reset du PNJ courant seulement si la box n’a pas été détruite
+        if (o->oF8 == 0) {
+            o->oAction = 0;
+            o->oTimer  = 0;
+        }
+    }
+}
+
+// Big Flame Talking principal
+void bhv_big_flame_talking_loop(void) {
+    // Toujours regarder Mario
+    o->oMoveAngleYaw = obj_angle_to_object(o, gMarioObject);
+
+    switch (o->oAction) {
+        case 0:
+            // Si la box a été détruite, le PNJ ne parle plus
+            if (o->oF8) break;
+
+            // Reset du flag du timer
+            o->oF4 = 0;
+
+            if (o->oDistanceToMario < 1000) {
+                if (cur_obj_update_dialog(
+                        MARIO_DIALOG_LOOK_UP,
+                        DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED,
+                        DIALOG_163,
+                        0
+                    )) {
+                    o->oAction++;  // Passe à l'action suivante une fois le dialogue terminé
+                }
+            }
+            break;
+
+        case 1: {
+            // Démarrage du timer
+            gMarioState->flags &= ~MARIO_DIALOG_STOP;
+            level_control_timer(TIMER_CONTROL_SHOW);
+            level_control_timer(TIMER_CONTROL_START);
+            set_mario_action(gMarioState, ACT_IDLE, 0);
+
+            // Monter la box de 1000 unités
+            struct Object *box = cur_obj_nearest_object_with_behavior(bhvExclamationBox);
+            if (box != NULL) {
+                box->oPosY += 1000;
+            }
+
+            o->oTimer = 0;
+            o->oAction++;
+            break;
+        }
+
+        case 2:
+            bhv_timer_for_lava_loop();
+            break;
+    }
+}
+
+

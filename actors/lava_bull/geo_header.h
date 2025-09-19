@@ -11,7 +11,7 @@ extern Gfx lava_bull_lava_bull_mesh_layer_5_tri_0[];
 extern Vtx lava_bull_lava_bull_mesh_layer_1_vtx_cull[8];
 extern Vtx lava_bull_lava_bull_mesh_layer_1_vtx_0[247];
 extern Gfx lava_bull_lava_bull_mesh_layer_1_tri_0[];
-extern Vtx lava_bull_lava_bull_mesh_layer_1_vtx_1[222];
+extern Vtx lava_bull_lava_bull_mesh_layer_1_vtx_1[31];
 extern Gfx lava_bull_lava_bull_mesh_layer_1_tri_1[];
 extern Gfx mat_lava_bull_f3dlite_material_005[];
 extern Gfx mat_revert_lava_bull_f3dlite_material_005[];

@@ -57,6 +57,37 @@ void platform_move_forward(void) {
         }
     }
 }
+void platform_move_forward_bowser(void) {
+    
+
+    // Détecte Mario proche
+    if (gMarioObject->platform == o && o->oF4 == 0) {
+        o->oF4 = 1;
+        o->oTimer = 0;
+        o->oVelY = 0.0f; // initialise la vitesse verticale
+    }
+
+    // Si déclenché, avance et incrémente le timer
+    if (o->oF4 == 1) {
+        o->oTimer++;
+
+        // Avance horizontalement tant que le timer < 300
+        if (o->oTimer < 1350) {
+            o->oPosZ -= 11;
+        }
+
+        // Après 300 frames, commence à descendre progressivement
+        if (o->oTimer >= 1350) {
+            // applique une vitesse verticale progressive
+            o->oVelY -= 0.5f;  // accélération vers le bas
+            if (o->oVelY < -1.5f) o->oVelY = -1.5f; // limite vitesse max
+            o->oPosY += o->oVelY;
+        }
+        if(o->oTimer >=1900){
+            obj_mark_for_deletion(o);
+        }
+    }
+}
 void bhv_fake_meteorite_loop(void) {
     // Descend progressivement
     o->oPosY -= 70.0f;
@@ -67,26 +98,28 @@ void bhv_fake_meteorite_loop(void) {
     }
 }
 void bhv_fake_meteorite_spawn(void) {
-    // Toutes les 30 frames
-    if (o->oTimer % 60 == 0) {
+    // Si pas encore de timer défini, on en génère un aléatoire
+    if (o->o100 == 0) {
+        // aléatoire entre 60 et 180 frames (~1 à 3 secondes)
+        o->o100 = (random_u16() % 120) + 60;
+    }
+
+    // Quand le timer atteint le délai choisi
+    if (o->oTimer >= o->o100) {
         s16 randX, randZ;
 
-        // X aléatoire en dehors du carré [-8500, +8500] mais pas trop loin
+        // X aléatoire sur les bords [-8500, -8300] ou [8300, 8500]
         if (random_float() < 0.5f) {
-            // Partie gauche [-9000, -8500]
-            randX = (random_u16() % 500) - 9000; 
+            randX = (random_u16() % 201) - 8500;  // [-8500, -8300]
         } else {
-            // Partie droite [8500, 9000]
-            randX = (random_u16() % 500) + 8500;
+            randX = (random_u16() % 201) + 8300;  // [8300, 8500]
         }
 
-        // Z aléatoire en dehors du carré [-8500, +8500] mais pas trop loin
+        // Z aléatoire sur les bords [-8500, -8300] ou [8300, 8500]
         if (random_float() < 0.5f) {
-            // Partie avant [-9000, -8500]
-            randZ = (random_u16() % 500) - 9000;
+            randZ = (random_u16() % 201) - 8500;  // [-8500, -8300]
         } else {
-            // Partie arrière [8500, 9000]
-            randZ = (random_u16() % 500) + 8500;
+            randZ = (random_u16() % 201) + 8300;  // [8300, 8500]
         }
 
         // Position absolue du spawn, hauteur 2000
@@ -97,11 +130,15 @@ void bhv_fake_meteorite_spawn(void) {
         // Spawn du fake météorite
         spawn_object_abs_with_rot(
             o, 0,
-            MODEL_PLATFORM,       // modèle
-            bhvFakeMeterorite,    // comportement
+            MODEL_PLATFORM,    // modèle
+            bhvFakeMeterorite, // comportement
             spawnX, spawnY, spawnZ,
-            0, 0, 0               // orientation
+            0, 0, 0
         );
+
+        // Reset du timer et nouveau délai
+        o->oTimer = 0;
+        o->o100 = (random_u16() % 120) + 60;
     }
 }
 
@@ -109,11 +146,21 @@ void bhv_fake_meteorite_spawn(void) {
 
 
 
-
-
+struct ObjectHitbox sBowserMeteorite = {
+    /* interactType:      */ INTERACT_FLAME,
+    /* downOffset:        */ 200,
+    /* damageOrCoinValue: */ 0,
+    /* health:            */ 1,
+    /* numLootCoins:      */ 0,
+    /* radius:            */ 200,
+    /* height:            */ 300,
+    /* hurtboxRadius:     */ 0,
+    /* hurtboxHeight:     */ 0,
+};
 
 
 void bhv_moving_down_until_floor_bowser(void) {
+    obj_set_hitbox(o, &sBowserMeteorite);
     // Vérifie si l’objet est dans la zone spéciale (cercle de rayon 10000)
     f32 dx = o->oPosX;
     f32 dz = o->oPosZ;

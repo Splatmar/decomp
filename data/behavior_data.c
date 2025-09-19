@@ -1238,11 +1238,12 @@ const BehaviorScript bhvFlame[] = {
 const BehaviorScript bhvFlameBigger[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    
     BILLBOARD(),
     SET_HOME(),
-    SCALE(/*Unused*/ 0, /*Field*/ 1750),
+    SCALE(/*Unused*/ 0, /*Field*/ 2500),
     SET_INTERACT_TYPE(INTERACT_FLAME),
-    SET_HITBOX_WITH_OFFSET(/*Radius*/ 50, /*Height*/ 25, /*Downwards offset*/ 25),
+    SET_HITBOX_WITH_OFFSET(/*Radius*/ 300, /*Height*/ 250, /*Downwards offset*/ 25),
     SET_INT(oIntangibleTimer, 0),
     CALL_NATIVE(bhv_init_room),
     BEGIN_LOOP(),
@@ -5431,6 +5432,19 @@ const BehaviorScript bhvPlatformMooving[] = {
         
     END_LOOP(),
 };
+const BehaviorScript bhvPlatformMoovingBowser[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    LOAD_COLLISION_DATA(train_collision),
+    SCALE(/*Unused*/ 0, /*Field*/ 200),
+    CALL_NATIVE(bhv_init_room),
+    BEGIN_LOOP(),
+        
+        CALL_NATIVE(platform_move_forward_bowser),
+        CALL_NATIVE(load_object_collision_model),
+        
+    END_LOOP(),
+};
 const BehaviorScript bhvGif[] = {
     BEGIN(OBJ_LIST_GENACTOR),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
@@ -6226,18 +6240,17 @@ const BehaviorScript bhvMoovingForward[] = {
 };
 const BehaviorScript bhvBowserMoovingForward[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL|OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    LOAD_COLLISION_DATA(turning_platform_collision),
+    OR_LONG(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL|OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    //LOAD_COLLISION_DATA(turning_platform_collision),
     SCALE(/*Unused*/ 0, /*Field*/ 150),
     SET_FLOAT(oDrawingDistance, 30000),
-    
+    SET_INTERACT_TYPE(INTERACT_FLAME),
+    SET_HITBOX(/*Radius*/ 400, /*Height*/ 400),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_moving_down_until_floor_bowser),
         CALL_NATIVE(bhv_fake_meteorite_spawn),
-        CALL_NATIVE(load_object_collision_model),
-        
-        
-        
+        //CALL_NATIVE(load_object_collision_model),
+        SET_INT(oInteractStatus, INT_STATUS_NONE),
     END_LOOP(),
 };
 const BehaviorScript bhvFakeMeterorite[] = {
@@ -6332,10 +6345,21 @@ const BehaviorScript bhvSwingingBall[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     SET_FLOAT(oCollisionDistance, 200),
     LOAD_COLLISION_DATA(rotatingball_collision),
+    SPAWN_CHILD_WITH_PARAM(/*Bhv param*/ 0, /*Model*/ MODEL_NONE, /*Behavior*/ bhvSwingingBallBottomHitbox),
     BEGIN_LOOP(),
+        CALL_NATIVE(bhv_swinging_ball_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
 
-    CALL_NATIVE(bhv_swinging_ball_loop),
-    CALL_NATIVE(load_object_collision_model),
+const BehaviorScript bhvSwingingBallBottomHitbox[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    SET_HITBOX_WITH_OFFSET(/*Radius*/ 350, /*Height*/ 270, 100),
+    SET_INTERACT_TYPE(INTERACT_IGLOO_BARRIER),
+    BEGIN_LOOP(),
+        SET_INT(oIntangibleTimer, 0),
+        CALL_NATIVE(bhv_swinging_ball_bottom_hitbox_loop),
     END_LOOP(),
 };
 
@@ -6411,6 +6435,8 @@ const BehaviorScript bhvBowserMoovingFloor[] = {
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     LOAD_COLLISION_DATA(lava_bowser_collision),
     SET_FLOAT(oDrawingDistance, 6000),
+    SCALE(/*Unused*/ 0, /*Field*/ 130),
+
     BEGIN_LOOP(),
         CALL_NATIVE(bhvMoovingFloor_loop_bowser),
         CALL_NATIVE(load_object_collision_model),
@@ -6429,16 +6455,20 @@ const BehaviorScript bhvCrackedFloor[] = {
     END_LOOP(),
 };
 
-const BehaviorScript bhvBowserFlame[] ={
+const BehaviorScript bhvBowserFlame[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_LONG(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL),
-    LOAD_COLLISION_DATA(fireball_collision),
+    SET_INTERACT_TYPE(INTERACT_FLAME),
+    SET_HITBOX_WITH_OFFSET(/*Radius*/ 500, /*Height*/ 500, /*Downwards offset*/ 25),
+    SET_INT(oIntangibleTimer, 0),
     SET_FLOAT(oDrawingDistance, 3000),
+    CALL_NATIVE(bhv_init_room),
     BEGIN_LOOP(),
+        SET_INT(oInteractStatus, INT_STATUS_NONE),
         CALL_NATIVE(bhv_bowser_flame_loop),
-        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
+
 const BehaviorScript bhv_falling_grill[] ={
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
@@ -6449,4 +6479,14 @@ const BehaviorScript bhv_falling_grill[] ={
         CALL_NATIVE(bhv_falling_grill_loop),
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
+};
+const BehaviorScript bhv_big_flame_talking[] ={
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO|OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO| OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW)),
+    SET_FLOAT(oDrawingDistance, 6000),
+    SCALE(/*Unused*/ 0, /*Field*/ 400),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_big_flame_talking_loop),
+    END_LOOP(),
+
 };

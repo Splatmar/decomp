@@ -329,29 +329,11 @@ Stars.\n\
 Bwa ha ha!"))
 
 DEFINE_DIALOG(DIALOG_030, 1, 6, 30, 200, _("\
-Hello! The Lakitu Bros.,\n\
-cutting in with a live\n\
-update on Mario's\n\
-progress. He's about to\n\
-learn a technique for\n\
-sneaking up on enemies.\n\
-The trick is this: He has\n\
-to walk very slowly in\n\
-order to walk quietly.\n\
-\n\
-\n\
-\n\
-And wrapping up filming\n\
-techniques reported on\n\
-earlier, you can take a\n\
-look around using [C]> and\n\
-[C]<. Press [C]| to view the\n\
-action from a distance.\n\
-When you can't move the\n\
-camera any farther, the\n\
-buzzer will sound. This is\n\
-the Lakitu Bros.,\n\
-signing off."))
+Passing through here is\n\
+dangerous if you don't\n\
+know its secret.\n\
+"))
+
 
 DEFINE_DIALOG(DIALOG_031, 1, 5, 30, 200, _("\
 No way! You beat me...\n\
@@ -2011,31 +1993,30 @@ all. Now, I must be off.\n\
 Owww! Let me go!"))
 
 DEFINE_DIALOG(DIALOG_163, 1, 5, 30, 200, _("\
-Noooo! You've really\n\
-beaten me this time,\n\
-Mario! I can't stand\n\
-losing to you!\n\
+Nooo! How could this be?\n\
+Defeated again by you,\n\
+Mario! My strength...\n\
+it's slipping away!\n\
 \n\
-My troops...worthless!\n\
-They've turned over all\n\
-the Power Stars! What?!\n\
-There are 120 in all???\n\
+All my plans, all my\n\
+traps... ruined! My army\n\
+was powerless to stop you!\n\
 \n\
-Amazing! There were some\n\
-in the castle that I\n\
-missed??!!\n\
+Curses! The secret I\n\
+guarded so closely has\n\
+fallen into your hands!\n\
 \n\
+But don't think this is\n\
+the end! I'll return,\n\
+stronger than ever, and\n\
+take back everything!\n\
 \n\
-Now I see peace\n\
-returning to the world...\n\
-Oooo! I really hate that!\n\
-I can't watch--\n\
-I'm outta here!\n\
-Just you wait until next\n\
-time. Until then, keep\n\
-that Control Stick\n\
-smokin'!\n\
-Buwaa ha ha!"))
+Until then... enjoy your\n\
+victory, because one day\n\
+it will be mine!\n\
+Gwaa ha ha!\n\
+"))
+
 
 DEFINE_DIALOG(DIALOG_164, 1, 4, 30, 200, _("\
 Mario! What's up, pal?\n\

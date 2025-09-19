@@ -210,35 +210,46 @@ void bhvMoovingFloor_loop_bowser() {
     // Vérifie si Bowser existe et est vivant
     struct Object *bowser = cur_obj_nearest_object_with_behavior(bhvBowserCustom);
 
-    if (bowser == NULL || bowser->oHealth <= 0) {
-        // Si Bowser est mort → bloque le plancher à Y = 100
-        o->oPosY = 500.0f;
-        return;
+    s16 maxheight = 1125;
+
+    switch (o->oAction) {
+        case 0: // monte
+            o->oPosY += 12.0f;
+            if (o->oPosY >= maxheight - 0.2f) {
+                o->oAction++;
+                o->oTimer = 0; // reset timer pour l’attente
+            }
+            break;
+
+        case 1: // attend en haut
+            if (o->oTimer >= 35) {
+                o->oAction++;
+            }
+            break;
+
+        case 2: // descend jusqu'en bas (200 mini)
+            o->oPosY -= 12.0f;
+            if (o->oPosY <= 200.0f) {
+                if (bowser == NULL || bowser->oHealth <= 0) {
+                    o->oAction = 3; // stop
+                } else {
+                    o->oAction = 0; // repart en montée
+                }
+            }
+            break;
+
+        case 3: // stop
+            break;
     }
 
-    // Sinon, comportement normal
-    switch (o->oAction) {
-        case 0:
-            o->oPosY += 12.0f;
-            if (o->oTimer > 86) {
-                o->oAction = 1;
-            }
-            break;
-
-        case 1:
-            if (o->oTimer >= 35) {
-                o->oAction = 2;
-            }
-            break;
-
-        case 2:
-            o->oPosY -= 12.0f;
-            if (o->oTimer > 86) {
-                o->oAction = 0; 
-            }
-            break;
+    // Oscillation si tu veux garder l’effet sinus (optionnel)
+    f32 speed = 384; // vitesse oscillation
+    if (o->oAction != 1 && o->oAction != 3) {
+        o->oPosY = (maxheight - 200) * ((sins(o->oF4 * speed) * 0.5f) + 0.5f) + 200;
+        o->oF4++;
     }
 }
+
 
 // Init du sol fissuré
 void bhv_crackedFloor_init(void) {
@@ -250,7 +261,7 @@ void bhv_crackedFloor_init(void) {
 void bhv_crackedFloor_loop(void) {
     float yMargin = 30.0f;
     print_text_fmt_int(20, 20, "Dist: %d", (s32)o->oDistanceToMario);
-    if (o->oDistanceToMario < 190.0f) { // Mario proche
+    if (gMarioObject->platform == o ) { // Mario proche
         if (gMarioState->action == ACT_GROUND_POUND
              || gMarioState->action == ACT_GROUND_POUND_LAND) {
                 spawn_mist_particles_variable(0, 0, 46.0f);

@@ -11,7 +11,7 @@ const Collision lava_bowser_collision[] = {
 	COL_VERTEX(0, -624, 5170),
 	COL_VERTEX(3449, -482, 4747),
 	COL_VERTEX(5580, -482, 1813),
-	COL_TRI_INIT(SURFACE_DEFAULT, 8),
+	COL_TRI_INIT(SURFACE_BURNING, 8),
 	COL_TRI(0, 1, 2),
 	COL_TRI(2, 3, 4),
 	COL_TRI(4, 5, 6),

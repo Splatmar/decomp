@@ -17,6 +17,7 @@
 #include "src/game/texscroll/group0_texscroll.inc.c"
 #include "src/game/texscroll/bob_texscroll.inc.c"
 #include "src/game/texscroll/lll_texscroll.inc.c"
+#include "src/game/texscroll/sa_texscroll.inc.c"
 void scroll_textures() {
 	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_castle_courtyard_segment_7SegmentRomStart)) {
 		scroll_textures_castle_courtyard();
@@ -36,6 +37,10 @@ void scroll_textures() {
 
 	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_lll_segment_7SegmentRomStart)) {
 		scroll_textures_lll();
+	}
+
+	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_sa_segment_7SegmentRomStart)) {
+		scroll_textures_sa();
 	}
 
 }
