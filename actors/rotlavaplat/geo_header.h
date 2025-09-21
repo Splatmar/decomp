@@ -1,0 +1,15 @@
+extern const GeoLayout rotlavaplat_geo[];
+extern u8 rotlavaplat_tex1_128x128_20e302eebfd0f776_14_ci8[];
+extern u8 rotlavaplat_tex1_128x128_20e302eebfd0f776_14_pal_rgba16[];
+extern u8 rotlavaplat_tex1_128x128_4fd3de01ff47bb46_14_ci8[];
+extern u8 rotlavaplat_tex1_128x128_4fd3de01ff47bb46_14_pal_rgba16[];
+extern Vtx rotlavaplat_Cylinder_001_mesh_layer_1_vtx_cull[8];
+extern Vtx rotlavaplat_Cylinder_001_mesh_layer_1_vtx_0[52];
+extern Gfx rotlavaplat_Cylinder_001_mesh_layer_1_tri_0[];
+extern Vtx rotlavaplat_Cylinder_001_mesh_layer_1_vtx_1[162];
+extern Gfx rotlavaplat_Cylinder_001_mesh_layer_1_tri_1[];
+extern Gfx mat_rotlavaplat_f3dlite_material_030[];
+extern Gfx mat_revert_rotlavaplat_f3dlite_material_030[];
+extern Gfx mat_rotlavaplat_f3dlite_material_031[];
+extern Gfx mat_revert_rotlavaplat_f3dlite_material_031[];
+extern Gfx rotlavaplat_Cylinder_001_mesh_layer_1[];

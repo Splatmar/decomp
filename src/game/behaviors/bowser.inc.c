@@ -2008,17 +2008,18 @@ void bhv_bowser_act_die(void) {
     else if (o->oSubAction == 3) {
         if (o->oTimer = 30) { // Attend 60 frames
 
+            
+            spawn_object(o, MODEL_BOWSER_FLAMES, bhvBowserBombExplosion);
             cur_obj_play_sound_2(SOUND_GENERAL_BOWSER_BOMB_EXPLOSION);
-
             // Explosion un peu au-dessus de Bowser
-            struct Object *expl = spawn_object_abs_with_rot(
+            /*struct Object *expl = spawn_object_abs_with_rot(
                 o, 0,
              MODEL_EXPLOSION, bhvExplosion,
                 o->oPosX,
                 1000,
                 o->oPosZ,
                 0, 0, 0
-                    );
+                    );*/
 
                 
 
@@ -2126,6 +2127,49 @@ static void bhv_timer_for_lava_loop(void) {
         }
     }
 }
+void bhv_platform_manager_init(void) {
+    // Timer pour le spawn
+    o->oF4 = o->oBehParams2ndByte; 
+    
+    // Vitesse qu’on veut donner aux plateformes
+    o->oF8 = GET_BPARAM1(o->oBehParams);
+}
+
+void bhv_platform_manager_loop(void) {
+    // Quand le timer expire, on spawn la plateforme
+    if (o->oTimer == o->oF4) {
+        struct Object *plat = spawn_object(o, MODEL_PLAT_LAVA_MOVING, bhvLavaPlatform);
+
+        // Spawn aux coordonnées du manager (spawn_object le fait déjà, mais on peut forcer au cas où)
+        plat->oPosX = o->oPosX;
+        plat->oPosY = o->oPosY;
+        plat->oPosZ = o->oPosZ;
+
+        // On envoie la vitesse via BParam2 (bits 16–23)
+        plat->oBehParams = (plat->oBehParams & 0xFF00FFFF) | ((o->oF8 & 0xFF) << 16);
+
+        // Reset timer si tu veux respawn plusieurs plateformes
+        o->oTimer = 0;
+    }
+}
+
+// ========== INIT ==========
+void bhv_lava_platform_init(void) {
+    // Vitesse récupérée depuis le BParam2
+    o->oF8 = GET_BPARAM2(o->oBehParams);
+}
+
+// ========== LOOP ==========
+void bhv_lava_platform_loop(void) {
+    // Déplacement sur l'axe X
+    o->oPosZ += 10;
+
+    // Limite fixe en X (par exemple 5000.0f, à ajuster selon ton niveau)
+    if (o->oPosZ > 945.0f) {
+        obj_mark_for_deletion(o);
+    }
+}
+
 
 // Big Flame Talking principal
 void bhv_big_flame_talking_loop(void) {

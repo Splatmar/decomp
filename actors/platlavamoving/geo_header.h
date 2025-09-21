@@ -1,0 +1,15 @@
+extern const GeoLayout platlavamoving_geo[];
+extern u8 platlavamoving_tex1_128x128_m_2c295007318ea2b9_14_mip2_ci8[];
+extern u8 platlavamoving_tex1_128x128_m_2c295007318ea2b9_14_mip2_pal_rgba16[];
+extern u8 platlavamoving_tex1_128x128_30fb506d398e63a1_14_ci8[];
+extern u8 platlavamoving_tex1_128x128_30fb506d398e63a1_14_pal_rgba16[];
+extern Vtx platlavamoving_Cube_003_mesh_layer_1_vtx_cull[8];
+extern Vtx platlavamoving_Cube_003_mesh_layer_1_vtx_0[5];
+extern Gfx platlavamoving_Cube_003_mesh_layer_1_tri_0[];
+extern Vtx platlavamoving_Cube_003_mesh_layer_1_vtx_1[12];
+extern Gfx platlavamoving_Cube_003_mesh_layer_1_tri_1[];
+extern Gfx mat_platlavamoving_f3dlite_material_027[];
+extern Gfx mat_revert_platlavamoving_f3dlite_material_027[];
+extern Gfx mat_platlavamoving_f3dlite_material_028[];
+extern Gfx mat_revert_platlavamoving_f3dlite_material_028[];
+extern Gfx platlavamoving_Cube_003_mesh_layer_1[];

@@ -162,6 +162,11 @@ void bhv_swinging_ball_bottom_hitbox_loop(void) {
     o->oPosX = o->parentObj->oPosX + xOffset;
     o->oPosY = o->parentObj->oPosY + yOffset;
     o->oPosZ = o->parentObj->oPosZ + zOffset;
+
+    // Si Mario est en collision avec la boule, sa position Y augmente de 1
+    if (obj_check_if_collided_with_object(o, gMarioObject)) {
+        gMarioState->pos[1] += 1.0f;
+    }
 }
 
 void bhv_custom_elevator_loop(void) {

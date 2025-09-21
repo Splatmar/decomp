@@ -550,6 +550,9 @@
 #define MODEL_TRAJECTORY_MARKER_BALL      0xE1        // bowling_ball_track_geo - duplicate used in SSL Pyramid small sized and as a track ball
 #define MODEL_FALLING_GRILL               0xE4        // falling_grill_geo
 #define MODEL_BOWSER_LAVA               0xE5        // bowser_lava_geo
+#define MODEL_PLAT_LAVA_MOVING         0xE6        // bowser_lava_wave_geo
+#define MODEL_ROT_LAVA_PLAT         0xE7        // bowser_lava_wave_geo
+
 #ifdef IA8_30FPS_COINS
 #define MODEL_SILVER_COIN                 0xE2        // silver_coin_geo
 #define MODEL_SILVER_COIN_NO_SHADOW       0xE3        // silver_coin_no_shadow_geo

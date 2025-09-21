@@ -37,3 +37,5 @@
 #include "falling_grill/geo.inc.c"
 #include "bowser_lava/geo.inc.c"
 #include "lava_bowser/geo.inc.c"
+#include "platlavamoving/geo.inc.c"
+#include "rotlavaplat/geo.inc.c"

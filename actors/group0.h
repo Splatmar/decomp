@@ -415,4 +415,12 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "lava_bowser/geo_header.h"
 
+#include "platlavamoving/collision_header.h"
+
+#include "platlavamoving/geo_header.h"
+
+#include "rotlavaplat/collision_header.h"
+
+#include "rotlavaplat/geo_header.h"
+
 #endif

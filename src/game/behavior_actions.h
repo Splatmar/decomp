@@ -591,6 +591,10 @@ void bhv_crackedFloor_loop(void);
 void bhv_falling_grill_loop(void);
 void bhv_falling_grill_init(void);
 void bhv_big_flame_talking_loop(void);
+void bhv_platform_manager_init(void);
+void bhv_platform_manager_loop(void);
+void bhv_lava_platform_init(void);
+void bhv_lava_platform_loop(void);
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
 // Bowser

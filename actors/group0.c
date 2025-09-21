@@ -71,3 +71,7 @@
 #include "bowser_lava/model.inc.c"
 #include "lava_bowser/collision.inc.c"
 #include "lava_bowser/model.inc.c"
+#include "platlavamoving/collision.inc.c"
+#include "platlavamoving/model.inc.c"
+#include "rotlavaplat/collision.inc.c"
+#include "rotlavaplat/model.inc.c"

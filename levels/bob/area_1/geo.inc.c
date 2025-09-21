@@ -12,6 +12,8 @@ const GeoLayout bob_area_1_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 10091, -1745, 3260, bob_dl_Cube_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 15622, 317, 8022, 0, -14, 47, bob_dl_Cube_001_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 8916, -1743, 2080, bob_dl_Cube_002_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 11171, -187, -1312, bob_dl_Cube_004_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 15053, -412, -151, bob_dl_Cylinder_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -465, -253, 7099, bob_dl_Plane_mesh_layer_4),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_dl_Plane_mesh_layer_1),

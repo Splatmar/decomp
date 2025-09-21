@@ -260,7 +260,7 @@ void bhv_crackedFloor_init(void) {
 
 void bhv_crackedFloor_loop(void) {
     float yMargin = 30.0f;
-    print_text_fmt_int(20, 20, "Dist: %d", (s32)o->oDistanceToMario);
+    //print_text_fmt_int(20, 20, "Dist: %d", (s32)o->oDistanceToMario);
     if (gMarioObject->platform == o ) { // Mario proche
         if (gMarioState->action == ACT_GROUND_POUND
              || gMarioState->action == ACT_GROUND_POUND_LAND) {

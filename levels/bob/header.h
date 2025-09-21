@@ -5,6 +5,8 @@
 #include "actors/lava_bull/geo_header.h"
 #include "actors/lava_pique/geo_header.h"
 #include "actors/grille/geo_header.h"
+#include "actors/platlavamoving/geo_header.h"
+#include "actors/rotlavaplat/geo_header.h"
 // geo
 extern const GeoLayout bob_geo_000440[];
 extern const GeoLayout bob_geo_000458[];

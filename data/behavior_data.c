@@ -1832,6 +1832,7 @@ const BehaviorScript bhvPushableStatue[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     LOAD_COLLISION_DATA(statue_bowser_collision),
     SET_FLOAT(oCollisionDistance, 1000),
+    SET_FLOAT(oDrawingDistance, 15000),
     SET_HOME(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_pushable_loop),
@@ -2680,6 +2681,7 @@ const BehaviorScript bhvExclamationBox[] = {
     SET_HOME(),
     CALL_NATIVE(bhv_init_room),
     BEGIN_LOOP(),
+        ADD_INT(oFaceAngleYaw, 200),
         CALL_NATIVE(bhv_exclamation_box_loop),
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
@@ -5472,12 +5474,14 @@ const BehaviorScript bhvLavaWave[] ={
     END_LOOP(),
 };
 const BehaviorScript bhvlavaBull[] ={
-    BEGIN(OBJ_LIST_SURFACE),
+    BEGIN(OBJ_LIST_LEVEL),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL)),
-    LOAD_COLLISION_DATA(lava_bull_collision),
+    SET_INTERACT_TYPE(INTERACT_FLAME),
+    SET_INT(oIntangibleTimer, 0),
+    SET_HITBOX_WITH_OFFSET(/*Radius*/ 100, /*Height*/ 100, /*Downwards offset*/ 0),
     BEGIN_LOOP(),
+        SET_INT(oInteractStatus, INT_STATUS_NONE),
         CALL_NATIVE(bhv_lavaBulle_loop),
-        CALL_NATIVE(load_object_collision_model), 
     END_LOOP(),
 };
 
@@ -6503,4 +6507,34 @@ const BehaviorScript bhv_big_flame_talking[] ={
             
     END_LOOP(),
 
+};
+const BehaviorScript bhvplatformmanager[] ={
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    CALL_NATIVE(bhv_platform_manager_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_platform_manager_loop),
+    END_LOOP(),
+};
+const BehaviorScript bhvLavaPlatform[] ={
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(platlavamoving_collision),
+    SCALE(/*Unused*/ 0, /*Field*/ 120),
+    SET_FLOAT(oDrawingDistance, 10000),
+    CALL_NATIVE(bhv_lava_platform_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_lava_platform_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhvTurningPlatformLava[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(rotlavaplat_collision),
+    SET_FLOAT(oDrawingDistance, 20000),
+    BEGIN_LOOP(),
+        ADD_INT(oFaceAngleYaw,180),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
 };
