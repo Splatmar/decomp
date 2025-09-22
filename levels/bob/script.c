@@ -87,7 +87,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(MODEL_NONE, 12240, -411, -1416, 0, 0, 0, (120 << 16), bhvplatformmanager),
 		OBJECT(MODEL_NONE, 13443, -411, -1416, 0, 0, 0, (180 << 16), bhvplatformmanager),
 		OBJECT(MODEL_ROT_LAVA_PLAT, 15315, 1288, -325, 0, 0, 0, 0x00000000, bhvTurningPlatformLava),
-		OBJECT(MODEL_KOOPA_SHELL, 15739, -65, 7387, 0, 0, 0, (30 << 24) | (0x0B << 16) | (100 << 8) | (0), bhvWarp),
+		OBJECT(MODEL_NONE, 15739, -65, 7387, 0, 0, 0, (30 << 24) | (0x0B << 16) | (100 << 8) | (0), bhvWarp),
 		OBJECT(MODEL_WHOMP, 340, 1039, 6536, 0, 0, 0, 0x00000000, bhvWhompKingBoss),
 		TERRAIN(bob_area_1_collision),
 		MACRO_OBJECTS(bob_area_1_macro_objs),
