@@ -165,6 +165,7 @@ extern const BehaviorScript bhv_big_flame_talking[];
 extern const BehaviorScript bhvplatformmanager[];
 extern const BehaviorScript bhvLavaPlatform[];
 extern const BehaviorScript bhvTurningPlatformLava[];
+extern const BehaviorScript bhvFakeWall[];
 extern const BehaviorScript bhvBowserFlameSpawn[];
 extern const BehaviorScript bhvTiltingBowserLavaPlatform[];
 extern const BehaviorScript bhvFallingBowserPlatform[];

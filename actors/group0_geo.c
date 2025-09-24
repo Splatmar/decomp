@@ -39,3 +39,5 @@
 #include "lava_bowser/geo.inc.c"
 #include "platlavamoving/geo.inc.c"
 #include "rotlavaplat/geo.inc.c"
+#include "fakewall/geo.inc.c"
+#include "lava_bull_blue/geo.inc.c"

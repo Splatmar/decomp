@@ -1,4 +1,7 @@
 // 0x0C000000
+
+#include "actors/group10.h"
+
 const GeoLayout king_bobomb_geo[] = {
    GEO_SHADOW(SHADOW_CIRCLE_4_VERTS, 0x96, 300),
    GEO_OPEN_NODE(),

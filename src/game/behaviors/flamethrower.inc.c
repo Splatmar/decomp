@@ -48,17 +48,22 @@ void bhv_flamethrower_flame_loop(void) {
 }
 
 void bhv_flamethrower_loop(void) {
+    // Vérifie si Mario tient un objet
+    if (gMarioState->heldObj == NULL) {
+        return; // Mario ne tient rien → le lance-flamme reste inactif
+    }
+
     if (o->oAction == FLAMETHROWER_ACT_IDLE) {
 #ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
         if (gCurrLevelNum != LEVEL_BBH || gMarioOnMerryGoRound)
 #endif
         {
-            if (o->oDistanceToMario < 2000.0f) {
+            if (o->oDistanceToMario < 900.0f) {
                 o->oAction = FLAMETHROWER_ACT_BLOW_FIRE;
             }
         }
     } else if (o->oAction == FLAMETHROWER_ACT_BLOW_FIRE) {
-        ModelID32 model = MODEL_RED_FLAME;
+        ModelID32 model = MODEL_BLUE_FLAME;
         f32 flameVel = 95.0f;
 
         if (o->oBehParams2ndByte == FLAMETHROWER_BP_BLUE) {
@@ -81,7 +86,9 @@ void bhv_flamethrower_loop(void) {
 
         o->oFlameThowerTimeRemaining = flameTimeRemaining;
 
-        struct Object *flame = spawn_object_relative(o->oBehParams2ndByte, 0, 0, 0, o, model, bhvFlamethrowerFlame);
+        struct Object *flame = spawn_object_relative(
+            o->oBehParams2ndByte, 0, 0, 0, o, model, bhvFlamethrowerFlame
+        );
         flame->oForwardVel = flameVel;
 
         cur_obj_play_sound_1(SOUND_AIR_BLOW_FIRE);

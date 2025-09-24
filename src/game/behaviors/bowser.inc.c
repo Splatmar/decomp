@@ -2158,6 +2158,31 @@ void bhv_lava_platform_init(void) {
     // Vitesse récupérée depuis le BParam2
     o->oF8 = GET_BPARAM2(o->oBehParams);
 }
+void bhv_fake_wall_loop(void) {
+    struct Object *bomb = cur_obj_nearest_object_with_behavior(bhvBobomb);
+
+    if (bomb != NULL) {
+        // Vérifie si la bob-omb est proche et qu'elle est en explosion
+        f32 dist = dist_between_objects(o, bomb);
+        if (dist < 500.0f && bomb->oAction == BOBOMB_ACT_EXPLODE) {
+            if (o->oF4 == 0) {
+                o->oF4 = 1; // démarre le timer seulement une fois
+            }
+        }
+    }
+
+    // Si le flag est activé → incrémente le compteur
+    if (o->oF4 > 0) {
+        o->oF4++;
+        if (o->oF4 > 15) { // délai avant destruction
+            spawn_triangle_break_particles(30, MODEL_DIRT_ANIMATION, 3.0f, TINY_DIRT_PARTICLE_ANIM_STATE_YELLOW);
+            play_puzzle_jingle();
+            obj_mark_for_deletion(o); // fait disparaître le mur
+        }
+    }
+    
+}
+
 
 // ========== LOOP ==========
 void bhv_lava_platform_loop(void) {

@@ -20,3 +20,8 @@ UNUSED static const u64 binid_1 = 1;
 #include "yoshi/anims/data.inc.c"
 #include "yoshi/anims/table.inc.c"
 UNUSED static const u64 binid_2 = 2;
+
+#include "king_bobomb/model.inc.c"
+#include "king_bobomb/anims/data.inc.c"
+#include "king_bobomb/anims/table.inc.c"
+UNUSED static const u64 binid_3 = 3;

@@ -75,3 +75,7 @@
 #include "platlavamoving/model.inc.c"
 #include "rotlavaplat/collision.inc.c"
 #include "rotlavaplat/model.inc.c"
+#include "fakewall/collision.inc.c"
+#include "fakewall/model.inc.c"
+#include "lava_bull_blue/model.inc.c"
+#include "lava_bull_blue/collision.inc.c"

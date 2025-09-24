@@ -176,9 +176,9 @@ void bobomb_held_loop(void) {
     o->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
     cur_obj_init_animation(BOBOMB_ANIM_HELD);
     cur_obj_set_pos_relative(gMarioObject, 0.0f, 60.0f, 100.0f);
-
+    struct Object *king = cur_obj_nearest_object_with_behavior(bhvKingBobomb);
     o->oBobombFuseLit = TRUE;
-    if (o->oBobombFuseTimer > 150) {
+    if ((o->oBobombFuseTimer > 150) && (king == NULL)) {
         //! Although the Bob-omb's action is set to explode when the fuse timer expires,
         //  bobomb_act_explode() will not execute until the bob-omb's held state changes.
         //  This allows the Bob-omb to be regrabbed indefinitely.

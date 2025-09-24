@@ -1,0 +1,17 @@
+const Collision fakewall_collision[] = {
+	COL_INIT(),
+	COL_VERTEX_INIT(6),
+	COL_VERTEX(0, 2, 496),
+	COL_VERTEX(0, 906, 496),
+	COL_VERTEX(0, 1115, 184),
+	COL_VERTEX(0, 1115, -156),
+	COL_VERTEX(0, 864, -519),
+	COL_VERTEX(0, 2, -519),
+	COL_TRI_INIT(SURFACE_DEFAULT, 4),
+	COL_TRI(0, 1, 2),
+	COL_TRI(2, 3, 4),
+	COL_TRI(4, 5, 0),
+	COL_TRI(2, 4, 0),
+	COL_TRI_STOP(),
+	COL_END()
+};

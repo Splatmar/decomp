@@ -332,7 +332,6 @@
 // group 3
 #define MODEL_WATER_BOMB                  0x54        // water_bomb_geo
 #define MODEL_WATER_BOMB_SHADOW           0x55        // water_bomb_shadow_geo
-#define MODEL_KING_BOBOMB                 0x56        // king_bobomb_geo
 
 // group 4
 #define MODEL_MANTA_RAY                   0x54        // manta_seg5_geo_05008D14
@@ -378,6 +377,7 @@
 // group 10
 #define MODEL_BIRDS                       0x54        // birds_geo
 #define MODEL_YOSHI                       0x55        // yoshi_geo
+#define MODEL_KING_BOBOMB                 0x56
 
 // group 11
 #define MODEL_ENEMY_LAKITU                0x54        // enemy_lakitu_geo
@@ -552,6 +552,8 @@
 #define MODEL_BOWSER_LAVA               0xE5        // bowser_lava_geo
 #define MODEL_PLAT_LAVA_MOVING         0xE6        // bowser_lava_wave_geo
 #define MODEL_ROT_LAVA_PLAT         0xE7        // bowser_lava_wave_geo
+#define MODEL_FAKE_WALL            0xE8        // fake wall for bowser
+#define MODEL_LAVA_BULL_BLUE     0xE9        // lava_bulle_geo_blue
 
 #ifdef IA8_30FPS_COINS
 #define MODEL_SILVER_COIN                 0xE2        // silver_coin_geo

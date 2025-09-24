@@ -13,6 +13,8 @@
 #include "actors/common0.h"
 #include "actors/common1.h"
 #include "actors/statue_bowser/geo_header.h"
+#include "actors/fakewall/geo_header.h"
+#include "actors/lava_bull_blue/geo_header.h"
 
 
 

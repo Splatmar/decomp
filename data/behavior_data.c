@@ -5486,6 +5486,7 @@ const BehaviorScript bhvlavaBull[] ={
 };
 
 
+
 const BehaviorScript bhvTrackBall[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
@@ -6535,6 +6536,16 @@ const BehaviorScript bhvTurningPlatformLava[] = {
     SET_FLOAT(oDrawingDistance, 20000),
     BEGIN_LOOP(),
         ADD_INT(oFaceAngleYaw,180),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+const BehaviorScript bhvFakeWall[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(fakewall_collision),
+    SET_FLOAT(oDrawingDistance, 20000),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_fake_wall_loop),
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
