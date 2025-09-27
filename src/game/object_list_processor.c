@@ -156,6 +156,7 @@ s16 gNumRoomedObjectsInMarioRoom;
 s16 gNumRoomedObjectsNotInMarioRoom;
 s16 gWDWWaterLevelChanging;
 s16 gMarioOnMerryGoRound;
+Vec3s gCustomObjectPos;
 
 /**
  * Nodes used to represent the doubly linked object lists.

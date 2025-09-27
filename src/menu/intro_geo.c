@@ -1,3 +1,4 @@
+
 #include <PR/ultratypes.h>
 
 #include "game/memory.h"
@@ -35,14 +36,97 @@ static s32 sGameOverFrameCounter;
 static s32 sGameOverTableIndex;
 static s16 sIntroFrameCounter;
 static s32 sTmCopyrightAlpha;
+/**/
+/*typedef struct {
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+} rgb;
 
+typedef struct {
+    u16 h;         // mario angles
+    u8  v;         // value as u8
+    float s;       // a fraction between 0 and 1
+} hsv;
+
+void hsv2rgb(hsv* in, rgb* out);
+
+void hsv2rgb(hsv* in, rgb* out)
+{
+    if(in->s <= 0.0) {
+        out->r = in->v;
+        out->g = in->v;
+        out->b = in->v;
+        return;
+    }
+    f32 hh = in->h / 10923.f;
+    int i = (int) hh;
+    f32 ff = hh - i;
+    u8 p = in->v * (1.0 - in->s);
+    u8 q = in->v * (1.0 - (in->s * ff));
+    u8 t = in->v * (1.0 - (in->s * (1.0 - ff)));
+
+    switch(i) {
+    case 0:
+        out->r = in->v;
+        out->g = t;
+        out->b = p;
+        break;
+    case 1:
+        out->r = q;
+        out->g = in->v;
+        out->b = p;
+        break;
+    case 2:
+        out->r = p;
+        out->g = in->v;
+        out->b = t;
+        break;
+
+    case 3:
+        out->r = p;
+        out->g = q;
+        out->b = in->v;
+        break;
+    case 4:
+        out->r = t;
+        out->g = p;
+        out->b = in->v;
+        break;
+    case 5:
+    default:
+        out->r = in->v;
+        out->g = p;
+        out->b = q;
+        break;
+    }
+}
+*/
 /**
  * Geo callback to render the "Super Mario 64" logo on the title screen
  */
+
+//extern Vtx titre_titlescreen_mesh_vtx_4[242];
 Gfx *geo_intro_super_mario_64_logo(s32 callContext, struct GraphNode *node, UNUSED void *context) {
     struct GraphNode *graphNode = node;
     Gfx *dl = NULL;
     Gfx *dlIter = NULL;
+
+    /*Vtx* vtx = segmented_to_virtual(titre_titlescreen_mesh_vtx_4);
+    for(int i = 0; i < sizeof(titre_titlescreen_mesh_vtx_4) / sizeof(*titre_titlescreen_mesh_vtx_4); i++)
+    {
+        Vtx* v = &vtx[i];
+
+        hsv color;
+        int b = (v->n.ob[0] + v->n.ob[1] + v->n.ob[2]) * 5 + (sIntroFrameCounter * 205);
+        float osc = (sins(b * 7.5f) + 1.0f) * 0.5f;
+        color.h = 4800;
+        color.s = 1.0f;
+        color.v = 90 +  (osc * 100);
+
+        hsv2rgb(&color, (rgb*) v->v.cn);
+    }*/
 
     if (callContext != GEO_CONTEXT_RENDER) {
         sIntroFrameCounter = 0;
@@ -72,7 +156,7 @@ Gfx *geo_intro_super_mario_64_logo(s32 callContext, struct GraphNode *node, UNUS
         guScale(scaleMat, scale[0], scale[1], scale[2]);
 
         gSPMatrix(dlIter++, scaleMat, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
-        gSPDisplayList(dlIter++, &intro_seg7_dl_main_logo);  // draw model
+        gSPDisplayList(dlIter++, &titre_titlescreen_mesh);  // draw model
         gSPPopMatrix(dlIter++, G_MTX_MODELVIEW);
         gSPEndDisplayList(dlIter);
 
@@ -103,7 +187,7 @@ Gfx *geo_intro_tm_copyright(s32 callContext, struct GraphNode *node, UNUSED void
             SET_GRAPH_NODE_LAYER(graphNode->flags, LAYER_TRANSPARENT);
             gDPSetRenderMode(dlIter++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
         }
-        gSPDisplayList(dlIter++, &intro_seg7_dl_copyright_trademark); // draw model
+        //gSPDisplayList(dlIter++, &intro_seg7_dl_copyright_trademark); // draw model
         gSPEndDisplayList(dlIter);
 
         // Once the "Super Mario 64" logo has just about zoomed fully, fade in the "TM" and copyright text

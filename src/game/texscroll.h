@@ -6,6 +6,8 @@
 #include "src/game/texscroll/bob_texscroll.inc.h"
 #include "src/game/texscroll/lll_texscroll.inc.h"
 #include "src/game/texscroll/sa_texscroll.inc.h"
+//#include "src/game/texscroll/intro_texscroll.inc.h"
+
 extern void scroll_textures();
 
 #endif

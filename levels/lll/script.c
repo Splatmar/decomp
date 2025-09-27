@@ -6,7 +6,8 @@
 #include "dialog_ids.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
-
+#include "actors/group10.h"
+#include "actors/group3.h"
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
