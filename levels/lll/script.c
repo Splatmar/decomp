@@ -6,12 +6,13 @@
 #include "dialog_ids.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
-#include "actors/group10.h"
-#include "actors/group3.h"
+
 #include "game/level_update.h"
 
 #include "levels/scripts.h"
 
+#include "actors/group10.h"
+#include "actors/group3.h"
 #include "actors/common1.h"
 #include "make_const_nonconst.h"
 #include "levels/lll/header.h"
@@ -90,7 +91,7 @@ const LevelScript level_lll_entry[] = {
 
 	AREA(1, lll_area_1),
 		WARP_NODE(0x14, LEVEL_LLL, 0x02, 0x14, WARP_NO_CHECKPOINT),
-		WARP_NODE(0x15, LEVEL_LLL, 0x03, 17, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x15, LEVEL_PSS, 0x03, 17, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_BOB, 0x01, 0x0B, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_SA, 0X01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_LLL, 0x03, 0x15, WARP_NO_CHECKPOINT),
@@ -174,7 +175,7 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_NONE, -4725, -303, -335, 0, 90, 0, (60 << 24) | (0x15 << 16) | (100 << 8) | (191), bhvWarp),
 		TERRAIN(lll_area_3_collision),
 		MACRO_OBJECTS(lll_area_3_macro_objs),
-		STOP_MUSIC(0),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

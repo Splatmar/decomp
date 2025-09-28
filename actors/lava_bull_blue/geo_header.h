@@ -1,8 +1,8 @@
 extern const GeoLayout lava_bull_blue_geo[];
 extern u8 lava_bull_blue_yeaux_flammes_ci8[];
 extern u8 lava_bull_blue_yeaux_flammes_pal_rgba16[];
-extern u8 lava_bull_blue_SUPER_MARIO_64_6E3243F8_0_2_allblue_ci8[];
-extern u8 lava_bull_blue_SUPER_MARIO_64_6E3243F8_0_2_allblue_pal_rgba16[];
+extern u8 lava_bull_blue_blue_ci4[];
+extern u8 lava_bull_blue_blue_pal_rgba16[];
 extern u8 lava_bull_blue_purpleboule_ci8[];
 extern u8 lava_bull_blue_purpleboule_pal_rgba16[];
 extern Vtx lava_bull_blue_lava_bull_mesh_layer_5_vtx_cull[8];

@@ -332,6 +332,7 @@
 // group 3
 #define MODEL_WATER_BOMB                  0x54        // water_bomb_geo
 #define MODEL_WATER_BOMB_SHADOW           0x55        // water_bomb_shadow_geo
+#define MODEL_KING_BOBOMB                 0x56        // king_bobomb_geo
 
 // group 4
 #define MODEL_MANTA_RAY                   0x54        // manta_seg5_geo_05008D14
@@ -377,7 +378,6 @@
 // group 10
 #define MODEL_BIRDS                       0x54        // birds_geo
 #define MODEL_YOSHI                       0x55        // yoshi_geo
-#define MODEL_KING_BOBOMB                 0x56
 
 // group 11
 #define MODEL_ENEMY_LAKITU                0x54        // enemy_lakitu_geo

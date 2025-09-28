@@ -94,6 +94,8 @@ void bhv_purple_switch_loop(void) {
     }
 }
 void bhv_purple_switch_special_loop(void) {
+    
+     
     switch (o->oAction) {
 
         /**
@@ -153,43 +155,55 @@ void bhv_purple_switch_special_loop(void) {
 #define PLATFORM_MOVE_HEIGHT     10.0f
 #define PLATFORM_DELAY_FRAMES    30
 #define PLATFORM_MOVE_FRAMES     180
+void bhv_platform_with_id_init(void) {
+   o->oF4 = o->oPosY; // stocke la position de départ
+}
 
 void bhv_platform_with_id_loop(void) {
-    
+    //print_text_fmt_int(10, 10, "Switch state: %d", gPurpleSwitchPressed); // debug
+    //print_text_fmt_int(10, 30, "oPosY: %d", (s32)o->oPosY);
+    // Utilise un champ inutilisé de l'objet comme "flag"
+    if (gPurpleSwitchPressed == 1 && o->oF8 == 0) {
+        o->oPosY = -509.0f; // position basse finale
+        o->oF8 = 1; // ✅ empêche que ça se refasse
+    } 
+    else {
+        switch (o->oAction) {
+            case PLATFORM_ACT_WAITING:
+                if (o->oBehParams2ndByte <= 0) {
+                    o->oAction = PLATFORM_ACT_DELAY;
+                    o->oTimer = 0;
+                    gLakituState.mode = CAMERA_MODE_STUCK;
+                    set_mario_npc_dialog(MARIO_DIALOG_LOOK_FRONT);
+                }
+                break;
 
-    switch (o->oAction) {
-        case PLATFORM_ACT_WAITING:
-            if (o->oBehParams2ndByte <= 0) {
-                o->oAction = PLATFORM_ACT_DELAY;
-                o->oTimer = 0;
-                gLakituState.mode = CAMERA_MODE_STUCK;
-                set_mario_npc_dialog(MARIO_DIALOG_LOOK_FRONT);
-            }
-            break;
+            case PLATFORM_ACT_DELAY:
+                if (o->oTimer > PLATFORM_DELAY_FRAMES) {
+                    o->oAction = PLATFORM_ACT_MOVING_UP;
+                    o->oTimer = 0;
+                }
+                break;
 
-        case PLATFORM_ACT_DELAY:
-            if (o->oTimer > PLATFORM_DELAY_FRAMES) {
-                o->oAction = PLATFORM_ACT_MOVING_UP;
-                o->oTimer = 0;
-            }
-            break;
+            case PLATFORM_ACT_MOVING_UP:
+                o->oPosY += PLATFORM_MOVE_HEIGHT; 
+                o->oTimer++;
 
-        case PLATFORM_ACT_MOVING_UP:
-            o->oPosY += PLATFORM_MOVE_HEIGHT; 
-            o->oTimer++;
+                if (o->oTimer > PLATFORM_MOVE_FRAMES) {
+                    play_puzzle_jingle();
+                    o->oAction = PLATFORM_ACT_STOPPED;
+                    gLakituState.mode = CAMERA_MODE_8_DIRECTIONS;
+                    gMarioState[0].action = ACT_IDLE;
+                }
+                break;
 
-            if (o->oTimer > PLATFORM_MOVE_FRAMES) {
-                play_puzzle_jingle();
-                o->oAction = PLATFORM_ACT_STOPPED;
-                gLakituState.mode = CAMERA_MODE_8_DIRECTIONS;
-                gMarioState[0].action = ACT_IDLE;
-            }
-            break;
-
-        case PLATFORM_ACT_STOPPED:
-            break;
+            case PLATFORM_ACT_STOPPED:
+                gPurpleSwitchPressed = 1; // Indique que le switch a été pressé
+                break;
+        }
     }
 }
+
 void bhvMoovingFloor_loop(){
     switch (o->oAction) {
         case 0:

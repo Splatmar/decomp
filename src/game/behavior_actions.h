@@ -584,6 +584,7 @@ void bhv_custom_elevator_loop(void);
 void bhv_zipline_loop(void);
 void bhv_purple_switch_special_loop(void);
 void bhv_platform_with_id_loop(void);
+void bhv_platform_with_id_init(void);
 void bhvMoovingFloor_loop(void);
 void bhv_crackedFloor_init(void);
 void bhvMoovingFloor_loop_bowser(void);

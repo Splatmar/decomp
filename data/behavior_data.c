@@ -6432,6 +6432,7 @@ const BehaviorScript bhvPlatform_with_id[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     LOAD_COLLISION_DATA(platform_with_id_collision),
+    CALL_NATIVE(bhv_platform_with_id_init),
     SET_FLOAT(oDrawingDistance, 15000),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_platform_with_id_loop),

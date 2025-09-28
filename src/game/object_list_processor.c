@@ -156,7 +156,7 @@ s16 gNumRoomedObjectsInMarioRoom;
 s16 gNumRoomedObjectsNotInMarioRoom;
 s16 gWDWWaterLevelChanging;
 s16 gMarioOnMerryGoRound;
-Vec3s gCustomObjectPos;
+s16 gPurpleSwitchPressed = 0; // Ajout custom : état du switch violet
 
 /**
  * Nodes used to represent the doubly linked object lists.

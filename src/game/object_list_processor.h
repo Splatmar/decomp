@@ -134,6 +134,7 @@ extern s16 gNumRoomedObjectsInMarioRoom;
 extern s16 gNumRoomedObjectsNotInMarioRoom;
 extern s16 gWDWWaterLevelChanging;
 extern s16 gMarioOnMerryGoRound;
+extern s16 gPurpleSwitchPressed; // Ajout custom : état du switch violet
 
 
 void bhv_mario_update(void);

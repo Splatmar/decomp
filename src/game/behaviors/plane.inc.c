@@ -173,7 +173,7 @@ void bhv_obstacle_manager_loop(void) {
 }
 static Vec3f lava_positions[5] = {   
     {7500, -700, 0},
-    {7500, -700,  -400},
+    {7500, -700, -400},
     {7500, -700, 400},
     {7500, -700, -200},
     {7500, -700, 200},
@@ -181,15 +181,24 @@ static Vec3f lava_positions[5] = {
 
 void spawn_multiple_fireballs(void) {
     s32 SPAWN_INTERVAL = 150;
+    static int lastIndex = -1; // pour stocker la dernière position utilisée
 
-  if (o->oTimer >= SPAWN_INTERVAL) {
-        int nextIndex = random_u16() % 5;
-       Vec3f pos;
-       vec3f_copy(pos,lava_positions[nextIndex]); // pointeur vers la position
-        spawn_object_abs_with_rot(o, 0, MODEL_LAVA_PIQUE,  bhvLavaWave, pos[0], pos[1], pos[2], 0, 0, 0);
+    if (o->oTimer >= SPAWN_INTERVAL) {
+        int nextIndex;
+        do {
+            nextIndex = random_u16() % 5;
+        } while (nextIndex == lastIndex); // on évite de prendre le même deux fois de suite
+
+        Vec3f pos;
+        vec3f_copy(pos, lava_positions[nextIndex]);
+        spawn_object_abs_with_rot(o, 0, MODEL_LAVA_PIQUE, bhvLavaWave,
+                                  pos[0], pos[1], pos[2], 0, 0, 0);
+
+        lastIndex = nextIndex; // mémorise le dernier
         o->oTimer = 0;
     }
 }
+
 void bhv_lavaBulle_loop(void) {
     if (o->oTimer == 0 && o->oAction == 0) {
         o->o10C = (random_u16() % 31); // délai aléatoire 0-30 frames

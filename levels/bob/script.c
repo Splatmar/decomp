@@ -91,7 +91,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(MODEL_WHOMP, 340, 1039, 6536, 0, 0, 0, 0x00000000, bhvWhompKingBoss),
 		TERRAIN(bob_area_1_collision),
 		MACRO_OBJECTS(bob_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

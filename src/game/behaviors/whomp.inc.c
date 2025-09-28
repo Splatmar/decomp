@@ -244,7 +244,7 @@ void whomp_die(void) {
             
             cur_obj_play_sound_2(SOUND_OBJ_KING_WHOMP_DEATH);
             o->oAction = 9;
-            play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, SEQ_LEVEL_GRASS), 0);
+            
 
 
         }
