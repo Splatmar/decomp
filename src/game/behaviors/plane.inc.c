@@ -78,7 +78,7 @@ gMarioState->marioObj->oPosZ = gMarioState->pos[2];
     }
 
     // Spawn du warp **une seule fois** après un certain temps (sécurisé)
-    if(o->oTimer == 200){  // exemple : frame 1000 
+    if(o->oTimer == 1600){  // exemple : frame 1000 
         initiate_warp(LEVEL_BOB & 0x7F, 1, 0x0A, WARP_FLAGS_NONE);
         play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x10, 0, 0, 0);
         level_set_transition(0x10, NULL);
@@ -192,7 +192,7 @@ void spawn_multiple_fireballs(void) {
         Vec3f pos;
         vec3f_copy(pos, lava_positions[nextIndex]);
         spawn_object_abs_with_rot(o, 0, MODEL_LAVA_PIQUE, bhvLavaWave,
-                                  pos[0], pos[1], pos[2], 0, 0, 0);
+                                  pos[0], 1350, pos[2], 0, 0, 0);
 
         lastIndex = nextIndex; // mémorise le dernier
         o->oTimer = 0;

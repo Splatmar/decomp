@@ -1896,9 +1896,21 @@ void bhv_bowser_custom_init(void) {
 //
 
 static void bhv_bowser_custom_intro(void) {
-    if(o->oTimer > 50)
-        o->oAction++;
+    
+        cur_obj_update_dialog(MARIO_DIALOG_LOOK_FRONT,
+            (DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED),
+            DIALOG_162, 0);
+    
+
+    // Quand le timer dépasse 60 ET que Mario n'est plus en dialogue,
+    // on passe directement à l’action 2
+    if (o->oTimer > 60 && cur_obj_update_dialog(MARIO_DIALOG_LOOK_UP, (DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED), DIALOG_162, 0)) {
+        o->oAction = 2;
+        gMarioState->flags &= ~MARIO_DIALOG_STOP; 
+            set_mario_action(gMarioState, ACT_IDLE, 0);
+    }
 }
+
 
 void bhv_bowser_custom_turn_to_mario(void) {
     s16 angleToMario = obj_angle_to_object(o, gMarioObject);
@@ -1996,7 +2008,7 @@ void bhv_bowser_act_die(void) {
     }
     else if (o->oSubAction == 2) {
         // Affiche la boite de dialogue
-        if (cur_obj_update_dialog(MARIO_DIALOG_LOOK_UP, 
+        if (cur_obj_update_dialog(MARIO_DIALOG_LOOK_FRONT, 
             (DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED), 
             DIALOG_163, 0)) {
             
@@ -2212,9 +2224,9 @@ void bhv_big_flame_talking_loop(void) {
             if (o->oDistanceToMario < 1000) {
                 
                 if (cur_obj_update_dialog(
-                        MARIO_DIALOG_LOOK_UP,
+                        MARIO_DIALOG_LOOK_FRONT,
                         DIALOG_FLAG_TEXT_DEFAULT | DIALOG_FLAG_TIME_STOP_ENABLED,
-                        DIALOG_163,
+                        DIALOG_165,
                         0
                     )) {
                     o->oAction++;  // Passe à l'action suivante une fois le dialogue terminé

@@ -30,7 +30,7 @@ void platform_move_forward(void) {
     
 
     // Détecte Mario proche
-    if (o->oDistanceToMario <= 100 && o->oF4 == 0) {
+    if (gMarioObject->platform == o && o->oF4 == 0) {
         o->oF4 = 1;
         o->oTimer = 0;
         o->oVelY = 0.0f; // initialise la vitesse verticale

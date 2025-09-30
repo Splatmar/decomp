@@ -21,7 +21,7 @@ void scroll_bob_dl_Circle_mesh_layer_5_vtx_0() {
 
 void scroll_bob_dl_pont_mesh_layer_4_vtx_1() {
 	int i = 0;
-	int count = 21;
+	int count = 35;
 	int height = 32 * 0x20;
 
 	static int currentY = 0;
@@ -42,7 +42,7 @@ void scroll_bob_dl_pont_mesh_layer_4_vtx_1() {
 
 void scroll_bob_dl_pont_mesh_layer_1_vtx_4() {
 	int i = 0;
-	int count = 12;
+	int count = 44;
 	int height = 32 * 0x20;
 
 	static int currentY = 0;

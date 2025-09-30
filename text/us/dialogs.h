@@ -1979,18 +1979,18 @@ KEEP_ON_PLAYING "』\n\
 The Super Mario 64 Team"))
 
 DEFINE_DIALOG(DIALOG_162, 1, 4, 30, 200, _("\
-No, no, no! Not you\n\
-again! I'm in a great\n\
-hurry, can't you see?\n\
+So, you've finally\n\
+returned, Mario...\n\
 \n\
-I've no time to squabble\n\
-over Stars. Here, have it.\n\
-I never meant to hide it\n\
-from you...\n\
-It's just that I'm in such\n\
-a rush. That's it, that's\n\
-all. Now, I must be off.\n\
-Owww! Let me go!"))
+While you were away, the\n\
+princess became mine!\n\
+Her cries for help are\n\
+music to my ears!\n\
+\n\
+You won't save her this\n\
+time. I'll make sure this\n\
+battle is your last!"))
+
 
 DEFINE_DIALOG(DIALOG_163, 1, 5, 30, 200, _("\
 Nooo! How could this be?\n\
@@ -2033,11 +2033,13 @@ Ready...set...\n\
 //Go//// Don't Go"))
 
 DEFINE_DIALOG(DIALOG_165, 1, 5, 30, 200, _("\
-I take no responsibility\n\
-whatsoever for those who\n\
-get dizzy and pass out\n\
-from running around\n\
-this post."))
+If you reach the block\n\
+within 15 seconds,\n\
+I will open the passage.\n\
+\n\
+But hurry, don't waste\n\
+any time or you'll fail!"))
+
 
 DEFINE_DIALOG(DIALOG_166, 1, 4, 30, 200, _("\
 I'll be back soon.\n\

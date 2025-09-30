@@ -5429,6 +5429,7 @@ const BehaviorScript bhvPlatformMooving[] = {
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL | OBJ_FLAG_MOVE_Y_WITH_TERMINAL_VEL | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     LOAD_COLLISION_DATA(train_collision),
     CALL_NATIVE(bhv_init_room),
+    SCALE(/*Unused*/ 0, /*Field*/ 110),
     BEGIN_LOOP(),
         
         CALL_NATIVE(platform_move_forward),
