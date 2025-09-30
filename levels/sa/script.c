@@ -45,6 +45,8 @@ const LevelScript level_sa_entry[] = {
 
 	AREA(1, sa_area_1),
 		WARP_NODE(0x0B, LEVEL_LLL, 0x03, 0x0C, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF0, LEVEL_ENDING, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_SA, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_BOWSER, 0, -649, 0, 0, 0, 0, 0x00000000, bhvBowserCustom),
 		OBJECT(MODEL_EXCLAMATION_BOX, 4324, 1370, -1851, 0, 0, 0, (15 << 16), bhvExclamationBox),
 		OBJECT(MODEL_EXCLAMATION_BOX, 3570, 835, 2891, 0, 0, 0, (15 << 16), bhvExclamationBox),
@@ -61,6 +63,7 @@ const LevelScript level_sa_entry[] = {
 		OBJECT(MODEL_NONE, 2049, 442, -4059, 0, 0, 0, (40 << 16), bhvPoleGrabbing),
 		OBJECT(MODEL_NONE, -2147, 481, -3986, 0, 0, 0, (40 << 16), bhvPoleGrabbing),
 		OBJECT(MODEL_ROTATING_BALL, 932, 1983, 3771, 0, 0, 0, 0x00000000, bhvSwingingBall),
+		OBJECT(MODEL_NONE, -1174, 685, 3663, 0, 0, 0, (0x0C << 16), bhvInstantActiveWarp),
 		TERRAIN(sa_area_1_collision),
 		MACRO_OBJECTS(sa_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_BOSS_KOOPA_FINAL),
@@ -70,7 +73,6 @@ const LevelScript level_sa_entry[] = {
 	END_AREA(),
 	FREE_LEVEL_POOL(),
 	MARIO_POS(1, 0, 0, 0, 0),
-	
 	CALL(0, lvl_init_or_update),
 	CALL_LOOP(1, lvl_init_or_update),
 	CLEAR_LEVEL(),

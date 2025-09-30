@@ -231,30 +231,30 @@ ride wherever you want to\n\
 go! Shred those enemies!"))
 
 DEFINE_DIALOG(DIALOG_017, 1, 4, 30, 200, _("\
-I'm the Big Bob-omb, lord\n\
-of all blasting matter,\n\
-king of ka-booms the\n\
-world over!\n\
-How dare you scale my\n\
-mountain? By what right\n\
-do you set foot on my\n\
-imperial mountaintop?\n\
-You may have eluded my\n\
-guards, but you'll never\n\
-escape my grasp...\n\
+I am the Big Bob-omb,\n\
+guardian of Bowser's\n\
+castle, sworn protector\n\
+of these final halls!\n\
+How dare you intrude so\n\
+deep into my master's\n\
+domain? By what right do\n\
+you trespass here?\n\
 \n\
-...and you'll never take\n\
-away my Power Star. I\n\
-hereby challenge you,\n\
-Mario!\n\
-If you want the Star I\n\
-hold, you must prove\n\
-yourself in battle.\n\
+You may have slipped past\n\
+the Koopas and traps,\n\
+but you will not escape\n\
+my grasp...\n\
+\n\
+If you wish to reach\n\
+Bowser himself, you must\n\
+first prove your strength\n\
+against me.\n\
 \n\
 Can you pick me up from\n\
-the back and hurl me to\n\
-this royal turf? I think\n\
-that you cannot!"))
+behind and throw me down\n\
+upon this castle floor?\n\
+I believe you cannot!"))
+
 
 DEFINE_DIALOG(DIALOG_018, 1, 4, 30, 200, _("\
 I'm sleeping because...\n\
@@ -1359,25 +1359,29 @@ er, grovel. Here, you win.\n\
 sorry"))
 
 DEFINE_DIALOG(DIALOG_116, 1, 5, 95, 200, _("\
-Whaaa....Whaaat?\n\
-Can it be that a\n\
-pipsqueak like you has\n\
-defused the Bob-omb\n\
-king????\n\
-You might be fast enough\n\
-to ground me, but you'll\n\
-have to pick up the pace\n\
-if you want to take King\n\
-Bowser by the tail.\n\
-Methinks my troops could\n\
-learn a lesson from you!\n\
-Here is your Star, as I\n\
-promised, Mario.\n\
+Whaaa... Whaaat?\n\
+How could I, guardian of\n\
+this castle, be defeated\n\
+by the likes of you!?\n\
 \n\
-If you want to see me\n\
-again, select this Star\n\
-from the menu. For now,\n\
-farewell."))
+No matter... You may have\n\
+won this battle, but Lord\n\
+Bowser will never fall to\n\
+a weakling such as you.\n\
+\n\
+Hmph... if only that wall\n\
+just ahead were not so...\n\
+fragile...!\n\
+...Ah! Forget I said that!\n\
+Even if you knew, there s\n\
+no way you could figure\n\
+out how to break it.\n\
+Yes... yes, that s right.\n\
+You ll never uncover the\n\
+path beyond!\n\
+\n\
+Now begone, Mario!"))
+
 
 DEFINE_DIALOG(DIALOG_117, 1, 1, 95, 200, _("\
 Who...walk...here?\n\
