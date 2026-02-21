@@ -50,7 +50,7 @@ const LevelScript level_castle_courtyard_entry[] = {
 		OBJECT(MODEL_NONE, 0, 0, 0, 0, 0, 0, 0x00000000, bhvObstacleManager),
 		TERRAIN(castle_courtyard_area_1_collision),
 		MACRO_OBJECTS(castle_courtyard_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_HOT),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SLIDE),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

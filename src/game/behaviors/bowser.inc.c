@@ -2100,16 +2100,35 @@ void bhv_falling_grill_init(void) {
 }
 
 void bhv_falling_grill_loop(void) {
-    if (gMarioObject->platform == o) {
-        // Descend si Mario est proche
-        o->oPosY -= 8.0f;
-    } else {
-        if (o->oPosY < o->oF4){
-            o->oPosY+= 5.0f; // Remonte sinon
-        }
-        
+    switch (o->oAction) {
+        case 0: // Etat idle, en attente
+            if (gMarioObject->platform == o) {
+                o->oAction = 1;   // Passe en mode "descente"
+                o->oTimer = 0;   // Reset du timer interne
+            }
+            break;
+
+        case 1: // Descente
+            if (o->oTimer < 90) {
+                o->oPosY -= 8.0f; // Descend 8 unités par frame
+            } else {
+                o->oAction = 2;   // Passe en remontée
+            }
+            break;
+
+        case 2: // Remontée
+            if (o->oPosY < o->oF4) {
+                o->oPosY += 8.0f; // Remonte de 8 unités par frame
+                if (o->oPosY > o->oF4) {
+                    o->oPosY = o->oF4; // Clamp pour éviter de dépasser
+                }
+            } else {
+                o->oAction = 0; // Retour à l'état initial
+            }
+            break;
     }
 }
+
 
 // Timer lié au Big Flame Talking
 static void bhv_timer_for_lava_loop(void) {

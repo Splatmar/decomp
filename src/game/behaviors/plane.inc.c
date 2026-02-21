@@ -78,7 +78,7 @@ gMarioState->marioObj->oPosZ = gMarioState->pos[2];
     }
 
     // Spawn du warp **une seule fois** après un certain temps (sécurisé)
-    if(o->oTimer == 300){  // exemple : frame 1000 
+    if(o->oTimer == 1800){  // exemple : frame 1000 
         initiate_warp(LEVEL_BOB & 0x7F, 1, 0x0A, WARP_FLAGS_NONE);
         play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x10, 0, 0, 0);
         level_set_transition(0x10, NULL);

@@ -18,7 +18,7 @@
     "0F_event_metal_cap": ["18"],
     "10_event_koopa_message": ["12"],
     "11_level_koopa_road": ["19"],
-    "12_event_high_score": ["1F"],
+    "12_event_high_score": ["0C_extended_bank"],
     "13_event_merry_go_round": ["21"],
     "14_event_race": ["1A"],
     "15_cutscene_star_spawn": ["0E"],

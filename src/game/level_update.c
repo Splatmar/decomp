@@ -917,7 +917,17 @@ void initiate_delayed_warp(void) {
                     break;
 
                 default:
-                    warpNode = area_get_warp_node(sSourceWarpNodeId);
+                 if(sSourceWarpNodeId == WARP_NODE_DEATH) { //if mario die in a main course, reset the level
+                  initiate_warp(gCurrLevelNum, 0x01, 0x0A, WARP_FLAG_EXIT_COURSE);
+                     } else {
+                      warpNode = area_get_warp_node(sSourceWarpNodeId);
+                       initiate_warp(warpNode->node.destLevel & 0x7F, warpNode->node.destArea, warpNode->node.destNode, sDelayedWarpArg);
+                     check_if_should_set_warp_checkpoint(&warpNode->node);
+                         }
+                         if (sWarpDest.type != WARP_TYPE_CHANGE_LEVEL) {
+                               level_set_transition(2, NULL);
+                             }
+                            break;
 
 #ifdef DEBUG_ASSERTIONS
                     if (!warpNode) {
@@ -1415,6 +1425,7 @@ s32 lvl_set_current_level(UNUSED s16 initOrUpdate, s32 levelNum) {
     sWarpCheckpointActive = FALSE;
     gCurrLevelNum = levelNum;
     gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
+	if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS) return 0;
 	if (gCurrLevelNum == LEVEL_BOB) return 0;
 	if (gCurrLevelNum == LEVEL_PSS) return 0;
 	if (gCurrLevelNum == LEVEL_LLL) return 0;

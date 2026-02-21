@@ -58,7 +58,7 @@ const LevelScript level_sa_entry[] = {
 		OBJECT(MODEL_FALLING_GRILL, -3897, 760, -2852, 0, -45, 0, 0x00000000, bhv_falling_grill),
 		OBJECT(MODEL_FALLING_GRILL, -3268, 882, -3542, 0, -45, 0, 0x00000000, bhv_falling_grill),
 		OBJECT(MODEL_BOWSER_LAVA, 0, -464, -8, 0, 0, 0, 0x00000000, bhvBowserMoovingFloor),
-		OBJECT(MODEL_NONE, -683, 1844, 16320, 0, -180, 0, (0x0B << 16), bhvInstantActiveWarp),
+		OBJECT(MODEL_NONE, -683, 1844, 16320, 0, -180, 0, (0x0A << 16), bhvInstantActiveWarp),
 		OBJECT(MODEL_TRAIN, -696, 232, 15335, 0, 90, 0, 0x00000000, bhvPlatformMoovingBowser),
 		OBJECT(MODEL_NONE, 2049, 442, -4059, 0, 0, 0, (40 << 16), bhvPoleGrabbing),
 		OBJECT(MODEL_NONE, -2147, 481, -3986, 0, 0, 0, (40 << 16), bhvPoleGrabbing),

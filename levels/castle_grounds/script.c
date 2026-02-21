@@ -60,7 +60,7 @@ const LevelScript level_castle_grounds_entry[] = {
 		OBJECT(MODEL_PLATFORM, 6912, 1296, -8331, 0, 0, 0, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
 		OBJECT(MODEL_PLATFORM, 5932, 1010, -10127, 0, 0, 0, (5 << 24) | (32 << 16) | (2 << 8), bhvMoovingForward),
 		OBJECT(MODEL_HEART, 5800, 100, -11800, 0, 0, 0, 0x00000000, bhvRecoveryHeart),
-		OBJECT(MODEL_NONE, 0, 162, 0, 0, -180, 0, (0x0A << 16), bhvInstantActiveWarp),
+		OBJECT(MODEL_NONE, 0, 162, 0, 0, 0, 0, (0x0A << 16), bhvInstantActiveWarp),
 		OBJECT(MODEL_PLATFORM, -100, 2160, -2327, 0, 145, 0, (10 << 24) | (20 << 16) | (2 << 8), bhvMoovingForward),
 		OBJECT(MODEL_PLATFORM, 2213, 2240, -5912, 16, -136, -77, (8 << 24) | (25 << 16) | (2 << 8), bhvMoovingForward),
 		OBJECT(MODEL_PLATFORM, 1242, 2112, -7384, 16, 147, -77, (7 << 24) | (25 << 16) | (2 << 8), bhvMoovingForward),
@@ -76,7 +76,7 @@ const LevelScript level_castle_grounds_entry[] = {
 		OBJECT(MODEL_NONE, -144, 2972, -12363, 0, 0, 0, (11 << 16), bhvWarp),
 		TERRAIN(castle_grounds_area_1_collision),
 		MACRO_OBJECTS(castle_grounds_area_1_macro_objs),
-		STOP_MUSIC(0),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_EVENT_HIGH_SCORE),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
